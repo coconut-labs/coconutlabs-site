@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { WatercolorWash } from "@/components/canvas/WatercolorWash";
 import { CoconutLabsLogo } from "@/components/primitives/CoconutLabsLogo";
 import { HeroCanvas } from "@/components/home/HeroCanvas";
 import { getLatestPostSlug } from "@/lib/content";
@@ -8,8 +9,22 @@ export async function Hero() {
   const latestSlug = await getLatestPostSlug();
 
   return (
-    <section className="relative grid min-h-[calc(100svh-var(--header-height))] place-items-center overflow-hidden px-[var(--space-page-x)] py-20">
+    <section className="isolate relative grid min-h-[calc(100svh-var(--header-height))] place-items-center overflow-hidden px-[var(--space-page-x)] py-20">
       <HeroCanvas />
+      <WatercolorWash
+        className="wash"
+        color="#9b6b1f"
+        opacity={0.55}
+        seed={7}
+        style={{ top: "4%", right: "-6%", width: "min(52vw, 640px)" }}
+      />
+      <WatercolorWash
+        className="wash"
+        color="#7b4e57"
+        opacity={0.4}
+        seed={21}
+        style={{ bottom: "-8%", left: "-4%", width: "min(38vw, 460px)" }}
+      />
       <div className="mx-auto max-w-[88rem]">
         <p className="mb-6 font-mono text-xs uppercase text-accent-2">independent inference research</p>
         <h1 className="block leading-none text-ink-0">

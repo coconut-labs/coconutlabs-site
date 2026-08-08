@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { WatercolorWash } from "@/components/canvas/WatercolorWash";
 import { FirstLoadReveal } from "@/components/shell/FirstLoadReveal";
 import { Footer } from "@/components/shell/Footer";
 import { Header } from "@/components/shell/Header";
@@ -36,6 +37,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <div className="page-shell paper-texture">
+          <WatercolorWash
+            className="wash-ambient"
+            color="#9b6b1f"
+            opacity={0.4}
+            seed={3}
+            style={{ top: "-14vh", right: "-16vw", width: "min(58vw, 760px)" }}
+          />
+          <WatercolorWash
+            className="wash-ambient"
+            color="#4a5b49"
+            opacity={0.35}
+            seed={12}
+            style={{ bottom: "-18vh", left: "-18vw", width: "min(52vw, 680px)" }}
+          />
           <Header />
           <RouteTransition>
             <main id="main">{children}</main>
