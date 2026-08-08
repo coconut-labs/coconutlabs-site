@@ -36,7 +36,12 @@ Text.`,
 
   it("loads published posts newest first", async () => {
     const posts = await getAllPosts();
-    expect(posts[0]?.slug).toBe("tenant-fairness-on-shared-inference");
+    // Assert ordering semantics, not a hardcoded newest slug — adding a post
+    // to the shelf must not break this test.
+    const dates = posts.map((post) => post.date);
+    const sorted = [...dates].sort((a, b) => (a < b ? 1 : -1));
+    expect(dates).toEqual(sorted);
+    expect(posts.length).toBeGreaterThanOrEqual(3);
     expect(posts.every((post) => post.status === "published")).toBe(true);
   });
 
