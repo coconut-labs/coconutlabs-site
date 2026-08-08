@@ -1,0 +1,32 @@
+---
+title: "A model in the room"
+dek: "Building a synthesizer plugin with an AI pair: three jobs the model actually has in a creative tool, and the fence that keeps it useful."
+date: "2026-08-08"
+type: "research note"
+authors:
+  - "Shrey Patel"
+slug: "a-model-in-the-room"
+status: "published"
+---
+
+## The instrument as a systems project
+
+I am building the synthesizer I make music with: a C++ Audio Unit for Logic, codename syn1. The DSP core deliberately has no framework dependency, so the whole test suite runs against a small test library in seconds instead of compiling against a gigabyte of JUCE. That one structural choice is why the project can be built with a model in the loop at all: fast, honest feedback beats clever suggestions.
+
+Two build scars say more about AI-assisted engineering than any benchmark. The build has a switch to not install a freshly compiled plugin, because swapping a component under a live Logic session can take the session down. And each build directory fetches its own dependencies, because parallel workers racing to fill one shared cache corrupt it. Neither lesson is musical. Both decide whether the instrument ships.
+
+## Three jobs, one fence
+
+The model has exactly three jobs in this room.
+
+**Bench partner.** DSP math, test design, build systems. The unglamorous majority of instrument building, where a well-read pair is worth real hours.
+
+**Menu widener, inside the instrument.** The plugin carries a harmony assistant, a mood pad, and a generate panel. All three propose: candidate chords under a melody, parameter neighborhoods that match a mood, phrases to audition. Proposals arrive as options with your hands still on the keys. Nothing lands in the track without a human committing it.
+
+**Borrowed ears.** A localhost tool turns a reference track into six separated stems and a scrubbable beat grid. On Apple Silicon the separation runs on the GPU, measured about 32x faster than CPU with numerically identical output. Reference listening with the lid off, and nothing leaves the machine.
+
+The fence between those jobs and taste is structural, not aspirational. The useful place for a model in a creative tool is upstream of the decision, widening what you consider. The one prototype that sat downstream of the decision produced parts that were competent and dead, the average of everything, which is the one thing a track must never be.
+
+## Why this is a lab note
+
+Because the fence generalizes. Proposal-only interfaces, human commit points, and fast local measurement are the same shape we argue for in inference systems: the machine expands the option space and the human owns the write path. The synth is just the version of that argument you can hear.
