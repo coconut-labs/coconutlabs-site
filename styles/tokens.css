@@ -1,22 +1,22 @@
 :root {
   color-scheme: light;
-  --bg-0: #FAFAF6;
+  --bg-0: #F7F7F5;
   --bg-1: #FFFFFF;
   --bg-2: #F0F0EA;
-  --bg-3: #EBEBFF;
+  --bg-3: #EDEDEA;
   --ink-0: #0B0B0C;
   --ink-1: #4A4A55;
   --ink-2: #7A7A88;
-  --rule: rgba(11,11,12,0.22);
-  --accent: #2427E0;
-  --accent-2: #1A1CB8;
+  --rule: rgba(17,17,17,0.12);
+  --accent: #2440CC;
+  --accent-2: #1B2F99;
   --accent-3: #0B0B0C;
   --success: #4a7355;
   --danger: #8f3d2f;
   --shadow-soft: 0 18px 50px rgb(26 22 17 / 0.10);
   --shadow-paper: 0 26px 90px rgb(26 22 17 / 0.16);
   --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument), "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-serif: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
   --font-body: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", "SFMono-Regular", Consolas, monospace;
   --space-page-x: clamp(1rem, 4vw, 4.5rem);
