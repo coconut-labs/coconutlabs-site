@@ -9,6 +9,7 @@ export const ROUTES: RouteEntry[] = [
 
   // Top nav (primary)
   { href: "/research", label: "Research", nav: true },
+  { href: "/library",  label: "Library",  nav: true },
   { href: "/projects", label: "Projects", nav: true },
   { href: "/joinus",   label: "Join us",  nav: true },
   { href: "/about",    label: "About",    nav: true },

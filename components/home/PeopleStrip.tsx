@@ -43,7 +43,7 @@ export function PeopleStrip() {
           <h2 className="mt-4 font-serif text-[clamp(3rem,7vw,6rem)] leading-none">Two engineers, close to the work.</h2>
           <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
             Coconut Labs is intentionally small. The work happens in the open at{" "}
-            <a className="text-accent hover:underline" href="https://github.com/coconut-labs">github.com/coconut-labs</a>{" "}
+            <a className="text-accent underline underline-offset-2 hover:text-accent-2" href="https://github.com/coconut-labs">github.com/coconut-labs</a>{" "}
             and shows up here when there is a result worth standing behind.
           </p>
         </div>
