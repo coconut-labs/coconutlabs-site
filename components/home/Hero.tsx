@@ -13,15 +13,15 @@ export async function Hero() {
       <HeroCanvas />
       <WatercolorWash
         className="wash"
-        color="#9b6b1f"
-        opacity={0.55}
+        color="#2440CC"
+        opacity={0.22}
         seed={7}
         style={{ top: "4%", right: "-6%", width: "min(52vw, 640px)" }}
       />
       <WatercolorWash
         className="wash"
-        color="#7b4e57"
-        opacity={0.4}
+        color="#1B2F99"
+        opacity={0.14}
         seed={21}
         style={{ bottom: "-8%", left: "-4%", width: "min(38vw, 460px)" }}
       />

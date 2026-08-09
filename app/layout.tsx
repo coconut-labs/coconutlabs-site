@@ -39,15 +39,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <div className="page-shell paper-texture">
           <WatercolorWash
             className="wash-ambient"
-            color="#9b6b1f"
-            opacity={0.4}
+            color="#2440CC"
+            opacity={0.14}
             seed={3}
             style={{ top: "-14vh", right: "-16vw", width: "min(58vw, 760px)" }}
           />
           <WatercolorWash
             className="wash-ambient"
-            color="#4a5b49"
-            opacity={0.35}
+            color="#6B7DFF"
+            opacity={0.11}
             seed={12}
             style={{ bottom: "-18vh", left: "-18vw", width: "min(52vw, 680px)" }}
           />

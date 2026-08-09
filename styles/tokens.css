@@ -6,32 +6,39 @@
   --bg-3: #EDEDEA;
   --ink-0: #0B0B0C;
   --ink-1: #4A4A55;
-  --ink-2: #7A7A88;
+  /* Darkened from #7A7A88, which was 3.94:1 on --bg-0 and 3.65:1 on the
+     reading ground. It is used at 12px on /research and /projects, so it
+     needed the 4.5:1 body threshold, not the 3:1 large-text one.
+     #6A6A78 measures 4.96:1 and 4.60:1. */
+  --ink-2: #6A6A78;
   --rule: rgba(17,17,17,0.12);
   --accent: #2440CC;
   --accent-2: #1B2F99;
   --accent-3: #0B0B0C;
   --success: #4a7355;
   --danger: #8f3d2f;
-  --shadow-soft: 0 18px 50px rgb(26 22 17 / 0.10);
-  --shadow-paper: 0 26px 90px rgb(26 22 17 / 0.16);
+  /* Tint was rgb(26 22 17), a warm brown left from the paper palette. On an
+     off-white ground it read as a yellow halo. Now neutral ink. */
+  --shadow-soft: 0 18px 50px rgb(11 11 12 / 0.10);
+  --shadow-paper: 0 26px 90px rgb(11 11 12 / 0.16);
   --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
   --font-body: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
   --font-mono: var(--font-geist-mono), "Geist Mono", "SFMono-Regular", Consolas, monospace;
   --space-page-x: clamp(1rem, 4vw, 4.5rem);
   --space-section-y: clamp(5rem, 12vw, 10rem);
-  --measure: 62ch;
+  /* Was 62ch, which measured 64 characters rendered. The target band is
+     65 to 75, and measure is the single largest readability lever here. */
+  --measure: 68ch;
   --header-height: 72px;
   --ease-paper: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-paper-tear: cubic-bezier(0.7, 0, 0.13, 1);
 }
 
-.theme-reading {
-  --bg-0: #f4eedf;
-  --bg-1: #fbf7ec;
-  --bg-2: #e7deca;
-}
+/* .theme-reading used to repaint research notes onto warm paper (#f4eedf /
+   #fbf7ec / #e7deca). That survived the neutral flip and was why a note still
+   read warm while the rest of the site had gone off-white. The class is still
+   applied in app/research/[slug]/layout.tsx; it now inherits one ground. */
 
 @keyframes hero-breathe {
   from {
