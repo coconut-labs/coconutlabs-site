@@ -3,7 +3,7 @@ import type { Post } from "@/lib/content";
 export function PostHeader({ post }: { post: Post }) {
   return (
     <header className="post-shell pb-10">
-      <div className="max-w-[62ch]">
+      <div className="max-w-[var(--measure)]">
         <p className="font-mono text-xs uppercase text-ink-2">
           {post.date} · {post.type} · {post.readingTime}
         </p>

@@ -12,7 +12,7 @@ export function ShareRow({ title, doi }: { title: string; doi?: string }) {
   }
 
   return (
-    <div className="no-print mx-auto flex max-w-[62ch] flex-wrap gap-3 px-[var(--space-page-x)] pb-24 font-mono text-xs">
+    <div className="no-print mx-auto flex max-w-[var(--measure)] flex-wrap gap-3 px-[var(--space-page-x)] pb-24 font-mono text-xs">
       <button
         className="focus-ring inline-flex h-10 items-center gap-2 rounded border border-rule bg-bg-1 px-3 text-ink-0 hover:border-accent"
         onClick={copyLink}

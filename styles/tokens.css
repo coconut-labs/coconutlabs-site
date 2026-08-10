@@ -19,8 +19,6 @@
   /* Card-internal dividers, one step lighter than --rule. New in Direction A. */
   --hair: rgba(17,17,17,0.06);
   --accent: #2440CC;
-  --accent-2: #1B2F99;
-  --accent-3: #0B0B0C;
   --success: #4a7355;
   --danger: #8f3d2f;
   /* Tint was rgb(26 22 17), a warm brown left from the paper palette. On an
@@ -70,8 +68,6 @@
   --rule: rgba(255,255,255,0.16);
   --hair: rgba(255,255,255,0.07);
   --accent: #7D93FF;
-  --accent-2: #A8B6FF;
-  --accent-3: #F2F2F0;
   --success: #7fb894;
   --danger: #e0836f;
   --shadow-soft: 0 18px 50px rgb(0 0 0 / 0.44);
@@ -93,8 +89,6 @@
     --rule: rgba(255,255,255,0.16);
     --hair: rgba(255,255,255,0.07);
     --accent: #7D93FF;
-    --accent-2: #A8B6FF;
-    --accent-3: #F2F2F0;
     --success: #7fb894;
     --danger: #e0836f;
     --shadow-soft: 0 18px 50px rgb(0 0 0 / 0.44);

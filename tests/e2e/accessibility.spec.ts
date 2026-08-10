@@ -16,6 +16,7 @@ const routes = [
   "/about",
   "/contact",
   "/colophon",
+  "/benchmarks",
 ];
 
 for (const route of routes) {
