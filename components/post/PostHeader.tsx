@@ -7,8 +7,10 @@ export function PostHeader({ post }: { post: Post }) {
         <p className="font-mono text-xs uppercase text-accent-2">
           {post.date} · {post.type} · {post.readingTime}
         </p>
-        <h1 className="mt-6 text-[clamp(4rem,10vw,8.8rem)] leading-[0.92]">{post.title}</h1>
-        <p className="mt-8 font-sans text-xl leading-8 text-ink-1 md:text-2xl">{post.dek}</p>
+        <h1 className="mt-6 text-[clamp(30px,4vw,46px)] font-semibold leading-[1.05] tracking-[-0.03em]">
+          {post.title}
+        </h1>
+        <p className="mt-6 font-sans text-base leading-relaxed text-ink-1">{post.dek}</p>
         <p className="mt-8 font-mono text-xs uppercase text-ink-2">By {post.authors.join(", ")}</p>
       </div>
     </header>

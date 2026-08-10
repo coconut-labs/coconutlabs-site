@@ -82,7 +82,7 @@ export default function LifecycleMap() {
             const loopTarget = loopTargetN === s.n;
             const pinned = pin?.kind === "stop" && pin.id === s.n;
             return (
-              <li key={s.n} style={{ listStyle: "none" }}>
+              <li key={s.n} className="list-none">
                 <button
                   type="button"
                   aria-pressed={pinned}
@@ -124,7 +124,7 @@ export default function LifecycleMap() {
             <span>Ten units, one per JD requirement. Each is built and written before the next starts.</span>
           )}
         </div>
-        <div className={styles.layers} style={{ marginTop: "1rem" }}>
+        <div className={styles.layers}>
           {LAYERS.map((layer) => {
             const units = UNITS.filter((u) => u.layer === layer.key);
             return (
