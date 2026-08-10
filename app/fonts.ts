@@ -1,4 +1,8 @@
-import { Fraunces, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+
+// Direction A is Geist-only. Instrument Serif and Fraunces were removed when
+// the token layer stopped referencing their variables — loading them was two
+// font downloads for zero rendered glyphs.
 
 export const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,16 +16,4 @@ export const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  weight: "400",
-});
 
-export const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  axes: ["SOFT", "WONK", "opsz"],
-});

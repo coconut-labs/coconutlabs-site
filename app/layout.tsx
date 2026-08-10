@@ -6,7 +6,7 @@ import { Header } from "@/components/shell/Header";
 import { PageNumber } from "@/components/shell/PageNumber";
 import { RouteTransition } from "@/components/shell/RouteTransition";
 import { buildMetadata } from "@/lib/seo";
-import { fraunces, geistMono, geistSans, instrumentSerif } from "./fonts";
+import { geistMono, geistSans } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,15 +20,21 @@ export const metadata: Metadata = {
   },
 };
 
+/* colorScheme was pinned "light" and themeColor was the retired warm paper
+   #ECE6D6 — the viewport meta was fighting the token layer's dark scheme and
+   painting old-brand chrome on mobile. Both now follow the scheme. */
 export const viewport: Viewport = {
-  colorScheme: "light",
-  themeColor: "#ECE6D6",
+  colorScheme: "light dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F7F7F5" },
+    { media: "(prefers-color-scheme: dark)", color: "#0C0C0E" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${fraunces.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
       lang="en"
     >
       <body>

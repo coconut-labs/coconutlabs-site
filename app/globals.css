@@ -22,6 +22,19 @@
   --font-serif: var(--font-serif);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+  /* Direction A: one 2px radius everywhere ("no rounded-pill UI anywhere").
+     Tailwind v4 renumbered its radius scale — rounded-sm now resolves to 4px
+     (--radius-xs is the 2px step), so every rounded-sm/md/lg/xl in the tree
+     was rendering off-spec. Collapsing the named steps onto --rad fixes all
+     141 call sites without touching a component. rounded-full stays intact
+     for the status dots, which are circles on purpose. */
+  --radius-xs: var(--rad);
+  --radius-sm: var(--rad);
+  --radius-md: var(--rad);
+  --radius-lg: var(--rad);
+  --radius-xl: var(--rad);
+  --radius-2xl: var(--rad);
+  --radius-3xl: var(--rad);
 }
 
 /* These resets live in @layer base on purpose. Tailwind v4 registers
