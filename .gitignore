@@ -12,3 +12,4 @@ test-results/
 .lighthouseci/
 tmp/
 *.tsbuildinfo
+.claude/
