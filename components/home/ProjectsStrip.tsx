@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/primitives/Badge";
 import { Card } from "@/components/primitives/Card";
 
@@ -10,7 +9,7 @@ const projects = [
     status: "Live",
     result: "1.14x of solo, 26x better than FIFO",
     body: "Tenant fairness on shared inference. A quiet tenant stays visible when a flooder arrives.",
-    tone: "sage" as const,
+    tone: "success" as const,
   },
   {
     name: "mlxd",
@@ -18,7 +17,7 @@ const projects = [
     status: "In research",
     result: "Tenant-fair Apple Silicon inference",
     body: "A scheduler + admission layer on top of mlx_lm.server. Restoring tenant identity first, then fairness on unified-memory hardware.",
-    tone: "amber" as const,
+    tone: "accent" as const,
   },
 ];
 
@@ -39,7 +38,7 @@ export function ProjectsStrip() {
                   <p className="font-mono text-[clamp(2rem,5vw,5rem)] leading-none text-accent">{project.result}</p>
                   <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-1">{project.body}</p>
                   <span className="mt-7 inline-flex items-center gap-2 font-mono text-xs text-ink-0">
-                    Read more <ArrowUpRight aria-hidden="true" size={14} />
+                    Read more <span aria-hidden="true">↗</span>
                   </span>
                 </div>
               </Card>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, X } from "lucide-react";
 import {
   generate,
   runModeled,
@@ -31,7 +30,7 @@ export default function Demo() {
 
   return (
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-accent-2">run it yourself</p>
+      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         The same {stream.length}-request warm workload over 12 hot prompts — live in your browser. Switch the cache-key
         config and watch the hit ratio collapse to zero while every answer stays correct.
@@ -81,11 +80,11 @@ export default function Demo() {
                 <td className="py-2">
                   {row.hit ? (
                     <span className="inline-flex items-center gap-1 text-success">
-                      <Check size={12} aria-hidden /> hit
+                      <span aria-hidden="true">✓</span> hit
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 text-ink-2">
-                      <X size={12} aria-hidden /> miss
+                      <span aria-hidden="true">✕</span> miss
                     </span>
                   )}
                 </td>
@@ -101,7 +100,7 @@ export default function Demo() {
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-ink-1">Silent-cache-miss guardrail</span>
             <span className={`inline-flex items-center gap-1 font-mono text-xs ${flagged ? "text-danger" : "text-success"}`}>
-              {flagged ? <X size={13} aria-hidden /> : <Check size={13} aria-hidden />}
+              {flagged ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
               {flagged ? "FLAGGED" : "passes"}
             </span>
           </div>
@@ -115,7 +114,7 @@ export default function Demo() {
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-ink-1">Functional correctness (the control)</span>
             <span className={`inline-flex items-center gap-1 font-mono text-xs ${controlFlags ? "text-danger" : "text-success"}`}>
-              {controlFlags ? <X size={13} aria-hidden /> : <Check size={13} aria-hidden />}
+              {controlFlags ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
               {controlFlags ? "FLAGGED" : "passes"}
             </span>
           </div>

@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { loadContributors } from "@/lib/contributors";
 import { buildMetadata } from "@/lib/seo";
 
@@ -48,7 +47,7 @@ export default async function JoinUsPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">contributors</p>
+        <p className="font-mono text-xs uppercase text-ink-2">contributors</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Build with us.</h1>
 
         <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
@@ -94,12 +93,12 @@ export default async function JoinUsPage() {
         </ul>
 
         <div className="mt-24 border-t border-rule pt-10">
-          <p className="font-mono text-xs uppercase text-accent-2">the actual files</p>
+          <p className="font-mono text-xs uppercase text-ink-2">the actual files</p>
           <ul className="mt-5 grid gap-3 font-mono text-sm">
             {FILE_LINKS.map(([label, href]) => (
               <li key={label}>
                 <a className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent" href={href}>
-                  {label} <ArrowUpRight aria-hidden="true" size={14} />
+                  {label} <span aria-hidden="true">↗</span>
                 </a>
               </li>
             ))}
@@ -107,7 +106,7 @@ export default async function JoinUsPage() {
         </div>
 
         <div className="mt-16 border-t border-rule pt-10">
-          <p className="font-mono text-xs uppercase text-accent-2">contributors so far</p>
+          <p className="font-mono text-xs uppercase text-ink-2">contributors so far</p>
           {contributors.length === 0 ? (
             <p className="mt-5 font-mono text-sm text-ink-1">Just us, for now.</p>
           ) : (

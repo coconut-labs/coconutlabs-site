@@ -44,7 +44,7 @@ export default function ContactPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">contact</p>
+        <p className="font-mono text-xs uppercase text-ink-2">contact</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Write the lab.</h1>
 
         <div className="mt-16 border-t border-rule pt-10">
@@ -73,14 +73,14 @@ export default function ContactPage() {
         */}
 
         <div className="mt-20 border-t border-rule pt-10">
-          <p className="font-mono text-xs uppercase text-accent-2">response time</p>
+          <p className="font-mono text-xs uppercase text-ink-2">response time</p>
           <p className="mt-4 max-w-2xl leading-7 text-ink-1">
             We don't always reply quickly. If something is time-sensitive, say so in the subject line and we will read it sooner.
           </p>
         </div>
 
         <div className="mt-12 border-t border-rule pt-10">
-          <p className="font-mono text-xs uppercase text-accent-2">not for this inbox</p>
+          <p className="font-mono text-xs uppercase text-ink-2">not for this inbox</p>
           <ul className="mt-4 grid max-w-2xl gap-3 leading-7 text-ink-1">
             {NOT_FOR.map((line) => (
               <li key={line}>{line}</li>

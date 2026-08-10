@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, Check, X } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import Demo from "./Demo";
 
@@ -20,7 +19,7 @@ export default function SilentCacheMissPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-accent-2">gallery unit · throughput &amp; caching · bottleneck class C</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · throughput &amp; caching · bottleneck class C</p>
         <p className="mt-2 font-mono text-xs">
           <a className="focus-ring text-ink-1 underline decoration-1 underline-offset-2 hover:text-accent" href="https://github.com/coconut-labs/silent-cache-miss-guardrail">
             source: github.com/coconut-labs/silent-cache-miss-guardrail
@@ -30,7 +29,7 @@ export default function SilentCacheMissPage() {
           Silent cache-miss guardrail
         </h1>
 
-        <div className="mt-8 border-l-2 border-accent-3/50 pl-5">
+        <div className="mt-8 border-l-2 border-ink-0/50 pl-5">
           <p className="text-lg italic leading-8 text-ink-1">
             &ldquo;Shorter prompts cannot be cached, even if marked with <code>cache_control</code>. Any requests to cache
             fewer than this number of tokens will be processed without caching, and no error is returned.&rdquo;
@@ -69,7 +68,7 @@ export default function SilentCacheMissPage() {
                     <td className="py-3 text-ink-1">{r.correct}</td>
                     <td className="py-3">
                       <span className={`inline-flex items-center gap-1 ${r.tone === "good" ? "text-success" : "text-danger"}`}>
-                        {r.tone === "good" ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}
+                        {r.tone === "good" ? <span aria-hidden="true">✓</span> : <span aria-hidden="true">✕</span>}
                         {r.verdict}
                       </span>
                     </td>
@@ -144,7 +143,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
 
         <div className="mt-14 flex flex-wrap gap-6 border-t border-rule pt-8">
           <Link className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent" href="/projects/gallery">
-            <ArrowRight aria-hidden size={14} className="rotate-180" /> Back to the gallery
+            <span aria-hidden="true">←</span> Back to the gallery
           </Link>
           <Link className="focus-ring rounded-sm font-mono text-sm text-ink-1 hover:text-accent" href="/projects">
             All projects

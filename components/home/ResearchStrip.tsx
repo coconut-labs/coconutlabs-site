@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/primitives/Card";
 import { getAllPosts } from "@/lib/content";
 
@@ -12,7 +11,7 @@ export async function ResearchStrip() {
         <div className="mb-8 flex items-end justify-between gap-6">
           <h2 className="text-[clamp(3rem,7vw,6rem)] leading-none">Recent research</h2>
           <Link className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs text-accent" href="/research">
-            Index <ArrowRight aria-hidden="true" size={14} />
+            Index <span aria-hidden="true">→</span>
           </Link>
         </div>
         <div className="grid gap-5 md:grid-cols-3">

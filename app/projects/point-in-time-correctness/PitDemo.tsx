@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, X } from "lucide-react";
 import { generate, asofJoin, leakyJoin, leakedCount, CITED_AUC } from "./pit";
 
 export default function PitDemo() {
@@ -14,7 +13,7 @@ export default function PitDemo() {
 
   return (
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-accent-2">run it yourself</p>
+      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         Same {entities.length} labels, joined to their feature two ways — live in your browser. Toggle the join and
         watch the guardrail flag every row whose feature is timestamped <em>after</em> its label.
@@ -59,9 +58,9 @@ export default function PitDemo() {
                 <td className="py-2 text-ink-2">{r.featureValue}</td>
                 <td className="py-2">
                   {r.leaked ? (
-                    <span className="inline-flex items-center gap-1 text-danger"><X size={12} aria-hidden /> leaked</span>
+                    <span className="inline-flex items-center gap-1 text-danger"><span aria-hidden="true">✕</span> leaked</span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 text-success"><Check size={12} aria-hidden /> ok</span>
+                    <span className="inline-flex items-center gap-1 text-success"><span aria-hidden="true">✓</span> ok</span>
                   )}
                 </td>
               </tr>
@@ -75,7 +74,7 @@ export default function PitDemo() {
         <div className="flex items-center justify-between gap-2">
           <span className="font-mono text-xs text-ink-1">Point-in-time guardrail</span>
           <span className={`inline-flex items-center gap-1 font-mono text-xs ${flagged ? "text-danger" : "text-success"}`}>
-            {flagged ? <X size={13} aria-hidden /> : <Check size={13} aria-hidden />}
+            {flagged ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
             {flagged ? "FLAGGED" : "passes"}
           </span>
         </div>

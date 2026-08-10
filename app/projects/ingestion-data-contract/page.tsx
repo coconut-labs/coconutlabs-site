@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, Check, X } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import Demo from "./Demo";
 
@@ -24,7 +23,7 @@ export default function IngestionDataContractPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class G</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core · bottleneck class G</p>
         <p className="mt-2 font-mono text-xs">
           <a className="focus-ring text-ink-1 underline decoration-1 underline-offset-2 hover:text-accent" href="https://github.com/coconut-labs/ingestion-data-contract-guardrail">
             source: github.com/coconut-labs/ingestion-data-contract-guardrail
@@ -32,7 +31,7 @@ export default function IngestionDataContractPage() {
         </p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">Schema-drift contract guardrail</h1>
 
-        <div className="mt-8 border-l-2 border-accent-3/50 pl-5">
+        <div className="mt-8 border-l-2 border-ink-0/50 pl-5">
           <p className="text-lg italic leading-8 text-ink-1">
             &ldquo;A crashed pipeline gets fixed. A lying one gets quoted in a board meeting.&rdquo;
           </p>
@@ -72,13 +71,13 @@ export default function IngestionDataContractPage() {
                     <td className="py-3 text-ink-2">{r.effect}</td>
                     <td className="py-3">
                       <span className={`inline-flex items-center gap-1 ${r.std === "catches" ? "text-success" : "text-danger"}`}>
-                        {r.std === "catches" ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}
+                        {r.std === "catches" ? <span aria-hidden="true">✓</span> : <span aria-hidden="true">✕</span>}
                         {r.std}
                       </span>
                     </td>
                     <td className="py-3">
                       <span className="inline-flex items-center gap-1 text-success">
-                        <Check size={13} aria-hidden />
+                        <span aria-hidden="true">✓</span>
                         {r.guard}
                       </span>
                     </td>
@@ -150,7 +149,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
 
         <div className="mt-14 flex flex-wrap gap-6 border-t border-rule pt-8">
           <Link className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent" href="/projects/gallery">
-            <ArrowRight aria-hidden size={14} className="rotate-180" /> Back to the gallery
+            <span aria-hidden="true">←</span> Back to the gallery
           </Link>
           <Link className="focus-ring rounded-sm font-mono text-sm text-ink-1 hover:text-accent" href="/projects">
             All projects

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { loadProject, loadWork } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
 
@@ -23,7 +22,7 @@ export default async function ProjectsPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">projects</p>
+        <p className="font-mono text-xs uppercase text-ink-2">projects</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Projects</h1>
         <p className="mt-7 max-w-2xl font-mono text-sm leading-7 text-ink-1">
           One lab, several surfaces. kvwarden.org and coconutos.org are separate domains for now, but everything here is Coconut Labs. Plus the small things that keep the lab honest.
@@ -31,8 +30,8 @@ export default async function ProjectsPage() {
 
         {/* KVWarden — large card */}
         <article className="mt-16 rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)] md:p-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent-2/40 bg-accent-2/10 px-3 py-1 font-mono text-xs uppercase text-accent-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-2"></span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
+            <span aria-hidden="true">●</span>
             Live
           </div>
           <h2 className="text-[clamp(3rem,7vw,6rem)] leading-none">{kvwarden.name}</h2>
@@ -46,19 +45,19 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/research/tenant-fairness-on-shared-inference"
             >
-              Read the launch <ArrowRight aria-hidden="true" size={14} />
+              Read the launch <span aria-hidden="true">→</span>
             </Link>
             <Link
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="/projects/kvwarden"
             >
-              Project page <ArrowRight aria-hidden="true" size={14} />
+              Project page <span aria-hidden="true">→</span>
             </Link>
             <a
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="https://github.com/coconut-labs/kvwarden"
             >
-              GitHub <ArrowUpRight aria-hidden="true" size={14} />
+              GitHub <span aria-hidden="true">↗</span>
             </a>
           </div>
         </article>
@@ -66,7 +65,7 @@ export default async function ProjectsPage() {
         {/* mlxd — medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            <span aria-hidden="true">●</span>
             In research
           </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">{mlxd.name}</h2>
@@ -80,7 +79,7 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/mlxd"
             >
-              Project page <ArrowRight aria-hidden="true" size={14} />
+              Project page <span aria-hidden="true">→</span>
             </Link>
           </div>
         </article>
@@ -88,7 +87,7 @@ export default async function ProjectsPage() {
         {/* Coconut OS — medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent"></span>
+            <span aria-hidden="true">●</span>
             In research
           </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">{coconutOs.name}</h2>
@@ -99,21 +98,21 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/coconut-os"
             >
-              Project page <ArrowRight aria-hidden="true" size={14} />
+              Project page <span aria-hidden="true">→</span>
             </Link>
             <a
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="https://coconutos.org"
             >
-              coconutos.org <ArrowUpRight aria-hidden="true" size={14} />
+              coconutos.org <span aria-hidden="true">↗</span>
             </a>
           </div>
         </article>
 
         {/* Gallery — hall of demos */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent-3/40 bg-accent-3/10 px-3 py-1 font-mono text-xs uppercase text-accent-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-3"></span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-ink-0/30 bg-ink-0/5 px-3 py-1 font-mono text-xs uppercase text-ink-0">
+            <span aria-hidden="true">●</span>
             Showcase · live demos
           </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">Hall of demos</h2>
@@ -128,20 +127,20 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/gallery"
             >
-              Open the gallery <ArrowRight aria-hidden="true" size={14} />
+              Open the gallery <span aria-hidden="true">→</span>
             </Link>
             <Link
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="/projects/agentic-mlops"
             >
-              The atlas <ArrowRight aria-hidden="true" size={14} />
+              The atlas <span aria-hidden="true">→</span>
             </Link>
           </div>
         </article>
 
         {/* Tools & experiments */}
         <div className="mt-16 border-t border-rule pt-10" id="tools">
-          <p className="font-mono text-xs uppercase text-accent-2">tools and experiments</p>
+          <p className="font-mono text-xs uppercase text-ink-2">tools and experiments</p>
           <p className="mt-4 max-w-2xl font-mono text-sm leading-7 text-ink-1">
             Smaller things, mostly the scaffolding behind the public work.
           </p>

@@ -4,7 +4,7 @@ import { Badge } from "@/components/primitives/Badge";
 
 describe("Badge", () => {
   it("renders badge text", () => {
-    render(<Badge tone="sage">Live</Badge>);
+    render(<Badge tone="success">Live</Badge>);
     expect(screen.getByText("Live")).toBeInTheDocument();
   });
 });

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, Check, X } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import Demo from "./Demo";
 
@@ -22,11 +21,11 @@ const MATRIX: { name: string; guardrail: boolean; control: boolean; loud?: boole
 function Mark({ hit }: { hit: boolean }) {
   return hit ? (
     <span className="inline-flex items-center gap-1 text-success">
-      <Check size={14} aria-hidden /> caught
+      <span aria-hidden="true">✓</span> caught
     </span>
   ) : (
     <span className="inline-flex items-center gap-1 text-ink-2">
-      <X size={14} aria-hidden /> missed
+      <span aria-hidden="true">✕</span> missed
     </span>
   );
 }
@@ -35,7 +34,7 @@ export default function GuardrailUnitPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class A</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core · bottleneck class A</p>
         <p className="mt-2 font-mono text-xs">
           <a className="focus-ring text-ink-1 underline decoration-1 underline-offset-2 hover:text-accent" href="https://github.com/coconut-labs/data-regression-guardrail">
             source: github.com/coconut-labs/data-regression-guardrail
@@ -46,7 +45,7 @@ export default function GuardrailUnitPage() {
         </h1>
 
         {/* provenance */}
-        <div className="mt-8 border-l-2 border-accent-3/50 pl-5">
+        <div className="mt-8 border-l-2 border-ink-0/50 pl-5">
           <p className="text-lg italic leading-8 text-ink-1">
             &ldquo;Implement observability, validation, and guardrails to prevent silent data regressions.&rdquo;
           </p>
@@ -167,7 +166,7 @@ export default function GuardrailUnitPage() {
             className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             href="/projects/gallery"
           >
-            <ArrowRight aria-hidden size={14} className="rotate-180" /> Back to the gallery
+            <span aria-hidden="true">←</span> Back to the gallery
           </Link>
           <Link className="focus-ring rounded-sm font-mono text-sm text-ink-1 hover:text-accent" href="/projects">
             All projects

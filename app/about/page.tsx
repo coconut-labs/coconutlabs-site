@@ -22,7 +22,7 @@ export default async function AboutPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">about</p>
+        <p className="font-mono text-xs uppercase text-ink-2">about</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">A small lab for shared inference.</h1>
         <div className="post-body mt-12">
           <Markdown content={manifesto} />

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { CoconutLabsLogo } from "@/components/primitives/CoconutLabsLogo";
 import { HeroCanvas } from "@/components/home/HeroCanvas";
 import { getLatestPostSlug } from "@/lib/content";
@@ -11,7 +10,7 @@ export async function Hero() {
     <section className="isolate relative grid min-h-[calc(100svh-var(--header-height))] place-items-center overflow-hidden px-[var(--space-page-x)] py-20">
       <HeroCanvas />
       <div className="mx-auto max-w-[88rem]">
-        <p className="mb-6 font-mono text-xs uppercase text-accent-2">independent inference research</p>
+        <p className="mb-6 font-mono text-xs uppercase text-ink-2">independent inference research</p>
         <h1 className="block leading-none text-ink-0">
           <CoconutLabsLogo
             animate
@@ -31,11 +30,11 @@ export async function Hero() {
         </p>
         <div className="mt-8">
           <Link
-            className="focus-ring inline-flex items-center gap-2 rounded border border-accent bg-accent px-5 py-3 font-mono text-xs uppercase tracking-wide text-bg-0 transition hover:bg-accent-2 hover:border-accent-2"
+            className="focus-ring inline-flex items-center gap-2 rounded border border-accent bg-accent px-5 py-3 font-mono text-xs uppercase tracking-wide text-bg-0 transition hover:opacity-90"
             data-cta="hero"
             href={`/research/${latestSlug}`}
           >
-            Read the launch <ArrowRight aria-hidden="true" size={14} />
+            Read the launch <span aria-hidden="true">→</span>
           </Link>
         </div>
       </div>

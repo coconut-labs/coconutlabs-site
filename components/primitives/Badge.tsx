@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 
-type BadgeTone = "amber" | "sage" | "rose" | "ink";
+// Reduced palette: one accent, success for genuine live/positive status,
+// ink for neutral metadata. The old amber/sage/rose paper tones are gone.
+type BadgeTone = "accent" | "success" | "ink";
 
 const tones: Record<BadgeTone, string> = {
-  amber: "border-accent/40 bg-accent/10 text-accent",
-  sage: "border-accent-2/40 bg-accent-2/10 text-accent-2",
-  rose: "border-accent-3/40 bg-accent-3/10 text-accent-3",
+  accent: "border-accent/40 bg-accent/10 text-accent",
+  success: "border-success/40 bg-success/10 text-success",
   ink: "border-ink-0/30 bg-ink-0/5 text-ink-0",
 };
 

@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { StatusBadge } from "@/components/projects/StatusBadge";
 import type { Project } from "@/lib/content";
 
@@ -16,7 +15,7 @@ export function ProjectHero({ project }: { project: Project }) {
           rel="noreferrer"
           target="_blank"
         >
-          Read the full project <ArrowUpRight aria-hidden="true" size={14} />
+          Read the full project <span aria-hidden="true">↗</span>
         </a>
       </div>
     </header>

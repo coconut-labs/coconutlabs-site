@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Check, X } from "lucide-react";
 import {
   COLUMNS,
   COLUMN_NAMES,
@@ -38,7 +37,7 @@ export default function Demo() {
 
   return (
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-accent-2">run it yourself</p>
+      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         The same {N_ROWS.toLocaleString()}-row, {COLUMN_NAMES.length}-column table, live in your browser. Pick a query
         and a storage layout, and watch the guardrail read the <em>bytes</em>, not the rows — the correctness check only
@@ -130,7 +129,7 @@ export default function Demo() {
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-ink-1">Bytes-read guardrail</span>
             <span className={`inline-flex items-center gap-1 font-mono text-xs ${flagged ? "text-danger" : "text-success"}`}>
-              {flagged ? <X size={13} aria-hidden /> : <Check size={13} aria-hidden />}
+              {flagged ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
               {flagged ? "FLAGGED" : "passes"}
             </span>
           </div>
@@ -146,7 +145,7 @@ export default function Demo() {
           <div className="flex items-center justify-between gap-2">
             <span className="font-mono text-xs text-ink-1">Correctness control</span>
             <span className="inline-flex items-center gap-1 font-mono text-xs text-success">
-              <Check size={13} aria-hidden /> right rows
+              <span aria-hidden="true">✓</span> right rows
             </span>
           </div>
           <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
