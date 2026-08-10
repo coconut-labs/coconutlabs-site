@@ -22,7 +22,7 @@ export default function PointInTimePage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class B</p>
-        <h1 className="mt-5 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
+        <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Point-in-time correctness guardrail
         </h1>
 
@@ -44,7 +44,7 @@ export default function PointInTimePage() {
         {/* three-way scorecard — the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-serif text-2xl text-ink-0">Same data, joined two ways</h2>
+            <h2 className="text-2xl text-ink-0">Same data, joined two ways</h2>
             <p className="font-mono text-xs text-ink-2">1200/1200 rows leaked · guardrail ~0.1 ms</p>
           </div>
           <div className="mt-6 overflow-x-auto">
@@ -87,7 +87,7 @@ export default function PointInTimePage() {
         </div>
 
         {/* mechanism */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Why the usual safeguards fail</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Why the usual safeguards fail</h2>
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>Schema validation checks the shape.</b> A leaky training table and a correct one have identical
@@ -112,7 +112,7 @@ guardrail: flag rows where feature_ts > label_ts`}
         </pre>
 
         {/* evidence */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Evidence</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4 — the same data joined two ways, scored by the guardrail, a real schema validator, and a model&rsquo;s
           offline AUC. The AUC line is the sharp part: the metric people trust to catch problems instead rewards this one.
@@ -123,7 +123,7 @@ guardrail: flag rows where feature_ts > label_ts`}
         </pre>
 
         {/* the bug measurement caught */}
-        <h2 className="mt-16 font-serif text-2xl text-ink-0">A leak inside the anti-leak join</h2>
+        <h2 className="mt-16 text-2xl text-ink-0">A leak inside the anti-leak join</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The first &ldquo;correct&rdquo; as-of join was itself leaky at the boundary — a feature timestamped exactly at
           the label instant was a post-outcome value, and the join picked it up for any label landing on a sample step.

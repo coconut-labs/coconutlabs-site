@@ -38,7 +38,7 @@ export default function AgenticMlopsPage() {
             </p>
             <h1
               style={{
-                fontFamily: "var(--font-serif)",
+                fontFamily: "var(--)",
                 fontSize: "clamp(2rem, 5vw, 3.25rem)",
                 lineHeight: 1.05,
                 letterSpacing: "-0.02em",

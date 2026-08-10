@@ -22,7 +22,7 @@ export default function ColumnarScanPage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class E</p>
-        <h1 className="mt-5 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
+        <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Columnar scan / bytes-read guardrail
         </h1>
 
@@ -45,7 +45,7 @@ export default function ColumnarScanPage() {
         {/* three-way scorecard — the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-serif text-2xl text-ink-0">Same file, one query, read two ways</h2>
+            <h2 className="text-2xl text-ink-0">Same file, one query, read two ways</h2>
             <p className="font-mono text-xs text-ink-2">200k rows · 2 of 12 columns · guardrail integer-exact</p>
           </div>
           <div className="mt-6 overflow-x-auto">
@@ -89,7 +89,7 @@ export default function ColumnarScanPage() {
         </div>
 
         {/* mechanism */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Why the usual check fails</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Why the usual check fails</h2>
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>Correctness checks watch the output.</b> &ldquo;Did the query return the right rows?&rdquo; is true whether
@@ -118,7 +118,7 @@ guardrail: flag when bytes_read > tolerance x projection_budget`}
         </pre>
 
         {/* evidence */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Evidence</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4 &mdash; a real off-the-shelf control. The harness writes a real Parquet file and a real CSV, then counts
           the bytes physically pulled through the reader (pre-buffering off) for the same query three ways. The
@@ -131,7 +131,7 @@ guardrail: flag when bytes_read > tolerance x projection_budget`}
         </pre>
 
         {/* gaps */}
-        <h2 className="mt-16 font-serif text-2xl text-ink-0">Honest gaps</h2>
+        <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The dataset is synthetic and deterministic (<span className="font-mono text-sm">seed=7</span>) &mdash; showing
           read amplification needs a controlled row width, so the numbers are on a designed table, but the failure mode is

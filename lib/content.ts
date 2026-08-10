@@ -178,7 +178,7 @@ export async function loadPodcasts(): Promise<ListEntry[]> {
   return readJson<ListEntry[]>("content/podcasts/podcasts.json");
 }
 
-export async function loadProject(slug: "kvwarden" | "mlxd"): Promise<Project> {
+export async function loadProject(slug: "kvwarden" | "mlxd" | "coconut-os"): Promise<Project> {
   const raw = await readFile(`content/projects/${slug}.mdx`);
   const parsed = matter(raw);
   const status = parsed.data.status;

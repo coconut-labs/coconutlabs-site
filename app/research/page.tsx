@@ -47,7 +47,7 @@ export default async function ResearchPage({
     <section className="content-band">
       <div className="content-inner">
         <p className="font-mono text-xs uppercase text-accent-2">research feed</p>
-        <h1 className="mt-5 font-serif text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Research</h1>
+        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Research</h1>
         <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
           Notes, papers, and recordings from the lab notebook. New entries first. Type-tagged. Each links to the canonical artifact.
         </p>
@@ -96,7 +96,7 @@ export default async function ResearchPage({
                     {entry.type}
                   </p>
                   <div>
-                    <h2 className="font-serif text-4xl leading-tight">{entry.title}</h2>
+                    <h2 className="text-4xl leading-tight">{entry.title}</h2>
                     <p className="mt-3 max-w-3xl text-ink-1">{entry.dek}</p>
                     {entry.authors.length > 0 ? (
                       <p className="mt-4 font-mono text-xs text-ink-2">{entry.authors.join(", ")}</p>

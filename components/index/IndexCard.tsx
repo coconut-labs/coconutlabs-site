@@ -20,7 +20,7 @@ export function IndexCard({ entry }: IndexCardProps) {
     <Card className="grid gap-5 md:grid-cols-[13rem_minmax(0,1fr)_auto]">
       <p className="font-mono text-xs uppercase text-ink-2">{meta}</p>
       <div>
-        <h2 className="font-serif text-4xl leading-tight">{title}</h2>
+        <h2 className="text-4xl leading-tight">{title}</h2>
         <p className="mt-3 max-w-3xl text-ink-1">{description}</p>
       </div>
       {href ? <ArrowUpRight aria-hidden="true" className="text-accent" size={18} /> : null}

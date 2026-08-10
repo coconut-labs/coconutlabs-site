@@ -45,7 +45,7 @@ export default function ContactPage() {
     <section className="content-band">
       <div className="content-inner">
         <p className="font-mono text-xs uppercase text-accent-2">contact</p>
-        <h1 className="mt-5 font-serif text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Write the lab.</h1>
+        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Write the lab.</h1>
 
         <div className="mt-16 border-t border-rule pt-10">
           <p className="max-w-2xl leading-7 text-ink-1">
@@ -64,7 +64,7 @@ export default function ContactPage() {
               className="grid gap-5 border-t border-rule py-7 md:grid-cols-[14rem_minmax(0,1fr)_auto]"
               key={row.title}
             >
-              <h2 className="font-serif text-4xl">{row.title}</h2>
+              <h2 className="text-4xl">{row.title}</h2>
               <p className="max-w-2xl leading-7 text-ink-1">{row.body}</p>
               <EmailLink className="font-mono text-xs" email={row.email} subject={row.subject} />
             </article>

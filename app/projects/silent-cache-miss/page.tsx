@@ -21,7 +21,7 @@ export default function SilentCacheMissPage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · throughput &amp; caching · bottleneck class C</p>
-        <h1 className="mt-5 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
+        <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Silent cache-miss guardrail
         </h1>
 
@@ -43,7 +43,7 @@ export default function SilentCacheMissPage() {
         {/* scorecard — the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-serif text-2xl text-ink-0">Same warm workload, four key configs</h2>
+            <h2 className="text-2xl text-ink-0">Same warm workload, four key configs</h2>
             <p className="font-mono text-xs text-ink-2">240 requests · 12 hot prompts · guardrail ~0.001 ms</p>
           </div>
           <div className="mt-6 overflow-x-auto">
@@ -87,7 +87,7 @@ export default function SilentCacheMissPage() {
         </div>
 
         {/* mechanism */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Why the functional test can&rsquo;t see it</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Why the functional test can&rsquo;t see it</h2>
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>The answer is computed from the query, not the cache.</b> A wrong cache key never produces a wrong result
@@ -114,7 +114,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
         </pre>
 
         {/* evidence */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Evidence</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4 — one warm workload run through four key configs, scored by the guardrail and by a real functional
           correctness test. The functional test is the sharp part: the thing teams trust to validate a cache passes
@@ -128,7 +128,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
         </pre>
 
         {/* honest gaps */}
-        <h2 className="mt-16 font-serif text-2xl text-ink-0">Honest gaps</h2>
+        <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The cache <em>models</em> the two documented provider rules (exact-prefix match, minimum cacheable length)
           rather than integrating with a live provider. The guardrail catches total silence — 0% — cleanly; partial

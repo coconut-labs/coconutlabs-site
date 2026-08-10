@@ -36,7 +36,7 @@ export default function GuardrailUnitPage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class A</p>
-        <h1 className="mt-5 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
+        <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Silent data-regression guardrail
         </h1>
 
@@ -62,7 +62,7 @@ export default function GuardrailUnitPage() {
         {/* result matrix — the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-serif text-2xl text-ink-0">On <span className="font-mono text-xl">lerobot/pusht</span></h2>
+            <h2 className="text-2xl text-ink-0">On <span className="font-mono text-xl">lerobot/pusht</span></h2>
             <p className="font-mono text-xs text-ink-2">6 silent corruptions + 1 loud · zero false positives · 1.8 ms/check</p>
           </div>
           <div className="mt-6 overflow-x-auto">
@@ -105,7 +105,7 @@ export default function GuardrailUnitPage() {
         </div>
 
         {/* how it works */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Why a column validator misses it</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Why a column validator misses it</h2>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-1">
           A standard data contract validates <em>columns</em>: this one exists, has this type, isn&rsquo;t null. That is
           the right shape for loud regressions and the wrong shape for silent ones, for two reasons.
@@ -138,7 +138,7 @@ export default function GuardrailUnitPage() {
         </pre>
 
         {/* evidence */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Evidence</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4 — a controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
           strict statistical config was <em>disqualified</em> for false-positing on clean holdout; that&rsquo;s recorded,
@@ -149,7 +149,7 @@ export default function GuardrailUnitPage() {
         </pre>
 
         {/* honest gaps */}
-        <h2 className="mt-16 font-serif text-2xl text-ink-0">What it doesn&rsquo;t do</h2>
+        <h2 className="mt-16 text-2xl text-ink-0">What it doesn&rsquo;t do</h2>
         <ul className="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-base leading-7 text-ink-1">
           <li>A batch guardrail on a sampled subset, not a streaming petabyte system.</li>
           <li>Detects structural / distributional regressions, not semantic label errors.</li>

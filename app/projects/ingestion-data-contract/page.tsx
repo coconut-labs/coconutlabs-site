@@ -25,7 +25,7 @@ export default function IngestionDataContractPage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class G</p>
-        <h1 className="mt-5 font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">Schema-drift contract guardrail</h1>
+        <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">Schema-drift contract guardrail</h1>
 
         <div className="mt-8 border-l-2 border-accent-3/50 pl-5">
           <p className="text-lg italic leading-8 text-ink-1">
@@ -44,7 +44,7 @@ export default function IngestionDataContractPage() {
         {/* scorecard — the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-serif text-2xl text-ink-0">Six drifts, one landing table</h2>
+            <h2 className="text-2xl text-ink-0">Six drifts, one landing table</h2>
             <p className="font-mono text-xs text-ink-2">guardrail 6/6 · standard check 1/6 · ~0.1 ms/check</p>
           </div>
           <div className="mt-6 overflow-x-auto">
@@ -96,7 +96,7 @@ export default function IngestionDataContractPage() {
         </div>
 
         {/* mechanism */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Why the usual gate fails</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Why the usual gate fails</h2>
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>A schema check reads the shape.</b> Column present, dtype unchanged, non-null, row count identical, values
@@ -121,7 +121,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
         </pre>
 
         {/* evidence */}
-        <h2 className="mt-16 font-serif text-3xl text-ink-0">Evidence</h2>
+        <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4 — one landing table, six drifts, scored by the contract guardrail and by a real off-the-shelf control
           (pandera&rsquo;s inferred schema at defaults, plus explicit row-count and null-ratio checks). The control is not a
@@ -133,7 +133,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
         </pre>
 
         {/* honest gaps */}
-        <h2 className="mt-16 font-serif text-2xl text-ink-0">Honest gaps</h2>
+        <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The contract&rsquo;s categorical domains are declared, so a genuinely new-but-legitimate category reads as a drift
           until the contract is updated — that friction is the point, but it is friction. The magnitude and precision bands

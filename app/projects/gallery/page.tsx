@@ -26,7 +26,7 @@ export default function GalleryPage() {
     <section className="content-band">
       <div className="content-inner">
         <p className="font-mono text-xs uppercase text-accent-2">the gallery</p>
-        <h1 className="mt-5 font-serif text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
+        <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
         <p className="mt-8 max-w-2xl text-lg leading-8 text-ink-1">
           One method at two scales. A deep case study — an agentic MLOps platform, built and
           measured end to end — and small free-standing prototypes, each reverse-engineering one
@@ -72,7 +72,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
               <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Silent data-regression guardrail</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Silent data-regression guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">Physical Intelligence · data core · class A</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               Catches the corruptions that leave a table structurally valid so a schema contract misses
@@ -92,7 +92,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
               <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Point-in-time correctness guardrail</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Point-in-time correctness guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">feature stores · data core · class B</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               Catches training data built from future feature values — the temporal leak a schema check passes and
@@ -112,7 +112,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
               <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">prompt caching · throughput · class C</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               Catches a cache that silently never hits — functional tests pass, every request pays full cost.{" "}
@@ -132,7 +132,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
               <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Columnar-scan bytes guardrail</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Columnar-scan bytes guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">columnar formats · storage · class E</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               A two-column query returns the right rows whether it reads 2 columns or all 12 — so correctness passes a
@@ -151,7 +151,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
               <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">ELT · schema-drift · class G</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               Catches drift that keeps the column present and non-null — a silent unit change reads revenue as{" "}
@@ -171,7 +171,7 @@ export default function GalleryPage() {
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
               <span className="h-1.5 w-1.5 rounded-full bg-accent"></span> Flagship · in build
             </div>
-            <h2 className="font-serif text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
+            <h2 className="text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">the deep case study · ten units</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
               One platform proving one claim: the classic MLOps loop still holds when the thing served is

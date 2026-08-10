@@ -26,14 +26,14 @@ export function ProjectsStrip() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <h2 className="mb-8 font-serif text-[clamp(3rem,7vw,6rem)] leading-none">Projects</h2>
+        <h2 className="mb-8 text-[clamp(3rem,7vw,6rem)] leading-none">Projects</h2>
         <div className="grid gap-6">
           {projects.map((project) => (
             <Link className="focus-ring rounded-lg" href={project.href} key={project.name}>
               <Card className="grid gap-8 md:grid-cols-[0.8fr_1.2fr]" tilt>
                 <div>
                   <Badge tone={project.tone}>{project.status}</Badge>
-                  <h3 className="mt-5 font-serif text-5xl leading-none">{project.name}</h3>
+                  <h3 className="mt-5 text-5xl leading-none">{project.name}</h3>
                 </div>
                 <div>
                   <p className="font-mono text-[clamp(2rem,5vw,5rem)] leading-none text-accent">{project.result}</p>

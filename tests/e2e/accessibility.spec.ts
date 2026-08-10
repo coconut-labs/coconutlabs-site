@@ -11,6 +11,7 @@ const routes = [
   "/podcasts",
   "/projects/kvwarden",
   "/projects/mlxd",
+  "/projects/coconut-os",
   "/joinus",
   "/about",
   "/contact",

@@ -32,7 +32,7 @@ export function FirstLoadReveal() {
       className="fixed inset-0 z-[200] grid place-items-center bg-bg-0 text-ink-0"
       style={{ animation: "first-reveal 720ms var(--ease-paper-tear) 180ms forwards" }}
     >
-      <span className="font-serif text-5xl">Coconut Labs</span>
+      <span className="text-5xl">Coconut Labs</span>
     </div>
   );
 }
