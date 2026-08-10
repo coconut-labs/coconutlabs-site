@@ -18,7 +18,8 @@ test("home renders the full composition in the new order", async ({ page }) => {
 
   // Contact strip
   await expect(page.getByText("Building something at this layer?")).toBeVisible();
-  await expect(page.getByRole("link", { name: /info@coconutlabs.org/i })).toHaveAttribute(
+  // Scoped to main: the Direction A footer carries its own mailto link.
+  await expect(page.getByRole("main").getByRole("link", { name: /info@coconutlabs.org/i })).toHaveAttribute(
     "href",
     "mailto:info@coconutlabs.org",
   );
