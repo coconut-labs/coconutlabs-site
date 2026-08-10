@@ -77,6 +77,18 @@
     text-decoration: none;
   }
 
+  /* Direction A: headings are weight 600 across the site. Preflight has
+     headings inherit weight, so unclassed h1-h6 were rendering at 400;
+     any font-* utility on a heading still wins over this. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+
   button,
   input,
   textarea,
@@ -110,6 +122,19 @@
 .focus-ring:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
+}
+
+/* Menu panel entry. 160ms, and the global prefers-reduced-motion clamp in
+   tokens.css collapses it to 0.001ms for users who ask for that. */
+.menu-panel:not([hidden]) {
+  animation: menu-reveal 160ms var(--ease-paper);
+}
+
+@keyframes menu-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 
 .paper-texture {
