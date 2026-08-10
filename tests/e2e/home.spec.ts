@@ -3,17 +3,29 @@ import { expect, test } from "@playwright/test";
 test("home renders the full composition in the new order", async ({ page }) => {
   await page.goto("/");
 
-  // Hero
-  await expect(page.getByRole("heading", { name: "Coconut Labs" })).toBeVisible();
-  await expect(page.getByText(/KVWarden Gate 2/i).first()).toBeVisible();
-  await expect(page.getByRole("link", { name: /Read the launch/i }).first()).toBeVisible();
+  // Status strip under the header, leading with the live dot
+  await expect(page.getByText(/commits this week/i)).toBeVisible();
 
-  // Strips — Projects above Research
+  // Hero: wordmark heading, the measurement claim, both CTAs
+  await expect(page.getByRole("heading", { name: "Coconut Labs" })).toBeVisible();
+  await expect(page.getByText(/quiet tenant keeps its latency/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: /Read the latest note/i }).first()).toBeVisible();
+  await expect(page.getByRole("main").getByRole("link", { name: /The proof page/i })).toBeVisible();
+
+  // Plot card carries provenance, not just numbers
+  await expect(page.getByText(/quiet-tenant p99 TTFT/i)).toBeVisible();
+  await expect(page.getByText(/n=311 post-warmup/i)).toBeVisible();
+
+  // Stat rail
+  await expect(page.getByText("ratio to solo")).toBeVisible();
+  await expect(page.getByText("vs fifo tail")).toBeVisible();
+
+  // Strips — Projects (three flagships) above Research (rows)
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Coconut OS" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Recent research" })).toBeVisible();
 
   // PeopleStrip — names hidden, generic copy used.
-  // See components/home/PeopleStrip.tsx for the founder-cards-hidden state.
   await expect(page.getByRole("heading", { name: "Two engineers, close to the work." })).toBeVisible();
 
   // Contact strip
@@ -23,7 +35,4 @@ test("home renders the full composition in the new order", async ({ page }) => {
     "href",
     "mailto:info@coconutlabs.org",
   );
-
-  // LiveSignals — permanent banner (matches the lowercase mono variant specifically)
-  await expect(page.getByText(/kvwarden gate 2 · 1\.14× solo/)).toBeVisible();
 });

@@ -2,6 +2,9 @@ import { ImageResponse } from "@vercel/og";
 
 export const runtime = "nodejs";
 
+// Social card in the Direction A system: off-white ground, ink text, the
+// accent reserved for the wordmark's second half. Sans throughout; the old
+// card was still Georgia on warm paper.
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const title = searchParams.get("title") ?? "Coconut Labs";
@@ -10,22 +13,36 @@ export async function GET(request: Request) {
     (
       <div
         style={{
-          alignItems: "center",
-          background: "#ECE6D6",
-          color: "#1A1611",
+          alignItems: "flex-start",
+          background: "#F7F7F5",
+          color: "#0B0B0C",
           display: "flex",
           flexDirection: "column",
-          fontFamily: "Georgia",
+          fontFamily: "sans-serif",
           height: "100%",
-          justifyContent: "center",
+          justifyContent: "space-between",
           padding: 72,
           width: "100%",
         }}
       >
-        <div style={{ color: "#4A5B49", fontFamily: "monospace", fontSize: 28, marginBottom: 34 }}>
-          Coconut Labs
+        <div style={{ display: "flex", fontSize: 34, fontWeight: 600, letterSpacing: "-0.02em" }}>
+          <span>coconut</span>
+          <span style={{ color: "#2440CC" }}>labs</span>
         </div>
-        <div style={{ fontSize: 86, lineHeight: 0.95, maxWidth: 960, textAlign: "center" }}>{title}</div>
+        <div
+          style={{
+            fontSize: 76,
+            fontWeight: 600,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.05,
+            maxWidth: 1000,
+          }}
+        >
+          {title}
+        </div>
+        <div style={{ color: "#6A6A78", fontFamily: "monospace", fontSize: 22 }}>
+          independent inference research · coconutlabs.org
+        </div>
       </div>
     ),
     {

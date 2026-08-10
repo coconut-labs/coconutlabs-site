@@ -38,7 +38,7 @@ export function PeopleStrip() {
       <div className="content-inner">
         <div className="max-w-4xl">
           <p className="font-mono text-xs uppercase text-ink-2">the lab</p>
-          <h2 className="mt-4 text-[clamp(3rem,7vw,6rem)] leading-none">Two engineers, close to the work.</h2>
+          <h2 className="mt-4 text-[clamp(1.6rem,3vw,2.4rem)] leading-tight tracking-[-0.03em]">Two engineers, close to the work.</h2>
           <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
             Coconut Labs is intentionally small. The work happens in the open at{" "}
             <a className="text-accent underline underline-offset-2 hover:opacity-80" href="https://github.com/coconut-labs">github.com/coconut-labs</a>{" "}

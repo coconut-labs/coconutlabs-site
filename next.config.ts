@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
       { source: "/papers",        destination: "/research?type=papers",    permanent: true },
       { source: "/podcasts",      destination: "/research?type=podcasts",  permanent: true },
       { source: "/projects/weft", destination: "/projects/mlxd",           permanent: true },
+      // Umbrella affordances: memorable paths on the main domain that hand
+      // off to the gated library and the masterclass subdomains.
+      { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
+      { source: "/library/enter", destination: "https://library.coconutlabs.org",     permanent: false },
+      { source: "/masterclass",   destination: "https://masterclass.coconutlabs.org", permanent: false },
     ];
   },
 };

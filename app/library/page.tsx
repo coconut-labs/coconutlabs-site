@@ -36,7 +36,7 @@ export default function LibraryPage() {
   return (
     <div className="mx-auto max-w-3xl px-[var(--space-page-x)] py-20">
       <p className="font-mono text-xs uppercase tracking-wide text-ink-2">the practice behind the lab</p>
-      <h1 className="mt-3 text-4xl text-ink-0">The Library</h1>
+      <h1 className="mt-3 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em] text-ink-0">The Library</h1>
       <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
         The lab publishes measurements. The Library is where the understanding gets built first: one
         private study practice, three wings, one rule. Go one level below what the job requires,
@@ -46,7 +46,7 @@ export default function LibraryPage() {
       <div className="mt-12 space-y-6">
         {wings.map((wing) => (
           <section
-            className="rounded-xl border border-rule bg-bg-1 p-6"
+            className="rounded-sm border border-rule bg-bg-1 p-6"
             key={wing.name}
           >
             <div className="flex flex-wrap items-baseline gap-3">
@@ -61,7 +61,7 @@ export default function LibraryPage() {
         ))}
       </div>
 
-      <div className="mt-12 rounded-xl border border-rule bg-bg-1 p-6">
+      <div className="mt-12 rounded-sm border border-rule bg-bg-1 p-6">
         <h2 className="text-xl text-ink-0">What has surfaced so far</h2>
         <p className="mt-3 leading-7 text-ink-1">
           Two library pieces have been rewritten public-native and live on the research shelf:{" "}
@@ -79,6 +79,26 @@ export default function LibraryPage() {
           <Link className="text-accent underline underline-offset-2 hover:opacity-80" href="/research">
             Browse the research shelf →
           </Link>
+        </p>
+      </div>
+
+      <div className="mt-12 rounded-sm border border-rule bg-bg-1 p-6">
+        <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2">for the two of us</p>
+        <p className="mt-3 max-w-[68ch] text-sm leading-6 text-ink-1">
+          The shelves themselves live behind a login at{" "}
+          <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://library.coconutlabs.org">
+            library.coconutlabs.org
+          </a>
+          . If your email is not on the short list, the door does not open, and that is the point.
+          The public versions of anything worth publishing land in{" "}
+          <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/research">
+            research
+          </Link>{" "}
+          and the{" "}
+          <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://masterclass.coconutlabs.org">
+            masterclass
+          </a>
+          .
         </p>
       </div>
     </div>
