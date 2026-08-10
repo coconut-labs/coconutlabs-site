@@ -1,6 +1,5 @@
 "use client";
 
-import { Check, Copy, Mail, X as XIcon } from "lucide-react";
 import { useState } from "react";
 
 export function ShareRow({ title, doi }: { title: string; doi?: string }) {
@@ -19,21 +18,19 @@ export function ShareRow({ title, doi }: { title: string; doi?: string }) {
         onClick={copyLink}
         type="button"
       >
-        {copied ? <Check aria-hidden="true" size={14} /> : <Copy aria-hidden="true" size={14} />}
-        Copy link
+        {copied ? <span aria-hidden="true">✓</span> : null}
+        {copied ? "Copied" : "Copy link"}
       </button>
       <a
         className="focus-ring inline-flex h-10 items-center gap-2 rounded border border-rule bg-bg-1 px-3 hover:border-accent"
         href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(typeof window === "undefined" ? "" : window.location.href)}`}
       >
-        <XIcon aria-hidden="true" size={14} />
         X
       </a>
       <a
         className="focus-ring inline-flex h-10 items-center gap-2 rounded border border-rule bg-bg-1 px-3 hover:border-accent"
         href={`mailto:?subject=${encodeURIComponent(title)}`}
       >
-        <Mail aria-hidden="true" size={14} />
         Email
       </a>
       {doi ? <span className="inline-flex h-10 items-center rounded border border-rule bg-bg-2 px-3">DOI {doi}</span> : null}

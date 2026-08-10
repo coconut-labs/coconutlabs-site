@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -25,7 +24,7 @@ export default function GalleryPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">the gallery</p>
+        <p className="font-mono text-xs uppercase text-ink-2">the gallery</p>
         <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
         <p className="mt-8 max-w-2xl text-lg leading-8 text-ink-1">
           One method at two scales. A deep case study — an agentic MLOps platform, built and
@@ -37,7 +36,7 @@ export default function GalleryPage() {
 
         {/* the competency grid */}
         <div className="mt-16">
-          <p className="font-mono text-xs uppercase text-accent-2">coverage · the frontier is the point</p>
+          <p className="font-mono text-xs uppercase text-ink-2">coverage · the frontier is the point</p>
           <ul className="mt-6 divide-y divide-rule border-y border-rule">
             {CLASSES.map((c) => (
               <li key={c.key} className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
@@ -49,7 +48,7 @@ export default function GalleryPage() {
                       href={c.cover.href}
                       className="focus-ring inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs text-accent"
                     >
-                      {c.cover.label} <ArrowRight aria-hidden size={12} />
+                      {c.cover.label} <span aria-hidden="true">→</span>
                     </Link>
                   ) : (
                     <span className="rounded-sm border border-rule px-3 py-1 font-mono text-xs text-ink-1">{c.cover.label}</span>
@@ -70,7 +69,7 @@ export default function GalleryPage() {
           {/* shipped gallery unit */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
+              <span aria-hidden="true">●</span> Shipped · Tier 4
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Silent data-regression guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">Physical Intelligence · data core · class A</p>
@@ -83,14 +82,14 @@ export default function GalleryPage() {
               href="/projects/silent-data-regression-guardrail"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Read the unit <ArrowRight aria-hidden size={14} />
+              Read the unit <span aria-hidden="true">→</span>
             </Link>
           </article>
 
           {/* point-in-time correctness unit */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
+              <span aria-hidden="true">●</span> Shipped · Tier 4
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Point-in-time correctness guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">feature stores · data core · class B</p>
@@ -103,14 +102,14 @@ export default function GalleryPage() {
               href="/projects/point-in-time-correctness"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Read the unit <ArrowRight aria-hidden size={14} />
+              Read the unit <span aria-hidden="true">→</span>
             </Link>
           </article>
 
           {/* silent cache-miss unit */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
+              <span aria-hidden="true">●</span> Shipped · Tier 4
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">prompt caching · throughput · class C</p>
@@ -123,14 +122,14 @@ export default function GalleryPage() {
               href="/projects/silent-cache-miss"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Read the unit <ArrowRight aria-hidden size={14} />
+              Read the unit <span aria-hidden="true">→</span>
             </Link>
           </article>
 
           {/* columnar-scan bytes unit */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
+              <span aria-hidden="true">●</span> Shipped · Tier 4
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Columnar-scan bytes guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">columnar formats · storage · class E</p>
@@ -142,14 +141,14 @@ export default function GalleryPage() {
               href="/projects/columnar-scan-bytes-guardrail"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Read the unit <ArrowRight aria-hidden size={14} />
+              Read the unit <span aria-hidden="true">→</span>
             </Link>
           </article>
 
           {/* ingestion data-contract unit */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span className="h-1.5 w-1.5 rounded-full bg-success"></span> Shipped · Tier 4
+              <span aria-hidden="true">●</span> Shipped · Tier 4
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">ELT · schema-drift · class G</p>
@@ -162,14 +161,14 @@ export default function GalleryPage() {
               href="/projects/ingestion-data-contract"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Read the unit <ArrowRight aria-hidden size={14} />
+              Read the unit <span aria-hidden="true">→</span>
             </Link>
           </article>
 
           {/* the flagship atlas */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/40 p-8">
             <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent"></span> Flagship · in build
+              <span aria-hidden="true">●</span> Flagship · in build
             </div>
             <h2 className="text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">the deep case study · ten units</p>
@@ -182,7 +181,7 @@ export default function GalleryPage() {
               href="/projects/agentic-mlops"
               className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             >
-              Open the atlas <ArrowRight aria-hidden size={14} />
+              Open the atlas <span aria-hidden="true">→</span>
             </Link>
           </article>
         </div>

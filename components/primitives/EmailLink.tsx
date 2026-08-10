@@ -1,6 +1,5 @@
 "use client";
 
-import { Check, Copy, Mail } from "lucide-react";
 import { useState } from "react";
 
 export function buildMailtoHref(email: string, subject?: string): string {
@@ -47,14 +46,13 @@ export function EmailLink({
         data-cta="mailto"
         href={href}
       >
-        <Mail aria-hidden="true" size={14} />
         {label ?? email}
       </a>
       <button
         aria-label={`Copy ${email}`}
         className={`focus-ring inline-flex h-9 items-center gap-2 rounded border px-3 font-mono text-[0.7rem] uppercase tracking-wide transition ${
           copied
-            ? "border-accent-2 bg-accent-2/10 text-accent-2"
+            ? "border-success/40 bg-success/10 text-success"
             : "border-rule bg-bg-1 text-ink-1 hover:border-accent hover:text-accent"
         }`}
         data-cta="copy-email"
@@ -64,14 +62,11 @@ export function EmailLink({
       >
         {copied ? (
           <>
-            <Check aria-hidden="true" size={13} />
+            <span aria-hidden="true">✓</span>
             Copied
           </>
         ) : (
-          <>
-            <Copy aria-hidden="true" size={13} />
-            Copy
-          </>
+          "Copy"
         )}
       </button>
     </span>

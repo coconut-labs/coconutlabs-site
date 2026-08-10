@@ -65,18 +65,18 @@ export default function LibraryPage() {
         <h2 className="text-xl text-ink-0">What has surfaced so far</h2>
         <p className="mt-3 leading-7 text-ink-1">
           Two library pieces have been rewritten public-native and live on the research shelf:{" "}
-          <Link className="text-accent underline underline-offset-2 hover:text-accent-2" href="/research/a-model-in-the-room">
+          <Link className="text-accent underline underline-offset-2 hover:opacity-80" href="/research/a-model-in-the-room">
             A model in the room
           </Link>{" "}
           and{" "}
-          <Link className="text-accent underline underline-offset-2 hover:text-accent-2" href="/research/mixing-and-evals">
+          <Link className="text-accent underline underline-offset-2 hover:opacity-80" href="/research/mixing-and-evals">
             What mixing taught me about evals
           </Link>
           . More follow the same path: written privately, tested against real work, then rewritten
           clean for this shelf.
         </p>
         <p className="mt-4">
-          <Link className="text-accent underline underline-offset-2 hover:text-accent-2" href="/research">
+          <Link className="text-accent underline underline-offset-2 hover:opacity-80" href="/research">
             Browse the research shelf →
           </Link>
         </p>

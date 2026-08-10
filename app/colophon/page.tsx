@@ -11,7 +11,7 @@ export default function ColophonPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">colophon</p>
+        <p className="font-mono text-xs uppercase text-ink-2">colophon</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">How this page is made.</h1>
         <div className="mt-16">
           <ColophonSection title="Type">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, X } from "lucide-react";
 import { fitProfile, check, schemaControlFlags, CORRUPTIONS, type Dataset, type Row } from "./guardrail";
 import sample from "./sample.json";
 
@@ -19,7 +18,7 @@ export default function Demo() {
 
   return (
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-accent-2">run it yourself</p>
+      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         This runs the real guardrail in your browser on {CLEAN.rows.length} rows of{" "}
         <span className="font-mono">lerobot/pusht</span>. Inject a corruption and watch the guardrail catch what the
@@ -97,7 +96,7 @@ function Verdict({ name, flagged, good, detail }: { name: string; flagged: boole
       <div className="flex items-center justify-between gap-2">
         <span className="font-mono text-xs text-ink-1">{name}</span>
         <span className={`inline-flex items-center gap-1 font-mono text-xs ${good ? "text-success" : "text-danger"}`}>
-          {good ? <Check size={13} aria-hidden /> : <X size={13} aria-hidden />}
+          {good ? <span aria-hidden="true">✓</span> : <span aria-hidden="true">✕</span>}
           {flagged ? "flagged" : "passed"}
         </span>
       </div>

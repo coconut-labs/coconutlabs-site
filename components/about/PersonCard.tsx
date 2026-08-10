@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import { EmailLink } from "@/components/primitives/EmailLink";
 import type { Person } from "@/lib/content";
 
@@ -12,7 +11,7 @@ export function PersonCard({ person }: { person: Person }) {
         </div>
       ) : null}
       <div>
-        <p className="font-mono text-xs uppercase text-accent-2">{person.role}</p>
+        <p className="font-mono text-xs uppercase text-ink-2">{person.role}</p>
         <h3 className="mt-3 text-4xl">{person.name}</h3>
         <p className="mt-4 leading-7 text-ink-1">{person.bio}</p>
         <div className="mt-5 flex flex-wrap gap-4 font-mono text-xs">
@@ -23,7 +22,7 @@ export function PersonCard({ person }: { person: Person }) {
             }
             return (
               <a className="focus-ring inline-flex items-center gap-1 rounded-sm text-accent" href={link.href} key={link.href}>
-                {link.label} <ArrowUpRight aria-hidden="true" size={13} />
+                {link.label} <span aria-hidden="true">↗</span>
               </a>
             );
           })}

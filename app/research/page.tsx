@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Card } from "@/components/primitives/Card";
 import { loadResearchFeed, type FeedType } from "@/lib/content";
 import { buildMetadata } from "@/lib/seo";
@@ -46,7 +45,7 @@ export default async function ResearchPage({
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">research feed</p>
+        <p className="font-mono text-xs uppercase text-ink-2">research feed</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Research</h1>
         <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
           Notes, papers, and recordings from the lab notebook. New entries first. Type-tagged. Each links to the canonical artifact.
@@ -102,7 +101,7 @@ export default async function ResearchPage({
                       <p className="mt-4 font-mono text-xs text-ink-2">{entry.authors.join(", ")}</p>
                     ) : null}
                   </div>
-                  <ArrowRight aria-hidden="true" className="text-accent" size={18} />
+                  <span aria-hidden="true" className="font-mono text-lg text-accent">→</span>
                 </Card>
               </Link>
             ))}

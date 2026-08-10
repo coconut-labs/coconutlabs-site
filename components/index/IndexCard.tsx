@@ -1,4 +1,3 @@
-import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/primitives/Card";
 import type { ListEntry, WorkEntry } from "@/lib/content";
 
@@ -23,7 +22,7 @@ export function IndexCard({ entry }: IndexCardProps) {
         <h2 className="text-4xl leading-tight">{title}</h2>
         <p className="mt-3 max-w-3xl text-ink-1">{description}</p>
       </div>
-      {href ? <ArrowUpRight aria-hidden="true" className="text-accent" size={18} /> : null}
+      {href ? <span aria-hidden="true" className="font-mono text-lg text-accent">↗</span> : null}
     </Card>
   );
 

@@ -15,7 +15,7 @@ export function ManifestoStrip() {
               <SplitText text="The lab is small by design. Fewer abstractions between the benchmark, the note, and the code." />
             </p>
           </div>
-          <blockquote className="text-[clamp(2.2rem,4vw,4.8rem)] leading-none text-accent-3">
+          <blockquote className="text-[clamp(2.2rem,4vw,4.8rem)] leading-none text-ink-0">
             The quiet tenant should still have a name.
           </blockquote>
         </div>

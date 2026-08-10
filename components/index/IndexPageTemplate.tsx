@@ -14,7 +14,7 @@ export function IndexPageTemplate({
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-accent-2">index</p>
+        <p className="font-mono text-xs uppercase text-ink-2">index</p>
         <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">{title}</h1>
         <p className="mt-7 max-w-2xl font-mono text-sm leading-7 text-ink-1">{subtitle}</p>
         <div className="mt-14 grid gap-5">
