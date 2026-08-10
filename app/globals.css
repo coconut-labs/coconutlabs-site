@@ -119,25 +119,11 @@
    is gone with the rest of the paper brand. .paper-texture now only carries
    the isolation context that keeps negative-z children visible. */
 
-/* .wash / .wash-ambient still position the WatercolorWash SVGs mounted in
-   app/layout.tsx and components/home/Hero.tsx. Those mounts are outside the
-   edit scope for this pass, so the rules stay until they come out together. */
-.wash {
-  contain: strict;
-  position: absolute;
-  transform: translateZ(0);
-  z-index: -1;
-}
-
-/* Own compositor layer + contain so a fixed decorative wash never repaints on
-   scroll. Paired with the removal of mix-blend-mode in WatercolorWash.tsx. */
-.wash-ambient {
-  contain: strict;
-  position: fixed;
-  transform: translateZ(0);
-  will-change: transform;
-  z-index: -1;
-}
+/* .wash / .wash-ambient are gone with the ambient WatercolorWash mounts in
+   app/layout.tsx and components/home/Hero.tsx. The design handoff has no
+   ambient washes: watercolor survives only as bounded plates with a 1px rule
+   and a caption (hall-of-demos cards, the KVWarden closing plate, About
+   avatars). components/canvas/WatercolorWash.tsx is kept for that use. */
 
 @media print {
   .wash,
