@@ -1,3 +1,7 @@
+/* Direction A ("Instrument"), per the design handoff. Both schemes ship; the
+   root carries light and [data-theme="dark"] overrides. Existing token names
+   are kept so no component has to change: bg-0/1/2 map to the handoff's
+   paper/card/sunk, ink-0/1/2 to ink/ink2/ink3, success/danger to pos/neg. */
 :root {
   color-scheme: light;
   --bg-0: #F7F7F5;
@@ -12,6 +16,8 @@
      #6A6A78 measures 4.96:1 and 4.60:1. */
   --ink-2: #6A6A78;
   --rule: rgba(17,17,17,0.12);
+  /* Card-internal dividers, one step lighter than --rule. New in Direction A. */
+  --hair: rgba(17,17,17,0.06);
   --accent: #2440CC;
   --accent-2: #1B2F99;
   --accent-3: #0B0B0C;
@@ -21,12 +27,20 @@
      off-white ground it read as a yellow halo. Now neutral ink. */
   --shadow-soft: 0 18px 50px rgb(11 11 12 / 0.10);
   --shadow-paper: 0 26px 90px rgb(11 11 12 / 0.16);
+  /* Direction A is Geist throughout, display and body. The neutral flip had
+     aliased --font-serif and --font-body to Neue Haas Grotesk Display, which
+     is not a licensed face here and was silently falling back to Helvetica.
+     --font-serif is kept as an alias of sans so the components still asking
+     for it keep rendering; the handoff has no serif anywhere. */
   --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
-  --font-body: "Neue Haas Grotesk Display", "Helvetica Neue", Helvetica, var(--font-geist-sans), Arial, sans-serif;
+  --font-serif: var(--font-sans);
+  --font-body: var(--font-sans);
   --font-mono: var(--font-geist-mono), "Geist Mono", "SFMono-Regular", Consolas, monospace;
-  --space-page-x: clamp(1rem, 4vw, 4.5rem);
+  /* Handoff calls this --gut: clamp(20px, 4vw, 64px). Was 1rem..4.5rem. */
+  --space-page-x: clamp(20px, 4vw, 64px);
   --space-section-y: clamp(5rem, 12vw, 10rem);
+  /* Near-square. The handoff is explicit: no rounded-pill UI anywhere. */
+  --rad: 2px;
   /* Was 62ch, which measured 64 characters rendered. The target band is
      65 to 75, and measure is the single largest readability lever here. */
   --measure: 68ch;
@@ -39,6 +53,54 @@
    #fbf7ec / #e7deca). That survived the neutral flip and was why a note still
    read warm while the rest of the site had gone off-white. The class is still
    applied in app/research/[slug]/layout.tsx; it now inherits one ground. */
+
+/* Dark scheme. Values are the handoff's, with one correction: its --ink3
+   #7C7C88 measures 4.46:1 on --bg-1 #141417, just under the 4.5 body
+   threshold, and ink3 carries 10.5-11px mono labels. #82828E is the nearest
+   value clearing 4.5 on all three grounds (5.15 / 4.84 / 5.00). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-0: #0C0C0E;
+  --bg-1: #141417;
+  --bg-2: #101013;
+  --bg-3: #17171B;
+  --ink-0: #F2F2F0;
+  --ink-1: #A8A8B2;
+  --ink-2: #82828E;
+  --rule: rgba(255,255,255,0.16);
+  --hair: rgba(255,255,255,0.07);
+  --accent: #7D93FF;
+  --accent-2: #A8B6FF;
+  --accent-3: #F2F2F0;
+  --success: #7fb894;
+  --danger: #e0836f;
+  --shadow-soft: 0 18px 50px rgb(0 0 0 / 0.44);
+  --shadow-paper: 0 26px 90px rgb(0 0 0 / 0.58);
+}
+
+/* Honour the OS preference until the user picks explicitly, at which point
+   the root attribute above wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg-0: #0C0C0E;
+    --bg-1: #141417;
+    --bg-2: #101013;
+    --bg-3: #17171B;
+    --ink-0: #F2F2F0;
+    --ink-1: #A8A8B2;
+    --ink-2: #82828E;
+    --rule: rgba(255,255,255,0.16);
+    --hair: rgba(255,255,255,0.07);
+    --accent: #7D93FF;
+    --accent-2: #A8B6FF;
+    --accent-3: #F2F2F0;
+    --success: #7fb894;
+    --danger: #e0836f;
+    --shadow-soft: 0 18px 50px rgb(0 0 0 / 0.44);
+    --shadow-paper: 0 26px 90px rgb(0 0 0 / 0.58);
+  }
+}
 
 @keyframes hero-breathe {
   from {

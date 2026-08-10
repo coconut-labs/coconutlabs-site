@@ -6,28 +6,33 @@
   padding: clamp(6rem, 12vw, 10rem) var(--space-page-x);
 }
 
+/* Direction A body spec: 16.5px, 1.55-1.72, --ink2, text-wrap pretty, 44-68ch.
+   Was clamping up to 1.28rem, which rendered 20.48px at 1440 — noticeably
+   larger than the handoff and outside its band. */
 .post-body {
-  color: var(--ink-0);
+  color: var(--ink-1);
   font-family: var(--font-body);
-  font-size: clamp(1.08rem, 1vw + 0.84rem, 1.28rem);
-  line-height: 1.72;
+  font-size: 16.5px;
+  line-height: 1.65;
   max-width: var(--measure);
+  text-wrap: pretty;
 }
 
 .post-body h2,
 .post-body h3 {
-  font-family: var(--font-serif);
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.03em;
   line-height: 1.05;
   margin-block: 2.5em 0.65em;
 }
 
 .post-body h2 {
-  font-size: clamp(2.1rem, 5vw, 4rem);
+  font-size: clamp(1.35rem, 1.4vw + 1rem, 1.5rem);
 }
 
 .post-body h3 {
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: clamp(1.2rem, 1vw + 0.95rem, 1.3rem);
 }
 
 .post-body p,
@@ -48,7 +53,7 @@
 
 .post-body code {
   background: var(--bg-2);
-  border-radius: 4px;
+  border-radius: var(--rad);
   font-family: var(--font-mono);
   font-size: 0.86em;
   padding: 0.1em 0.28em;
@@ -56,7 +61,7 @@
 
 .post-body pre {
   background: var(--ink-0);
-  border-radius: 8px;
+  border-radius: var(--rad);
   color: var(--bg-1);
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -72,11 +77,11 @@
 }
 
 .post-body blockquote {
-  border-left: 1px solid var(--accent);
-  color: var(--ink-1);
-  font-family: var(--font-serif);
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
-  line-height: 1.15;
+  border-left: 2px solid var(--ink-0);
+  color: var(--ink-0);
+  font-family: var(--font-sans);
+  font-size: 21px;
+  line-height: 1.35;
   margin-inline: 0;
   padding-left: 1.2rem;
 }
