@@ -34,7 +34,17 @@ export function WatercolorWash({
       aria-hidden="true"
       className={className}
       focusable="false"
-      style={{ pointerEvents: "none", mixBlendMode: "multiply", opacity, ...style }}
+      style={{
+        pointerEvents: "none",
+        opacity,
+        // No mix-blend-mode: blending a position:fixed layer against the page
+        // forces a full-viewport repaint every scroll frame (~20fps). Plain
+        // alpha on the near-white ground reads almost identically at these
+        // low opacities and lets the compositor keep the wash on its own layer.
+        transform: "translateZ(0)",
+        willChange: "transform",
+        ...style,
+      }}
       viewBox="0 0 600 480"
     >
       <defs>

@@ -123,12 +123,19 @@
    app/layout.tsx and components/home/Hero.tsx. Those mounts are outside the
    edit scope for this pass, so the rules stay until they come out together. */
 .wash {
+  contain: strict;
   position: absolute;
+  transform: translateZ(0);
   z-index: -1;
 }
 
+/* Own compositor layer + contain so a fixed decorative wash never repaints on
+   scroll. Paired with the removal of mix-blend-mode in WatercolorWash.tsx. */
 .wash-ambient {
+  contain: strict;
   position: fixed;
+  transform: translateZ(0);
+  will-change: transform;
   z-index: -1;
 }
 
