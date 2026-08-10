@@ -1,6 +1,8 @@
-/* Atlas — agentic MLOps platform. Warm-paper tokens only; single-theme (light).
-   Four-layer identity uses shape + label as primary encoding, muted accent as a
-   supporting cue (the accents fail CVD separation as color-alone — validated). */
+/* Atlas — agentic MLOps platform. Direction A tokens only, both schemes.
+   Type sits on the site scale (text-xs / text-sm equivalents, one section
+   clamp); spacing on the Tailwind quarter-rem steps; radii on --rad.
+   Four-layer identity uses shape + label as primary encoding, muted accent as
+   a supporting cue (the accents fail CVD separation as color-alone — validated). */
 
 .wrap {
   display: flex;
@@ -18,22 +20,20 @@
   margin-bottom: 1.25rem;
 }
 .mapTitle {
-  font-family: var(--font-serif);
-  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
   color: var(--ink-0);
-  letter-spacing: -0.01em;
 }
 .mapHint {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  font-size: 0.75rem;
   color: var(--ink-2);
 }
 
 .ribbon {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 @media (max-width: 900px) {
   .ribbon { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -46,12 +46,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.7rem 0.7rem 0.75rem;
+  gap: 0.25rem;
+  padding: 0.75rem;
   text-align: left;
   background: var(--bg-1);
   border: 1px solid var(--rule);
-  border-radius: 10px;
+  border-radius: var(--rad);
   cursor: pointer;
   font: inherit;
   color: var(--ink-1);
@@ -63,20 +63,23 @@
   transform: translateY(-2px);
   border-color: var(--accent);
   box-shadow: var(--shadow-soft);
-  outline: none;
 }
-.stop:focus-visible { box-shadow: 0 0 0 2px var(--accent), var(--shadow-soft); }
+.stop:hover { outline: none; }
+.stop:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* Directional flow: a chevron in the gap to the right of each stop, so the
    sequence reads 1→2→3… Hidden at row ends and on mobile stacks. */
 .stop::after {
   content: "→";
   position: absolute;
-  right: -0.52rem;
+  right: -0.5rem;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--ink-2);
   pointer-events: none;
 }
@@ -86,45 +89,45 @@
 
 .stopNum {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   color: var(--ink-2);
-  letter-spacing: 0.04em;
 }
 .stopName {
   font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 550;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--ink-0);
   line-height: 1.15;
 }
 .stopUnits {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem;
-  margin-top: 0.15rem;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
 }
 .stopUnitTag {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   color: var(--ink-2);
-  padding: 0.05rem 0.25rem;
+  padding: 0 0.25rem;
   border: 1px solid var(--rule);
-  border-radius: 4px;
+  border-radius: var(--rad);
 }
 .loopFlag {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
-  color: var(--accent-3);
-  letter-spacing: 0.02em;
+  font-size: 0.75rem;
+  color: var(--ink-0);
 }
 
 /* dimming when a unit is the active lens */
 .dim { opacity: 0.32; }
 .lit { border-color: var(--accent); background: var(--bg-2); }
-/* loop-back target (8→5, 13/14→6): distinct from the --accent unit lens */
+/* loop-back target (8→5, 13/14→6): distinct from the --accent unit lens.
+   The inset shadow doubles the 1px border to read as a 2px ink ring without
+   shifting layout. */
 .loopTarget {
-  border-color: var(--accent-3);
-  box-shadow: inset 0 0 0 1px var(--accent-3);
+  border-color: var(--ink-0);
+  box-shadow: inset 0 0 0 1px var(--ink-0);
 }
 
 /* ---- unit index by layer ------------------------------------------------- */
@@ -133,17 +136,18 @@
 .layers {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 .layer {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 .layerUnits {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 .layerHead {
   display: flex;
@@ -153,7 +157,9 @@
   border-bottom: 1px solid var(--rule);
 }
 /* Solid silhouettes — shape carries layer identity (color fails CVD as the sole
-   cue, validated). Filled discriminates far better than 1.5px outline at ~14px. */
+   cue, validated). Filled discriminates far better than 1.5px outline at ~14px.
+   The 50% radius on .glyphAi is the circle itself, not a surface radius — it
+   stays off --rad on purpose. */
 .glyph {
   width: 14px; height: 14px;
   flex: none;
@@ -162,25 +168,24 @@
 .glyphData    { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }  /* ◆ diamond */
 .glyphDevops  { clip-path: polygon(50% 0, 100% 100%, 0 100%); }          /* ▲ triangle */
 .glyphAi      { border-radius: 50%; }                                     /* ● circle */
-.glyphSwe     { border-radius: 2px; }                                     /* ■ square */
+.glyphSwe     { border-radius: var(--rad); }                              /* ■ square */
 .layerName {
   font-family: var(--font-sans);
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
   color: var(--ink-0);
 }
-.layerMeta { font-family: var(--font-mono); font-size: 0.66rem; color: var(--ink-2); margin-left: auto; }
+.layerMeta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-2); margin-left: auto; }
 
 .unit {
   display: flex;
   flex-direction: column;
-  gap: 0.28rem;
-  padding: 0.7rem 0.75rem;
+  gap: 0.25rem;
+  padding: 0.75rem;
   background: var(--bg-1);
   border: 1px solid var(--rule);
   border-left: 3px solid var(--accent);
-  border-radius: 8px;
+  border-radius: var(--rad);
   text-align: left;
   cursor: pointer;
   font: inherit;
@@ -190,36 +195,39 @@
 .unit:hover, .unit:focus-visible {
   transform: translateY(-1px);
   box-shadow: var(--shadow-soft);
-  outline: none;
 }
-.unit:focus-visible { box-shadow: 0 0 0 2px var(--accent), var(--shadow-soft); }
+.unit:hover { outline: none; }
+.unit:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 .unitActive { border-color: var(--accent); background: var(--bg-2); }
 
 .unitTop { display: flex; align-items: baseline; gap: 0.5rem; }
 .unitId {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent);
 }
-.unitTitle { font-family: var(--font-sans); font-size: 0.86rem; font-weight: 550; color: var(--ink-0); }
+.unitTitle { font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--ink-0); }
 .tier {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   color: var(--ink-2);
   border: 1px solid var(--rule);
-  border-radius: 4px;
-  padding: 0.05rem 0.3rem;
+  border-radius: var(--rad);
+  padding: 0 0.25rem;
 }
-.unitClaim { font-family: var(--font-body); font-size: 0.8rem; line-height: 1.4; color: var(--ink-1); }
-.unitJd { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-2); letter-spacing: 0.01em; }
+.unitClaim { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.4; color: var(--ink-1); }
+.unitJd { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-2); }
 
 /* stops a unit claims, when that unit is hovered — surfaced under the index */
 .claimRow {
-  min-height: 1.4rem;
+  min-height: 1.5rem;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   color: var(--ink-2);
 }
 .claimRow b { color: var(--accent); font-weight: 600; }
