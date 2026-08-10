@@ -22,6 +22,11 @@ export default function PointInTimePage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-accent-2">gallery unit · data core · bottleneck class B</p>
+        <p className="mt-2 font-mono text-xs">
+          <a className="focus-ring text-ink-1 underline decoration-1 underline-offset-2 hover:text-accent" href="https://github.com/coconut-labs/point-in-time-correctness-guardrail">
+            source: github.com/coconut-labs/point-in-time-correctness-guardrail
+          </a>
+        </p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Point-in-time correctness guardrail
         </h1>
