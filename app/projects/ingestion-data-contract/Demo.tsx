@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import PresetButton from "@/components/demos/PresetButton";
+import VerdictCard from "@/components/demos/VerdictCard";
 import {
   fitContract,
   fitControl,
@@ -47,51 +50,63 @@ export default function Demo() {
           : `revenue reads ${usd(rev)}, true is ${usd(cleanRev)}`
     : `revenue ${usd(cleanRev)} · ${cleanRefunds} refunds · ${cleanBuckets} currency buckets`;
 
+  const reportBroken =
+    active !== null &&
+    (rev === null ||
+      (active.id === "boolean_encoding" && refunds !== cleanRefunds) ||
+      (active.id === "enum_expansion" && buckets !== cleanBuckets) ||
+      (rev !== null && cleanRev !== null && Math.abs(rev - cleanRev) > 1));
+
+  const outcome: Outcome = active
+    ? controlFlagged
+      ? {
+          tone: "danger",
+          label: "flagged by both",
+          headline: `Both checks flagged ${active.label.toLowerCase()}: values left the observed range. This is the one loud drift a standard check can catch.`,
+          detail: violations[0] ? `${violations[0].kind}: ${violations[0].detail}` : undefined,
+        }
+      : {
+          tone: "danger",
+          label: "flagged by the contract only",
+          headline: `The contract flagged ${active.label.toLowerCase()} while the standard check passed. Downstream, ${effect}.`,
+          detail: violations.map((v) => `${v.kind}: ${v.detail}`).join(" · "),
+        }
+    : {
+        tone: "success",
+        label: "clean pass",
+        headline: `The table as landed passes both checks. The report reads ${effect}.`,
+      };
+
   return (
-    <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
-        This runs the real guardrail in your browser on {CLEAN.rows.length} rows of a synthetic ELT landing table.
-        Inject a drift and watch the contract catch what the standard schema / null / row-count check misses, and
-        what it does to the number the report emits. Computed live, not canned.
-      </p>
-
-      {/* selector */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => setActiveId(null)}
-          className={`focus-ring rounded-sm border px-3 py-1.5 font-mono text-xs transition ${
-            activeId === null ? "border-accent bg-accent/10 text-accent" : "border-rule text-ink-1 hover:border-accent"
-          }`}
-        >
-          Clean data
-        </button>
-        {DRIFTS.map((c) => (
-          <button
-            key={c.id}
-            type="button"
-            onClick={() => setActiveId(c.id)}
-            className={`focus-ring rounded-sm border px-3 py-1.5 font-mono text-xs transition ${
-              activeId === c.id ? "border-accent bg-accent/10 text-accent" : "border-rule text-ink-1 hover:border-accent"
-            }`}
-          >
-            {c.label}
-          </button>
-        ))}
-      </div>
-
-      {active ? (
-        <p className="mt-4 font-mono text-xs text-ink-2">
-          Injected: {active.failure}. {active.silent ? "Column stays present, non-null, in-range." : "Values leave the observed range."}
-        </p>
-      ) : (
-        <p className="mt-4 font-mono text-xs text-ink-2">Baseline: the table as landed. Nothing should fire.</p>
-      )}
-
+    <DemoShell
+      scenario={`You are the analytics engineer. This morning's load is ${CLEAN.rows.length} rows of an ELT landing table, and it may carry one of these drifts. The real contract runs in your browser, computed live, not canned.`}
+      controlsLabel="inject a drift"
+      controls={
+        <div className="flex flex-wrap gap-2">
+          <PresetButton active={activeId === null} onClick={() => setActiveId(null)}>
+            Clean data
+          </PresetButton>
+          {DRIFTS.map((c) => (
+            <PresetButton key={c.id} danger active={activeId === c.id} onClick={() => setActiveId(c.id)}>
+              {c.label}
+            </PresetButton>
+          ))}
+        </div>
+      }
+      outcome={outcome}
+      footnote={
+        <>
+          {active
+            ? `Injected: ${active.failure}. ${active.silent ? "Column stays present, non-null, in-range." : "Values leave the observed range."}`
+            : "Baseline: the table as landed. Nothing should fire."}{" "}
+          Same contract and standard check as the Python harness; verified to reproduce its 6/6-vs-1/6 verdicts on this
+          table. The one drift the standard check catches is the only one that leaves the observed range.
+        </>
+      }
+    >
       {/* two verdicts */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
-        <Verdict
+      <div className="grid gap-4 sm:grid-cols-2">
+        <VerdictCard
           name="The contract guardrail"
           flagged={guardrailFlagged}
           good={active === null ? !guardrailFlagged : guardrailFlagged}
@@ -101,7 +116,7 @@ export default function Demo() {
               : "no violations, clean data passes"
           }
         />
-        <Verdict
+        <VerdictCard
           name="Standard schema / null / row-count check"
           flagged={controlFlagged}
           good={active === null ? !controlFlagged : controlFlagged}
@@ -119,32 +134,12 @@ export default function Demo() {
       <div className="mt-4 rounded-lg border border-rule bg-bg-2/40 p-5">
         <div className="flex items-center justify-between gap-2">
           <span className="font-mono text-xs text-ink-1">Downstream report</span>
-          <span className={`font-mono text-xs ${active && (rev === null || (active.id === "boolean_encoding" && refunds !== cleanRefunds) || (active.id === "enum_expansion" && buckets !== cleanBuckets) || (rev !== null && cleanRev !== null && Math.abs(rev - cleanRev) > 1)) ? "text-danger" : "text-ink-2"}`}>
+          <span className={`font-mono text-xs ${reportBroken ? "text-danger" : "text-ink-2"}`}>
             {active ? (active.silent ? "no error · wrong number" : "out of range") : "baseline"}
           </span>
         </div>
         <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">{effect}</p>
       </div>
-
-      <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        Same contract and standard check as the Python harness; verified to reproduce its 6/6-vs-1/6 verdicts on this
-        table. The one drift the standard check catches is the only one that leaves the observed range.
-      </p>
-    </div>
-  );
-}
-
-function Verdict({ name, flagged, good, detail }: { name: string; flagged: boolean; good: boolean; detail: string }) {
-  return (
-    <div className="rounded-lg border border-rule bg-bg-2/40 p-5">
-      <div className="flex items-center justify-between gap-2">
-        <span className="font-mono text-xs text-ink-1">{name}</span>
-        <span className={`inline-flex items-center gap-1 font-mono text-xs ${good ? "text-success" : "text-danger"}`}>
-          {good ? <span aria-hidden="true">✓</span> : <span aria-hidden="true">✕</span>}
-          {flagged ? "flagged" : "passed"}
-        </span>
-      </div>
-      <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">{detail}</p>
-    </div>
+    </DemoShell>
   );
 }

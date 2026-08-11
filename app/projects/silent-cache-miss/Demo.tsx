@@ -1,6 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import PresetButton from "@/components/demos/PresetButton";
+import VerdictCard from "@/components/demos/VerdictCard";
 import {
   generate,
   runModeled,
@@ -27,41 +30,44 @@ export default function Demo() {
   const trace = traceModeled(stream, active.keyFn).slice(0, 8);
   const flagged = checkHitRatio(res.hitRatio, res.hits + res.misses).length > 0;
   const controlFlags = functionalControlFlags(stream, res);
+  const pct = (res.hitRatio * 100).toFixed(0);
+
+  const outcome: Outcome = flagged
+    ? {
+        tone: "danger",
+        label: "flagged by the guardrail only",
+        headline: `The guardrail flagged this config: hit ratio ${pct}% on a workload built to repeat. ${res.realCalls} of ${stream.length} requests paid full cost.`,
+        detail: "Every answer was still correct, so the functional test saw nothing wrong.",
+      }
+    : {
+        tone: "success",
+        label: "clean pass",
+        headline: `The cache works: ${pct}% of requests hit, only ${res.realCalls} of ${stream.length} paid full cost. Both checks pass.`,
+      };
 
   return (
-    <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
-        The same {stream.length}-request warm workload over 12 hot prompts, live in your browser. Switch the cache-key
-        config and watch the hit ratio collapse to zero while every answer stays correct.
-      </p>
-
-      {/* config selector */}
-      <div className="mt-6 flex flex-wrap gap-2 font-mono text-xs">
-        {CONFIGS.map((c) => {
-          const on = c.name === config;
-          const good = !c.buggy;
-          return (
-            <button
-              key={c.name}
-              type="button"
-              onClick={() => setConfig(c.name)}
-              className={`focus-ring rounded-sm border px-3 py-2 transition ${
-                on
-                  ? good
-                    ? "border-accent bg-accent/10 text-accent"
-                    : "border-danger bg-danger/10 text-danger"
-                  : "border-rule text-ink-1 hover:text-accent"
-              }`}
-            >
+    <DemoShell
+      scenario={`You are the platform engineer. The same warm workload, ${stream.length} requests over 12 hot prompts, runs against whichever cache-key config shipped. Live in your browser, deterministic every run.`}
+      controlsLabel="pick the cache-key config"
+      controls={
+        <div className="flex flex-wrap gap-2">
+          {CONFIGS.map((c) => (
+            <PresetButton key={c.name} danger={c.buggy} active={c.name === config} onClick={() => setConfig(c.name)}>
               {LABELS[c.name] ?? c.name}
-            </button>
-          );
-        })}
-      </div>
-
+            </PresetButton>
+          ))}
+        </div>
+      }
+      outcome={outcome}
+      footnote={
+        <>
+          The workload, cache, and both checks are live and deterministic, the same logic as the Python run, verified
+          by <span className="text-ink-1">web/parity-check.mts</span> (PARITY OK, identical hit ratios).
+        </>
+      }
+    >
       {/* per-request trace */}
-      <div className="mt-6 overflow-x-auto">
+      <div className="overflow-x-auto">
         <table className="w-full min-w-[30rem] border-collapse font-mono text-xs">
           <thead>
             <tr className="border-b border-rule text-left uppercase text-ink-2">
@@ -96,38 +102,19 @@ export default function Demo() {
 
       {/* two verdicts side by side */}
       <div className="mt-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-lg border border-rule bg-bg-2/40 p-5">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-xs text-ink-1">Silent-cache-miss guardrail</span>
-            <span className={`inline-flex items-center gap-1 font-mono text-xs ${flagged ? "text-danger" : "text-success"}`}>
-              {flagged ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
-              {flagged ? "FLAGGED" : "passes"}
-            </span>
-          </div>
-          <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">
-            hit ratio <span className={flagged ? "text-danger" : "text-success"}>{(res.hitRatio * 100).toFixed(0)}%</span>{" "}
-            · {res.realCalls} of {stream.length} requests paid full cost
-          </p>
-        </div>
-
-        <div className="rounded-lg border border-rule bg-bg-2/40 p-5">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-xs text-ink-1">Functional correctness (the control)</span>
-            <span className={`inline-flex items-center gap-1 font-mono text-xs ${controlFlags ? "text-danger" : "text-success"}`}>
-              {controlFlags ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
-              {controlFlags ? "FLAGGED" : "passes"}
-            </span>
-          </div>
-          <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">
-            every returned answer matches the direct computation, so the test people trust sees nothing wrong.
-          </p>
-        </div>
+        <VerdictCard
+          name="Silent-cache-miss guardrail"
+          flagged={flagged}
+          good={active.buggy ? flagged : !flagged}
+          detail={`hit ratio ${pct}% · ${res.realCalls} of ${stream.length} requests paid full cost`}
+        />
+        <VerdictCard
+          name="Functional correctness (the control)"
+          flagged={controlFlags}
+          good={!active.buggy && !controlFlags}
+          detail="every returned answer matches the direct computation, so the test people trust sees nothing wrong."
+        />
       </div>
-
-      <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        The workload, cache, and both checks are live and deterministic, the same logic as the Python run above, verified
-        by <span className="text-ink-1">web/parity-check.mts</span> (PARITY OK, identical hit ratios).
-      </p>
-    </div>
+    </DemoShell>
   );
 }

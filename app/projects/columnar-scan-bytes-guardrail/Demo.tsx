@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import PresetButton from "@/components/demos/PresetButton";
 import {
   COLUMNS,
   COLUMN_NAMES,
@@ -35,52 +37,62 @@ export default function Demo() {
   const report = readReport(projection, layout);
   const flagged = report.flagged;
 
+  const outcome: Outcome = flagged
+    ? {
+        tone: "danger",
+        label: "flagged by the guardrail only",
+        headline: `This read touched ${fmtBytes(report.bytesRead)}, ${report.overRead.toFixed(1)}x what the query needed. The rows came back right, so the correctness check stays green.`,
+        detail: `projection needs ${fmtBytes(report.budget)} · guardrail flags when bytes read exceed tolerance x budget`,
+      }
+    : report.overRead === 1 && projection.length === COLUMN_NAMES.length
+      ? {
+          tone: "success",
+          label: "within budget",
+          headline: "The query needs every column, so a full read is minimal. The guardrail flags waste, not scans.",
+          detail: `bytes read ${fmtBytes(report.bytesRead)} · budget ${fmtBytes(report.budget)}`,
+        }
+      : {
+          tone: "success",
+          label: "within budget",
+          headline: `Only the projected columns were read: ${fmtBytes(report.bytesRead)} against a budget of ${fmtBytes(report.budget)}. Same right rows, a fraction of the bytes.`,
+        };
+
   return (
-    <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
-      <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
-        The same {N_ROWS.toLocaleString()}-row, {COLUMN_NAMES.length}-column table, live in your browser. Pick a query
-        and a storage layout, and watch the guardrail read the <em>bytes</em>, not the rows; the correctness check only
-        sees that the answer is right.
-      </p>
-
-      {/* query picker */}
-      <div className="mt-6 flex flex-wrap gap-2">
-        {QUERIES.map((q) => (
-          <button
-            key={q.id}
-            type="button"
-            onClick={() => setQueryId(q.id)}
-            className={`focus-ring rounded-sm border px-3 py-1.5 font-mono text-xs transition ${
-              q.id === queryId ? "border-accent/50 bg-accent/10 text-accent" : "border-rule text-ink-1 hover:text-accent"
-            }`}
-          >
-            {q.label}
-            <span className="ml-1 text-ink-2">· {q.projection.length}/{COLUMN_NAMES.length} col</span>
-          </button>
-        ))}
-      </div>
-
-      {/* layout toggle */}
-      <div className="mt-4 inline-flex overflow-hidden rounded-sm border border-rule font-mono text-xs">
-        <button
-          type="button"
-          onClick={() => setLayout("columnar")}
-          className={`focus-ring px-4 py-2 transition ${layout === "columnar" ? "bg-accent/10 text-accent" : "text-ink-1 hover:text-accent"}`}
-        >
-          Columnar + projection
-        </button>
-        <button
-          type="button"
-          onClick={() => setLayout("row")}
-          className={`focus-ring border-l border-rule px-4 py-2 transition ${layout === "row" ? "bg-danger/10 text-danger" : "text-ink-1 hover:text-danger"}`}
-        >
-          Row layout
-        </button>
-      </div>
-
+    <DemoShell
+      scenario={`You are the analytics engineer. The same ${N_ROWS.toLocaleString()}-row, ${COLUMN_NAMES.length}-column table sits under every query. Pick a query and a storage layout; the guardrail counts the bytes the read actually touches.`}
+      controlsLabel="pick a query and a layout"
+      controls={
+        <div className="space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {QUERIES.map((q) => (
+              <PresetButton key={q.id} active={q.id === queryId} onClick={() => setQueryId(q.id)}>
+                {q.label}
+                <span className="ml-1 text-ink-2">· {q.projection.length}/{COLUMN_NAMES.length} col</span>
+              </PresetButton>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <PresetButton active={layout === "columnar"} onClick={() => setLayout("columnar")}>
+              Columnar + projection
+            </PresetButton>
+            <PresetButton danger active={layout === "row"} onClick={() => setLayout("row")}>
+              Row layout
+            </PresetButton>
+          </div>
+        </div>
+      }
+      outcome={outcome}
+      footnote={
+        <>
+          Bytes here are the deterministic model. On a real Parquet file the Python harness measured the same effect for
+          real: the projected read touched {fmtBytes(CITED_MEASURED.parquetProjectedBytes)} versus{" "}
+          {fmtBytes(CITED_MEASURED.parquetFullBytes)} for the full scan of the same file,{" "}
+          {CITED_MEASURED.parquetOverReadX}x, and {CITED_MEASURED.csvOverReadX}x against a row-oriented CSV.
+        </>
+      }
+    >
       {/* column strip: which columns get physically read */}
-      <div className="mt-6 flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-1.5">
         {COLUMN_NAMES.map((c) => {
           const read = readSet.has(c);
           const needed = projection.includes(c);
@@ -91,8 +103,8 @@ export default function Demo() {
                 needed
                   ? "border-accent/50 bg-accent/10 text-accent"
                   : read
-                  ? "border-danger/40 bg-danger/5 text-danger"
-                  : "border-rule/60 text-ink-2"
+                    ? "border-danger/40 bg-danger/5 text-danger"
+                    : "border-rule/60 text-ink-2"
               }`}
               title={`${COLUMNS[c] ?? 0} bytes/row`}
             >
@@ -123,43 +135,18 @@ export default function Demo() {
         </p>
       </div>
 
-      {/* two verdicts, side by side */}
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-rule bg-bg-2/40 p-4">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-xs text-ink-1">Bytes-read guardrail</span>
-            <span className={`inline-flex items-center gap-1 font-mono text-xs ${flagged ? "text-danger" : "text-success"}`}>
-              {flagged ? <span aria-hidden="true">✕</span> : <span aria-hidden="true">✓</span>}
-              {flagged ? "FLAGGED" : "passes"}
-            </span>
-          </div>
-          <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
-            {flagged
-              ? `${report.overRead.toFixed(1)}x over-read; this touches columns the query never asked for.`
-              : report.overRead === 1
-              ? `the query needs every column, so a full read IS minimal; the guardrail flags waste, not scans.`
-              : `within budget, only the projected columns were read.`}
-          </p>
+      {/* the control's verdict, for contrast */}
+      <div className="mt-4 rounded-lg border border-rule bg-bg-2/40 p-4">
+        <div className="flex items-center justify-between gap-2">
+          <span className="font-mono text-xs text-ink-1">Correctness control</span>
+          <span className="inline-flex items-center gap-1 font-mono text-xs text-success">
+            <span aria-hidden="true">✓</span> right rows
+          </span>
         </div>
-        <div className="rounded-lg border border-rule bg-bg-2/40 p-4">
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-xs text-ink-1">Correctness control</span>
-            <span className="inline-flex items-center gap-1 font-mono text-xs text-success">
-              <span aria-hidden="true">✓</span> right rows
-            </span>
-          </div>
-          <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
-            the answer is identical whichever layout you pick, so this check passes even the full scan.
-          </p>
-        </div>
+        <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
+          the answer is identical whichever layout you pick, so this check passes even the full scan.
+        </p>
       </div>
-
-      <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        Bytes here are the deterministic model. On a real Parquet file the Python harness measured the same effect for
-        real: the projected read touched {fmtBytes(CITED_MEASURED.parquetProjectedBytes)} versus{" "}
-        {fmtBytes(CITED_MEASURED.parquetFullBytes)} for the full scan of the same file,{" "}
-        {CITED_MEASURED.parquetOverReadX}x, and {CITED_MEASURED.csvOverReadX}x against a row-oriented CSV.
-      </p>
-    </div>
+    </DemoShell>
   );
 }
