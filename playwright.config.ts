@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: "./tests/e2e",
+  testDir: "./tests",
   timeout: 30_000,
   expect: {
     timeout: 8_000,
@@ -16,15 +16,26 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
+      testDir: "./tests/e2e",
       use: { ...devices["Desktop Chrome"] },
     },
     {
       name: "firefox",
+      testDir: "./tests/e2e",
       use: { ...devices["Desktop Firefox"] },
     },
     {
       name: "webkit",
+      testDir: "./tests/e2e",
       use: { ...devices["Desktop Safari"] },
+    },
+    {
+      // Pixel-deterministic design gate. Chromium only: one renderer, one
+      // truth. Not in the default 3-browser matrix; run via npm run
+      // test:visual, baseline update is a deliberate act.
+      name: "visual",
+      testDir: "./tests/visual",
+      use: { ...devices["Desktop Chrome"] },
     },
   ],
   webServer: {
