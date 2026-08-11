@@ -5,7 +5,7 @@ import PitDemo from "./PitDemo";
 export const metadata = buildMetadata({
   title: "Point-in-time correctness guardrail · Coconut Labs",
   description:
-    "Temporal leakage is the bug where offline accuracy goes up — so accuracy can't catch it and schema checks can't see it. This does.",
+    "Temporal leakage is the bug where offline accuracy goes up, so accuracy can't catch it and schema checks can't see it. This does.",
   path: "/projects/point-in-time-correctness",
 });
 
@@ -45,7 +45,7 @@ export default function PointInTimePage() {
           catch it, and a schema check can&rsquo;t see it.
         </p>
 
-        {/* three-way scorecard — the hero */}
+        {/* three-way scorecard, the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-2xl text-ink-0">Same data, joined two ways</h2>
@@ -85,7 +85,7 @@ export default function PointInTimePage() {
           </p>
         </div>
 
-        {/* interactive demo — live join + guardrail */}
+        {/* interactive demo, live join + guardrail */}
         <div className="mt-12">
           <PitDemo />
         </div>
@@ -95,7 +95,7 @@ export default function PointInTimePage() {
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>Schema validation checks the shape.</b> A leaky training table and a correct one have identical
-            columns and types — the leak is in <em>which value</em> got joined, not the schema. It passes.
+            columns and types, the leak is in <em>which value</em> got joined, not the schema. It passes.
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>Offline accuracy is actively misleading.</b> The leak <em>raises</em> the score, so the metric you use
@@ -104,8 +104,8 @@ export default function PointInTimePage() {
         </ul>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
           Point-in-time correctness is a property of the join. The right join is <em>as-of</em>: for each label, the
-          most recent feature at or before its time. The guardrail is one line of intent — <b>no feature may be
-          timestamped after its label</b> — checked independently of any score.
+          most recent feature at or before its time. The guardrail is one line of intent: <b>no feature may be
+          timestamped after its label</b>, checked independently of any score.
         </p>
 
         <pre className="mt-8 overflow-x-auto rounded-lg border border-rule bg-bg-2/50 p-6 font-mono text-xs leading-6 text-ink-1">
@@ -118,7 +118,7 @@ guardrail: flag rows where feature_ts > label_ts`}
         {/* evidence */}
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          Tier 4 — the same data joined two ways, scored by the guardrail, a real schema validator, and a model&rsquo;s
+          Tier 4, the same data joined two ways, scored by the guardrail, a real schema validator, and a model&rsquo;s
           offline AUC. The AUC line is the sharp part: the metric people trust to catch problems instead rewards this one.
           Synthetic data (leakage needs controlled feature timing); stated on the page, not hidden.
         </p>
@@ -129,9 +129,9 @@ guardrail: flag rows where feature_ts > label_ts`}
         {/* the bug measurement caught */}
         <h2 className="mt-16 text-2xl text-ink-0">A leak inside the anti-leak join</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
-          The first &ldquo;correct&rdquo; as-of join was itself leaky at the boundary — a feature timestamped exactly at
+          The first &ldquo;correct&rdquo; as-of join was itself leaky at the boundary, a feature timestamped exactly at
           the label instant was a post-outcome value, and the join picked it up for any label landing on a sample step.
-          The honest model scored AUC <b>0.40 — below chance</b>, which is impossible for a real signal, and exactly the
+          The honest model scored AUC <b>0.40, below chance</b>, which is impossible for a real signal, and exactly the
           tell that the clean table wasn&rsquo;t clean. Fixing the boundary restored 0.77. Only reading a number that
           didn&rsquo;t make sense surfaced it.
         </p>

@@ -5,7 +5,7 @@ import LifecycleMap from "./LifecycleMap";
 export const metadata = buildMetadata({
   title: "Agentic MLOps Platform · Coconut Labs",
   description:
-    "A public, explorable case study: the classic MLOps loop — register, train, gate, canary, promote, roll back — still holds when the thing served is an LLM agent.",
+    "A public, explorable case study: the classic MLOps loop (register, train, gate, canary, promote, roll back) still holds when the thing served is an LLM agent.",
   path: "/projects/agentic-mlops",
 });
 
@@ -32,8 +32,8 @@ export default function AgenticMlopsPage() {
               An agentic MLOps platform, built to be measured.
             </h1>
             <p className="mt-6 max-w-[var(--measure)] font-body text-lg leading-8 text-ink-1">
-              One claim runs through the whole build: the classic MLOps loop — register, train,
-              gate, canary, promote, roll back — still works when the thing being served is an LLM
+              One claim runs through the whole build: the classic MLOps loop (register, train,
+              gate, canary, promote, roll back) still works when the thing being served is an LLM
               agent, provided you add a fourth telemetry axis (tokens and cost) and a fifth artifact
               type (the reasoning trace). Everything below either supports that claim or is cut.
             </p>

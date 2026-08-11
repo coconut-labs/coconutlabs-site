@@ -32,7 +32,7 @@ export default function Demo() {
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
       <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
-        The same {stream.length}-request warm workload over 12 hot prompts — live in your browser. Switch the cache-key
+        The same {stream.length}-request warm workload over 12 hot prompts, live in your browser. Switch the cache-key
         config and watch the hit ratio collapse to zero while every answer stays correct.
       </p>
 
@@ -119,13 +119,13 @@ export default function Demo() {
             </span>
           </div>
           <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">
-            every returned answer matches the direct computation — so the test people trust sees nothing wrong.
+            every returned answer matches the direct computation, so the test people trust sees nothing wrong.
           </p>
         </div>
       </div>
 
       <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        The workload, cache and both checks are live and deterministic — the same logic as the Python run above, verified
+        The workload, cache and both checks are live and deterministic, the same logic as the Python run above, verified
         by <span className="text-ink-1">web/parity-check.mts</span> (PARITY OK, identical hit ratios).
       </p>
     </div>

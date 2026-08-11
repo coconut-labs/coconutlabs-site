@@ -171,10 +171,10 @@ export function CoconutLabsLogo({
         }
       `}</style>
 
-      {/* "coconut" — HTML text, browser-native rendering */}
+      {/* "coconut", HTML text, browser-native rendering */}
       <span className="cl-text cl-text-coconut">coconut</span>
 
-      {/* The mark — SVG only for the bracketed cellular pattern */}
+      {/* The mark, SVG only for the bracketed cellular pattern */}
       <svg
         viewBox="0 0 100 30"
         xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +200,7 @@ export function CoconutLabsLogo({
         {/* big dot 1 */}
         <circle cx="17" cy="15" r="3" fill="currentColor" className="cl-mark-dot cl-mark-dot-1" />
 
-        {/* dotted divider 1 — slightly thicker dots (r=1.2 vs 0.9) for
+        {/* dotted divider 1, slightly thicker dots (r=1.2 vs 0.9) for
             crispness at smaller render sizes */}
         <g className="cl-mark-divider cl-mark-divider-1">
           <circle cx="28" cy="6" r="1.2" fill="currentColor" />
@@ -214,7 +214,7 @@ export function CoconutLabsLogo({
         <circle cx="39" cy="15" r="3" fill="currentColor" className="cl-mark-dot cl-mark-dot-2" />
         <circle cx="61" cy="15" r="3" fill="currentColor" className="cl-mark-dot cl-mark-dot-3" />
 
-        {/* dotted divider 2 — center of mark */}
+        {/* dotted divider 2, center of mark */}
         <g className="cl-mark-divider cl-mark-divider-2">
           <circle cx="50" cy="6" r="1.2" fill="currentColor" />
           <circle cx="50" cy="10.5" r="1.2" fill="currentColor" />
@@ -245,7 +245,7 @@ export function CoconutLabsLogo({
         />
       </svg>
 
-      {/* "labs" — HTML text, browser-native rendering */}
+      {/* "labs", HTML text, browser-native rendering */}
       <span className="cl-text cl-text-labs">labs</span>
     </span>
   );

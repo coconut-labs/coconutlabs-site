@@ -46,7 +46,7 @@ export function PeopleStrip() {
           </p>
         </div>
 
-        {/* Founder cards hidden for now — see comment at top of file.
+        {/* Founder cards hidden for now, see comment at top of file.
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
           {people.map((person) => (
             <FounderCard key={person.slug} person={person} />

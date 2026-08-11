@@ -7,6 +7,6 @@ outbound: "https://github.com/coconut-labs"
 probeWindow: "2026-05-19 → 2026-05-23"
 ---
 
-mlxd is a planned scheduler and admission layer that lives on top of `mlx_lm.server`. The thesis: today MLX has no tenant identity — concurrent requests can bleed KV cache between callers. Once correctness is restored, the next gap is fairness, and the model has to be different from CUDA's KV-block partitioning because unified memory makes bandwidth the shared resource, not GPU memory.
+mlxd is a planned scheduler and admission layer that lives on top of `mlx_lm.server`. The thesis: today MLX has no tenant identity, concurrent requests can bleed KV cache between callers. Once correctness is restored, the next gap is fairness, and the model has to be different from CUDA's KV-block partitioning because unified memory makes bandwidth the shared resource, not GPU memory.
 
 Sibling to KVWarden under coconut-labs. Shared methodology, separate codebase.

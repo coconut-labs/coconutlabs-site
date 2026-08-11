@@ -49,14 +49,14 @@ export default function ContactPage() {
 
         <div className="mt-16 border-t border-rule pt-10">
           <p className="max-w-2xl leading-7 text-ink-1">
-            Collaborate, press, recruiting questions, students, partners — anything. One inbox, read by us. Plain language is fine; pitch decks are not. Attach a specific artifact (trace, result, paper draft) if you want a faster reply.
+            Collaborate, press, recruiting questions, students, partners: anything. One inbox, read by us. Plain language is fine; pitch decks are not. Attach a specific artifact (trace, result, paper draft) if you want a faster reply.
           </p>
           <div className="mt-7">
             <EmailLink className="font-mono text-xs" email="info@coconutlabs.org" />
           </div>
         </div>
 
-        {/* Per-person rows commented out — see top of file. The single-inbox
+        {/* Per-person rows commented out, see top of file. The single-inbox
             block above replaces them while names stay private.
         <div className="mt-16 grid gap-5">
           {rows.map((row) => (

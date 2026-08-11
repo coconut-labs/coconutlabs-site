@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Silent cache-miss guardrail · Coconut Labs",
   description:
-    "A cache with a key bug returns correct answers and passes every functional test while never hitting — paying full cost on every request. A hit-ratio guardrail catches it.",
+    "A cache with a key bug returns correct answers and passes every functional test while never hitting, paying full cost on every request. A hit-ratio guardrail catches it.",
   path: "/projects/silent-cache-miss",
 });
 
@@ -41,10 +41,10 @@ export default function SilentCacheMissPage() {
 
         <p className="mt-14 font-mono text-[clamp(1.4rem,3vw,2.4rem)] leading-tight text-ink-0">
           A cache with a key bug still returns the <span className="text-accent">right answer</span>. It just never
-          hits — and nothing tells you.
+          hits, and nothing tells you.
         </p>
 
-        {/* scorecard — the hero */}
+        {/* scorecard, the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-2xl text-ink-0">Same warm workload, four key configs</h2>
@@ -78,9 +78,9 @@ export default function SilentCacheMissPage() {
             </table>
           </div>
           <p className="mt-5 font-mono text-xs leading-6 text-ink-2">
-            A working cache serves <span className="text-ink-1">95%</span> of requests from memory — 12 real calls. Each
-            buggy config drops to <span className="text-ink-1">0%</span> — 240 real calls, <span className="text-ink-1">20&times;</span>{" "}
-            the compute — while returning identical, correct answers. The functional test passes all of them. Only the
+            A working cache serves <span className="text-ink-1">95%</span> of requests from memory, 12 real calls. Each
+            buggy config drops to <span className="text-ink-1">0%</span>, 240 real calls, <span className="text-ink-1">20&times;</span>{" "}
+            the compute, while returning identical, correct answers. The functional test passes all of them. Only the
             guardrail sees the cost.
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function SilentCacheMissPage() {
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>The answer is computed from the query, not the cache.</b> A wrong cache key never produces a wrong result
-            — on a miss the system recomputes correctly. So a test that checks outputs passes whether the cache hit or
+           , on a miss the system recomputes correctly. So a test that checks outputs passes whether the cache hit or
             not.
           </li>
           <li className="border-l-2 border-rule pl-5">
@@ -105,8 +105,8 @@ export default function SilentCacheMissPage() {
           </li>
         </ul>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
-          Correctness cannot see cost. The guardrail asserts a different property: on a <em>warm</em> workload — one
-          where requests are known to recur — the cache-hit ratio must clear a floor derived from the repetition
+          Correctness cannot see cost. The guardrail asserts a different property: on a <em>warm</em> workload, one
+          where requests are known to recur, the cache-hit ratio must clear a floor derived from the repetition
           structure. A cache that never hits reads 0.00 and is flagged, in about a microsecond.
         </p>
 
@@ -120,10 +120,10 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
         {/* evidence */}
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          Tier 4 — one warm workload run through four key configs, scored by the guardrail and by a real functional
+          Tier 4, one warm workload run through four key configs, scored by the guardrail and by a real functional
           correctness test. The functional test is the sharp part: the thing teams trust to validate a cache passes
           every silently-broken config. Anchored on Python&rsquo;s own <span className="text-ink-1">functools.lru_cache</span>{" "}
-          — a real off-the-shelf cache — whose <span className="text-ink-1">cache_info()</span> shows the identical miss
+         , a real off-the-shelf cache, whose <span className="text-ink-1">cache_info()</span> shows the identical miss
           (0 hits / 240 on the volatile key). Synthetic workload; the repetition is known by construction, stated on the
           page.
         </p>
@@ -135,7 +135,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
         <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The cache <em>models</em> the two documented provider rules (exact-prefix match, minimum cacheable length)
-          rather than integrating with a live provider. The guardrail catches total silence — 0% — cleanly; partial
+          rather than integrating with a live provider. The guardrail catches total silence, 0%, cleanly; partial
           degradation (say 95% &rarr; 60% after a config change) needs a tuned floor or trend tracking, not a fixed one.
           And the workload&rsquo;s repetition is known here by construction; a production stream&rsquo;s warmth has to be
           measured before the floor means anything.

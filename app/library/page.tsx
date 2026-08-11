@@ -10,25 +10,18 @@ export const metadata: Metadata = buildMetadata({
 
 const wings = [
   {
-    name: "Below the Waterline",
-    kind: "the atlas",
+    name: "The Academic Wing",
+    kind: "waterline atlas + study shelf",
     status: "private",
-    body: "A nightly atlas of how real systems actually work: case studies and ground-floor primers on MapReduce, Kafka's storage engine, vector search, LSM engines, GPUs, and LLM serving. Every piece descends from the business problem to the metal, with diagrams doing half the teaching.",
-    note: "Six artifacts and counting. Private by design: the writing leans on first-person operational detail, so it stays on the shelf it was written for.",
-  },
-  {
-    name: "The Study Shelf",
-    kind: "practice",
-    status: "private",
-    body: "Working curricula run against real prototypes: an applied-AI systems course built module by module, and a forward-deployed engineering masterclass for data people. Every module ends in something that runs, and each carries a fifteen-minute daily rep.",
-    note: "The operating rule is one rep a day, every day. A streak counter keeps the score honest.",
+    body: "The academic side of the practice, in one place behind one login. Below the Waterline is a nightly systems atlas: case studies and ground-floor primers on MapReduce, Kafka's storage engine, vector search, LSM engines, GPUs, and LLM serving, each one descending from the business problem to the metal with diagrams doing half the teaching. The Study Shelf runs beside it: working curricula against real prototypes, an applied-AI systems course and a forward-deployed engineering track, every module ending in something that runs.",
+    note: "The operating rule is one rep a day, fifteen minutes, every day. A streak counter keeps the score honest. Private by design: the atlas leans on first-person operational detail, so it stays on the shelf it was written for.",
   },
   {
     name: "Essays",
-    kind: "writing",
+    kind: "the pipeline to research",
     status: "surfacing",
-    body: "Fifteen pieces in plain English: the machinery under data tools, the craft of AI systems that hold up, the practice of learning one level down, and studio notes from building a synthesizer with a model in the room.",
-    note: "Essays publish here as research notes once they are rewritten public-native and edited by hand.",
+    body: "Fifteen pieces in plain English: the machinery under data tools, the craft of AI systems that hold up, the practice of learning one level down, and studio notes from building a synthesizer with a model in the room. This wing is where private writing earns its way out.",
+    note: "An essay publishes as a research note only after it is rewritten public-native and edited by hand. Two have made the trip so far.",
   },
 ];
 

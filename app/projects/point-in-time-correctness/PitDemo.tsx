@@ -15,7 +15,7 @@ export default function PitDemo() {
     <div className="rounded-lg border border-rule bg-bg-1/60 p-6 md:p-8">
       <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
-        Same {entities.length} labels, joined to their feature two ways — live in your browser. Toggle the join and
+        Same {entities.length} labels, joined to their feature two ways, live in your browser. Toggle the join and
         watch the guardrail flag every row whose feature is timestamped <em>after</em> its label.
       </p>
 
@@ -80,14 +80,14 @@ export default function PitDemo() {
         </div>
         <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">
           {flagged
-            ? `${leaked}/${rows.length} rows use a feature from after the label — the leaky join time-travels. A schema check passes this; offline accuracy rewards it.`
+            ? `${leaked}/${rows.length} rows use a feature from after the label, the leaky join time-travels. A schema check passes this; offline accuracy rewards it.`
             : `0/${rows.length} rows use a future feature. Every feature was available when its label was recorded.`}
         </p>
       </div>
 
       <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        The join and guardrail are live. The model impact — leaked AUC {CITED_AUC.leaky} vs point-in-time-correct{" "}
-        {CITED_AUC.asof} — is the measured figure from the Python run above, not recomputed here.
+        The join and guardrail are live. The model impact, leaked AUC {CITED_AUC.leaky} vs point-in-time-correct{" "}
+        {CITED_AUC.asof}, is the measured figure from the Python run above, not recomputed here.
       </p>
     </div>
   );

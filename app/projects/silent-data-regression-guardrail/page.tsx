@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Silent data-regression guardrail · Coconut Labs",
   description:
-    "A small, measured prototype: catching silent data regressions a standard schema contract misses — 6/6 vs 1/6 on a real robot dataset.",
+    "A small, measured prototype: catching silent data regressions a standard schema contract misses, 6/6 vs 1/6 on a real robot dataset.",
   path: "/projects/silent-data-regression-guardrail",
 });
 
@@ -55,7 +55,7 @@ export default function GuardrailUnitPage() {
         </div>
         <p className="mt-6 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           An independent prototype inspired by a publicly-stated problem. Not affiliated with, or a replica of, any
-          proprietary system — the title names the problem, never a company&rsquo;s internals.
+          proprietary system, the title names the problem, never a company&rsquo;s internals.
         </p>
 
         {/* claim */}
@@ -63,7 +63,7 @@ export default function GuardrailUnitPage() {
           The data looks fine and is wrong. A schema contract passes it through; this catches it.
         </p>
 
-        {/* result matrix — the hero */}
+        {/* result matrix, the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-2xl text-ink-0">On <span className="font-mono text-xl">lerobot/pusht</span></h2>
@@ -103,7 +103,7 @@ export default function GuardrailUnitPage() {
           </p>
         </div>
 
-        {/* interactive demo — runs the real guardrail in-browser */}
+        {/* interactive demo, runs the real guardrail in-browser */}
         <div className="mt-12">
           <Demo />
         </div>
@@ -117,7 +117,7 @@ export default function GuardrailUnitPage() {
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>It can&rsquo;t see inside array columns.</b> A robot state is <code className="font-mono text-base">[x, y]</code>{" "}
-            in one cell. Drop a dimension or rescale an axis and the column is unchanged — still a non-null object column.
+            in one cell. Drop a dimension or rescale an axis and the column is unchanged, still a non-null object column.
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>It can&rsquo;t see across the episode structure.</b> Truncation, frame-rate drift, and clock misalignment
@@ -126,7 +126,7 @@ export default function GuardrailUnitPage() {
         </ul>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
           And tightening it makes it worse: auto-inferring strict value ranges makes the validator{" "}
-          <b>false-positive on clean unseen data</b>. A control that rejects good data isn&rsquo;t detecting regressions —
+          <b>false-positive on clean unseen data</b>. A control that rejects good data isn&rsquo;t detecting regressions,
           it&rsquo;s just brittle. So the guardrail profiles the <em>structure</em> a column check can&rsquo;t: array
           dimensionality, per-dimension stats, inter-frame period, per-episode start, and the episode-length floor.
         </p>
@@ -144,7 +144,7 @@ export default function GuardrailUnitPage() {
         {/* evidence */}
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          Tier 4 — a controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
+          Tier 4, a controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
           strict statistical config was <em>disqualified</em> for false-positing on clean holdout; that&rsquo;s recorded,
           not hidden. Reproduce it yourself:
         </p>

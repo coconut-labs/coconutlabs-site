@@ -22,7 +22,7 @@ export default function Demo() {
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         This runs the real guardrail in your browser on {CLEAN.rows.length} rows of{" "}
         <span className="font-mono">lerobot/pusht</span>. Inject a corruption and watch the guardrail catch what the
-        schema contract misses — computed live, not canned.
+        schema contract misses, computed live, not canned.
       </p>
 
       {/* selector */}
@@ -65,7 +65,7 @@ export default function Demo() {
           detail={
             guardrailFlagged
               ? violations.map((v) => `${v.kind}: ${v.detail}`).join(" · ")
-              : "no violations — clean data passes"
+              : "no violations, clean data passes"
           }
         />
         <Verdict
@@ -76,8 +76,8 @@ export default function Demo() {
             controlFlagged
               ? "rejected: a declared column is missing"
               : active
-              ? "passed — the schema still looks valid, so it waves the corruption through"
-              : "passed — clean data is valid"
+              ? "passed, the schema still looks valid, so it waves the corruption through"
+              : "passed, clean data is valid"
           }
         />
       </div>

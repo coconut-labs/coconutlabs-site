@@ -28,7 +28,7 @@ export default async function ProjectsPage() {
           One lab, several surfaces. kvwarden.org and coconutos.org are separate domains for now, but everything here is Coconut Labs. Plus the small things that keep the lab honest.
         </p>
 
-        {/* KVWarden — large card */}
+        {/* KVWarden, large card */}
         <article className="mt-16 rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)] md:p-12">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
             <span aria-hidden="true">●</span>
@@ -62,7 +62,7 @@ export default async function ProjectsPage() {
           </div>
         </article>
 
-        {/* mlxd — medium card */}
+        {/* mlxd, medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
             <span aria-hidden="true">●</span>
@@ -84,7 +84,7 @@ export default async function ProjectsPage() {
           </div>
         </article>
 
-        {/* Coconut OS — medium card */}
+        {/* Coconut OS, medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
             <span aria-hidden="true">●</span>
@@ -109,7 +109,7 @@ export default async function ProjectsPage() {
           </div>
         </article>
 
-        {/* Gallery — hall of demos */}
+        {/* Gallery, hall of demos */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
           <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-ink-0/30 bg-ink-0/5 px-3 py-1 font-mono text-xs uppercase text-ink-0">
             <span aria-hidden="true">●</span>
@@ -119,7 +119,7 @@ export default async function ProjectsPage() {
           <p className="mt-3 font-mono text-xs uppercase text-ink-2">an agentic MLOps atlas + measured prototypes</p>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-ink-1">
             One method at two scales: a deep agentic-MLOps platform case study, and small
-            free-standing prototypes — each solving one company&rsquo;s real data-systems bottleneck, with a guardrail
+            free-standing prototypes, each solving one company&rsquo;s real data-systems bottleneck, with a guardrail
             you can run in your browser. Two shipped, Tier-4, measured.
           </p>
           <div className="mt-7 flex flex-wrap gap-5 font-mono text-xs">
@@ -145,7 +145,7 @@ export default async function ProjectsPage() {
             Smaller things, mostly the scaffolding behind the public work.
           </p>
           {tools.length === 0 ? (
-            <p className="mt-8 font-mono text-xs text-ink-2">// nothing here yet — see github.com/coconut-labs.</p>
+            <p className="mt-8 font-mono text-xs text-ink-2">// nothing here yet, see github.com/coconut-labs.</p>
           ) : (
             <ul className="mt-8 grid gap-5 md:grid-cols-2">
               {tools.map((tool) => (

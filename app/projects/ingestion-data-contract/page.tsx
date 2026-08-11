@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Schema-drift contract guardrail · Coconut Labs",
   description:
-    "Silent schema drift keeps the column present and non-null, so schema, null, and row-count checks all pass — and the number downstream goes quietly wrong. A pinned data contract catches it.",
+    "Silent schema drift keeps the column present and non-null, so schema, null, and row-count checks all pass, and the number downstream goes quietly wrong. A pinned data contract catches it.",
   path: "/projects/ingestion-data-contract",
 });
 
@@ -42,10 +42,10 @@ export default function IngestionDataContractPage() {
 
         <p className="mt-14 font-mono text-[clamp(1.4rem,3vw,2.4rem)] leading-tight text-ink-0">
           The drift keeps the column present and <span className="text-accent">non-null</span>. So the schema check
-          passes, the null check passes, the row-count check passes — and the number goes quietly wrong.
+          passes, the null check passes, the row-count check passes, and the number goes quietly wrong.
         </p>
 
-        {/* scorecard — the hero */}
+        {/* scorecard, the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-2xl text-ink-0">Six drifts, one landing table</h2>
@@ -87,7 +87,7 @@ export default function IngestionDataContractPage() {
             </table>
           </div>
           <p className="mt-5 font-mono text-xs leading-6 text-ink-2">
-            The standard check catches exactly one drift — the only one whose values leave the observed range. Every
+            The standard check catches exactly one drift, the only one whose values leave the observed range. Every
             other drift keeps each value individually valid and corrupts the aggregate. The unit-scale one makes the
             revenue report read <span className="text-ink-1">$157,512</span> against a true{" "}
             <span className="text-ink-1">$299,354</span>: no error, no null, quoted in the meeting.
@@ -108,14 +108,14 @@ export default function IngestionDataContractPage() {
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>The corruption is in meaning, not shape.</b> A currency that split into two spellings, a boolean that grew
-            a third encoding, a cents column that started shipping dollars — each value still looks valid. Only the
+            a third encoding, a cents column that started shipping dollars, each value still looks valid. Only the
             aggregate is wrong.
           </li>
         </ul>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
           The contract pins <em>meaning</em>: the declared dtype, the allowed value domain of each categorical column, a
           magnitude band for the money column, and a ceiling on how &ldquo;round&rdquo; those values may be. A drift that
-          survives shape checks still has to survive the domain, the band, and the precision signature — and these don&rsquo;t.
+          survives shape checks still has to survive the domain, the band, and the precision signature, and these don&rsquo;t.
         </p>
 
         <pre className="mt-8 overflow-x-auto rounded-lg border border-rule bg-bg-2/50 p-6 font-mono text-xs leading-6 text-ink-1">
@@ -127,7 +127,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
         {/* evidence */}
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          Tier 4 — one landing table, six drifts, scored by the contract guardrail and by a real off-the-shelf control
+          Tier 4, one landing table, six drifts, scored by the contract guardrail and by a real off-the-shelf control
           (pandera&rsquo;s inferred schema at defaults, plus explicit row-count and null-ratio checks). The control is not a
           strawman: it catches the one drift that leaves the observed range, and only that one. The rest it waves through,
           and the downstream number moves. Synthetic data (drift needs controlled before/after); stated, not hidden.
@@ -140,10 +140,10 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
         <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The contract&rsquo;s categorical domains are declared, so a genuinely new-but-legitimate category reads as a drift
-          until the contract is updated — that friction is the point, but it is friction. The magnitude and precision bands
+          until the contract is updated, that friction is the point, but it is friction. The magnitude and precision bands
           are fitted from a golden sample and tuned for this table; production needs per-column tuning. And the hardest
-          drift class is out of reach of any per-column contract: a <em>cross-field</em> one — say, amounts that stop being
-          normalized to a common currency while every column stays in its own domain — corrupts the sum with no new value
+          drift class is out of reach of any per-column contract: a <em>cross-field</em> one, say, amounts that stop being
+          normalized to a common currency while every column stays in its own domain, corrupts the sum with no new value
           anywhere, and needs a reconciliation total, not a schema. That is the next guardrail, not this one.
         </p>
 

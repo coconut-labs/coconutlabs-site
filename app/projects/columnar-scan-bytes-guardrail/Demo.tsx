@@ -40,7 +40,7 @@ export default function Demo() {
       <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         The same {N_ROWS.toLocaleString()}-row, {COLUMN_NAMES.length}-column table, live in your browser. Pick a query
-        and a storage layout, and watch the guardrail read the <em>bytes</em>, not the rows — the correctness check only
+        and a storage layout, and watch the guardrail read the <em>bytes</em>, not the rows, the correctness check only
         sees that the answer is right.
       </p>
 
@@ -135,10 +135,10 @@ export default function Demo() {
           </div>
           <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
             {flagged
-              ? `${report.overRead.toFixed(1)}x over-read — this touches columns the query never asked for.`
+              ? `${report.overRead.toFixed(1)}x over-read, this touches columns the query never asked for.`
               : report.overRead === 1
-              ? `the query needs every column, so a full read IS minimal — the guardrail flags waste, not scans.`
-              : `within budget — only the projected columns were read.`}
+              ? `the query needs every column, so a full read IS minimal, the guardrail flags waste, not scans.`
+              : `within budget, only the projected columns were read.`}
           </p>
         </div>
         <div className="rounded-lg border border-rule bg-bg-2/40 p-4">
@@ -149,7 +149,7 @@ export default function Demo() {
             </span>
           </div>
           <p className="mt-2 font-mono text-[0.68rem] leading-5 text-ink-2">
-            the answer is identical whichever layout you pick — so this check passes even the full scan.
+            the answer is identical whichever layout you pick, so this check passes even the full scan.
           </p>
         </div>
       </div>
@@ -157,8 +157,8 @@ export default function Demo() {
       <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
         Bytes here are the deterministic model. On a real Parquet file the Python harness measured the same effect for
         real: the projected read touched {fmtBytes(CITED_MEASURED.parquetProjectedBytes)} versus{" "}
-        {fmtBytes(CITED_MEASURED.parquetFullBytes)} for the full scan of the same file —{" "}
-        {CITED_MEASURED.parquetOverReadX}x — and {CITED_MEASURED.csvOverReadX}x against a row-oriented CSV.
+        {fmtBytes(CITED_MEASURED.parquetFullBytes)} for the full scan of the same file,{" "}
+        {CITED_MEASURED.parquetOverReadX}x, and {CITED_MEASURED.csvOverReadX}x against a row-oriented CSV.
       </p>
     </div>
   );

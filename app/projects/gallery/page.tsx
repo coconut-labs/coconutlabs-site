@@ -27,8 +27,8 @@ export default function GalleryPage() {
         <p className="font-mono text-xs uppercase text-ink-2">the gallery</p>
         <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
         <p className="mt-8 max-w-2xl text-lg leading-8 text-ink-1">
-          One method at two scales. A deep case study — an agentic MLOps platform, built and
-          measured end to end — and small free-standing prototypes, each reverse-engineering one
+          One method at two scales: a deep case study (an agentic MLOps platform, built and
+          measured end to end) plus small free-standing prototypes, each reverse-engineering one
           company&rsquo;s publicly-stated data-systems bottleneck and solving a slice of it, honestly
           measured. Same unit contract, same evidence tiers, so the reader sees one discipline
           applied at two densities, not a pile of demos.
@@ -94,7 +94,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Point-in-time correctness guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">feature stores · data core · class B</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches training data built from future feature values — the temporal leak a schema check passes and
+              Catches training data built from future feature values, the temporal leak a schema check passes and
               offline accuracy <span className="italic">rewards</span>. <span className="font-mono">0.999 leaked vs
               0.771 correct</span>; only the guardrail sees it.
             </p>
@@ -114,7 +114,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">prompt caching · throughput · class C</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches a cache that silently never hits — functional tests pass, every request pays full cost.{" "}
+              Catches a cache that silently never hits, functional tests pass, every request pays full cost.{" "}
               <span className="font-mono">95% hit-ratio working vs 0%</span> (20× redundant compute), invisible to a
               correctness check.
             </p>
@@ -134,7 +134,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Columnar-scan bytes guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">columnar formats · storage · class E</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              A two-column query returns the right rows whether it reads 2 columns or all 12 — so correctness passes a
+              A two-column query returns the right rows whether it reads 2 columns or all 12, so correctness passes a
               full scan reading <span className="font-mono">44.7× the bytes</span>. The guardrail counts bytes, not rows.
             </p>
             <Link
@@ -153,7 +153,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">ELT · schema-drift · class G</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches drift that keeps the column present and non-null — a silent unit change reads revenue as{" "}
+              Catches drift that keeps the column present and non-null, a silent unit change reads revenue as{" "}
               <span className="font-mono">$157k vs a true $299k</span>, zero errors, zero nulls. Schema/null checks pass
               it; the contract doesn&rsquo;t.
             </p>

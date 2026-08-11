@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Columnar scan / bytes-read guardrail · Coconut Labs",
   description:
-    "A two-column query that scans the whole table returns the right rows — so correctness checks pass while it reads 40x the bytes. This reads the bytes, not the rows.",
+    "A two-column query that scans the whole table returns the right rows, so correctness checks pass while it reads 40x the bytes. This reads the bytes, not the rows.",
   path: "/projects/columnar-scan-bytes-guardrail",
 });
 
@@ -46,7 +46,7 @@ export default function ColumnarScanPage() {
           two columns &mdash; and nothing that checks correctness can see it.
         </p>
 
-        {/* three-way scorecard — the hero */}
+        {/* three-way scorecard, the hero */}
         <div className="mt-12 rounded-lg border border-rule bg-bg-1/60 p-6 md:p-9">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
             <h2 className="text-2xl text-ink-0">Same file, one query, read two ways</h2>

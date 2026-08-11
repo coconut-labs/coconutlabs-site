@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 /* colorScheme was pinned "light" and themeColor was the retired warm paper
-   #ECE6D6 — the viewport meta was fighting the token layer's dark scheme and
+   #ECE6D6, the viewport meta was fighting the token layer's dark scheme and
    painting old-brand chrome on mobile. Both now follow the scheme. */
 export const viewport: Viewport = {
   colorScheme: "light dark",

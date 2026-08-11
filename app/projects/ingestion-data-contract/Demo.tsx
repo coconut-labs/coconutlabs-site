@@ -39,12 +39,12 @@ export default function Demo() {
   // what the downstream report reads now vs clean
   const effect = active
     ? active.id === "boolean_encoding"
-      ? `refund count reads ${refunds} — was ${cleanRefunds}`
+      ? `refund count reads ${refunds}, was ${cleanRefunds}`
       : active.id === "enum_expansion"
-        ? `${buckets} currency buckets — was ${cleanBuckets}`
+        ? `${buckets} currency buckets, was ${cleanBuckets}`
         : rev === null
           ? "the revenue sum can no longer run"
-          : `revenue reads ${usd(rev)} — true is ${usd(cleanRev)}`
+          : `revenue reads ${usd(rev)}, true is ${usd(cleanRev)}`
     : `revenue ${usd(cleanRev)} · ${cleanRefunds} refunds · ${cleanBuckets} currency buckets`;
 
   return (
@@ -52,7 +52,7 @@ export default function Demo() {
       <p className="font-mono text-xs uppercase text-ink-2">run it yourself</p>
       <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
         This runs the real guardrail in your browser on {CLEAN.rows.length} rows of a synthetic ELT landing table.
-        Inject a drift and watch the contract catch what the standard schema / null / row-count check misses — and
+        Inject a drift and watch the contract catch what the standard schema / null / row-count check misses, and
         what it does to the number the report emits. Computed live, not canned.
       </p>
 
@@ -98,7 +98,7 @@ export default function Demo() {
           detail={
             guardrailFlagged
               ? violations.map((v) => `${v.kind}: ${v.detail}`).join(" · ")
-              : "no violations — clean data passes"
+              : "no violations, clean data passes"
           }
         />
         <Verdict
@@ -109,8 +109,8 @@ export default function Demo() {
             controlFlagged
               ? "rejected: a value left the observed range"
               : active
-                ? "passed — column present, non-null, in-range, same row count, so it waves the drift through"
-                : "passed — clean data is valid"
+                ? "passed, column present, non-null, in-range, same row count, so it waves the drift through"
+                : "passed, clean data is valid"
           }
         />
       </div>

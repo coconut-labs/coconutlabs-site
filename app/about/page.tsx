@@ -28,7 +28,7 @@ export default async function AboutPage() {
           <Markdown content={manifesto} />
         </div>
 
-        {/* People grid hidden for now — see import comment at top.
+        {/* People grid hidden for now, see import comment at top.
         <div className="mt-20 grid gap-5 lg:grid-cols-2">
           <h2 className="sr-only">People</h2>
           {people.map((person) => (
