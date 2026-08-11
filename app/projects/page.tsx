@@ -22,10 +22,14 @@ export default async function ProjectsPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-ink-2">projects</p>
-        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Projects</h1>
-        <p className="mt-7 max-w-2xl font-mono text-sm leading-7 text-ink-1">
-          One lab, several surfaces. kvwarden.org and coconutos.org are separate domains for now, but everything here is Coconut Labs. Plus the small things that keep the lab honest.
+        <p className="font-mono text-xs uppercase text-ink-2">what the lab builds</p>
+        <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">Projects</h1>
+        <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
+          Everything the lab builds, flagship first: KVWarden is live and measured, mlxd and
+          Coconut OS are in research, and the smaller tools behind the public work sit at the end.
+        </p>
+        <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
+          One lab, several surfaces. kvwarden.org and coconutos.org are separate domains for now, but everything here is Coconut Labs.
         </p>
 
         {/* KVWarden, large card */}

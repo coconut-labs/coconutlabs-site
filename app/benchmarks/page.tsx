@@ -46,9 +46,9 @@ export default function BenchmarksPage() {
         </div>
 
         <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
-          One rule holds everywhere on this page: a number without its hardware, sample count, and
-          methodology is not a result. Every figure below carries all three and links to the raw
-          artifact that produced it.
+          This is the lab&rsquo;s proof page: every number we cite in public lives here, and a
+          number without its hardware, sample count, and methodology is not a result. Every figure
+          below carries all three and links to the raw artifact that produced it.
         </p>
 
         {/* stat grid */}

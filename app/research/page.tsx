@@ -45,10 +45,11 @@ export default async function ResearchPage({
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-ink-2">research feed</p>
-        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Research</h1>
-        <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
-          Notes, papers, and recordings from the lab notebook. New entries first. Type-tagged. Each links to the canonical artifact.
+        <p className="font-mono text-xs uppercase text-ink-2">writing</p>
+        <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">Research</h1>
+        <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
+          Every note here is a lab record: a claim, the bench that tested it, and what survived.
+          Newest first, filtered by type below, each entry linked to its canonical artifact.
         </p>
 
         <div className="mt-10 flex items-center justify-between border-y border-rule py-4">

@@ -30,10 +30,18 @@ export default function LibraryPage() {
     <div className="mx-auto max-w-3xl px-[var(--space-page-x)] py-20">
       <p className="font-mono text-xs uppercase tracking-wide text-ink-2">the practice behind the lab</p>
       <h1 className="mt-3 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em] text-ink-0">The Library</h1>
-      <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
-        The lab publishes measurements. The Library is where the understanding gets built first: one
-        private study practice, two wings, one rule. Go one level below what the job requires,
+      <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
+        The Library is the lab&rsquo;s private study practice, where the understanding behind the
+        public work gets built. Two wings, one rule: go one level below what the job requires,
         every day, and write it down well enough to teach.
+      </p>
+      <p className="mt-6">
+        <Link
+          className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs uppercase text-accent"
+          href="/research"
+        >
+          Read what has surfaced <span aria-hidden="true">→</span>
+        </Link>
       </p>
 
       <div className="mt-12 space-y-6">

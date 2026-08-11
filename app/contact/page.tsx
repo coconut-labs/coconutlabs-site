@@ -45,10 +45,10 @@ export default function ContactPage() {
     <section className="content-band">
       <div className="content-inner">
         <p className="font-mono text-xs uppercase text-ink-2">contact</p>
-        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Write the lab.</h1>
+        <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">Write the lab.</h1>
 
-        <div className="mt-16 border-t border-rule pt-10">
-          <p className="max-w-2xl leading-7 text-ink-1">
+        <div className="mt-6">
+          <p className="max-w-2xl text-base leading-7 text-ink-1">
             Collaborate, press, recruiting questions, students, partners: anything. One inbox, read by us. Plain language is fine; pitch decks are not. Attach a specific artifact (trace, result, paper draft) if you want a faster reply.
           </p>
           <div className="mt-7">

@@ -47,11 +47,11 @@ export default async function JoinUsPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-ink-2">contributors</p>
-        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">Build with us.</h1>
+        <p className="font-mono text-xs uppercase text-ink-2">how to contribute</p>
+        <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">Build with us.</h1>
 
-        <p className="mt-7 max-w-2xl text-xl leading-9 text-ink-1">
-          The fastest way in is a small reproducible artifact: a trace, a failing case, a benchmark, or a patch. We are two people. There is no Slack, no Discord, no weekly call. Contribution is async and lives on GitHub.
+        <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
+          The fastest way in is a small reproducible artifact: a trace, a failing case, a benchmark, or a patch. We are two people. There is no Slack, no Discord, no weekly call. Contribution is async and lives on GitHub. Pick a starting path below.
         </p>
 
         <h2 className="mt-20 text-[clamp(2.4rem,5vw,4rem)] leading-tight">How to start</h2>

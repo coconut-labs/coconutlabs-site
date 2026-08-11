@@ -1,6 +1,7 @@
 // People grid hidden for now — names not public yet. Re-enable by
 // uncommenting the loadPeople import + call and the people grid <div> below.
 // import { PersonCard } from "@/components/about/PersonCard";
+import Link from "next/link";
 import { PrincipleCard } from "@/components/about/PrincipleCard";
 import { loadManifesto, loadPrinciples } from "@/lib/content";
 import { Markdown } from "@/lib/markdown";
@@ -22,8 +23,19 @@ export default async function AboutPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-ink-2">about</p>
-        <h1 className="mt-5 text-[clamp(4rem,10vw,9rem)] leading-[0.92]">A small lab for shared inference.</h1>
+        <p className="font-mono text-xs uppercase text-ink-2">who we are and how we work</p>
+        <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">A small lab for shared inference.</h1>
+        <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
+          The manifesto and the working principles of a two-person inference research lab.
+        </p>
+        <p className="mt-6">
+          <Link
+            className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs uppercase text-accent"
+            href="/benchmarks"
+          >
+            See the proof page <span aria-hidden="true">→</span>
+          </Link>
+        </p>
         <div className="post-body mt-12">
           <Markdown content={manifesto} />
         </div>
