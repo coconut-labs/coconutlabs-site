@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "The gallery · Coconut Labs",
   description:
-    "One method at two scales: a deep MLOps platform and small measured prototypes, each reverse-engineering a real company's data-systems bottleneck.",
+    "Every card is a thing that silently breaks in real data systems. Every demo runs in your browser: flip the failure on, watch the checks disagree.",
   path: "/projects/gallery",
 });
 
@@ -20,19 +20,178 @@ const CLASSES: { key: string; name: string; cover: { label: string; href?: strin
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
 ];
 
+// Each shipped unit as a story card: a plain-language hook, one thing you can do
+// in the live demo, the measured result with its regime, and the provenance line.
+type UnitCard = {
+  title: string;
+  hook: string;
+  action: string;
+  numbers: React.ReactNode;
+  meta: string;
+  href: string;
+  source: string;
+};
+const UNIT_CARDS: UnitCard[] = [
+  {
+    title: "Silent data-regression guardrail",
+    hook: "Data can go bad without a single error. The table still looks valid; the numbers are wrong.",
+    action: "Flip a corruption on, watch the guardrail catch what the schema contract passes.",
+    numbers: (
+      <>
+        <span className="font-mono">6/6 vs 1/6</span> silent corruptions caught on{" "}
+        <span className="font-mono">lerobot/pusht</span> · zero false positives · 1.8 ms/check
+      </>
+    ),
+    meta: "Physical Intelligence · data core · class A",
+    href: "/projects/silent-data-regression-guardrail",
+    source: "https://github.com/coconut-labs/data-regression-guardrail",
+  },
+  {
+    title: "Point-in-time correctness guardrail",
+    hook: "A model can train on answers from the future. Offline accuracy rewards the leak.",
+    action: "Toggle the leak on, watch the score jump to a number too good to trust.",
+    numbers: (
+      <>
+        <span className="font-mono">0.999 leaked vs 0.771 correct</span> on the same 1200-row
+        training set · guardrail ~0.1 ms
+      </>
+    ),
+    meta: "feature stores · data core · class B",
+    href: "/projects/point-in-time-correctness",
+    source: "https://github.com/coconut-labs/point-in-time-correctness-guardrail",
+  },
+  {
+    title: "Silent cache-miss guardrail",
+    hook: "A cache can pass every functional test and never hit once. Every request pays full price.",
+    action: "Break the cache, watch cost climb while correctness stays green.",
+    numbers: (
+      <>
+        <span className="font-mono">95% hit ratio working vs 0% broken</span> over 240 requests on
+        12 hot prompts · 20× redundant compute
+      </>
+    ),
+    meta: "prompt caching · throughput · class C",
+    href: "/projects/silent-cache-miss",
+    source: "https://github.com/coconut-labs/silent-cache-miss-guardrail",
+  },
+  {
+    title: "Columnar-scan bytes guardrail",
+    hook: "A query can return the right rows while reading everything. Row checks stay green either way.",
+    action: "Switch the scan mode, watch the byte counter disagree with the row counter.",
+    numbers: (
+      <>
+        <span className="font-mono">44.7× the bytes</span> for the same correct answer, 200k rows,
+        2 of 12 columns needed
+      </>
+    ),
+    meta: "columnar formats · storage · class E",
+    href: "/projects/columnar-scan-bytes-guardrail",
+    source: "https://github.com/coconut-labs/columnar-scan-bytes-guardrail",
+  },
+  {
+    title: "Ingestion data-contract guardrail",
+    hook: "A feed can change meaning without dropping a row. Revenue reads $157k when the truth is $299k.",
+    action: "Drift the units mid-stream, watch the contract object while schema and null checks pass.",
+    numbers: (
+      <>
+        contract <span className="font-mono">6/6</span> drifts caught vs schema/null checks{" "}
+        <span className="font-mono">1/6</span> · zero errors, zero nulls in the bad data · ~0.1
+        ms/check
+      </>
+    ),
+    meta: "ELT · schema-drift · class G",
+    href: "/projects/ingestion-data-contract",
+    source: "https://github.com/coconut-labs/ingestion-data-contract-guardrail",
+  },
+];
+
 export default function GalleryPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
         <p className="font-mono text-xs uppercase text-ink-2">the gallery</p>
         <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-ink-1">
+        <p className="mt-8 max-w-2xl text-xl leading-8 text-ink-0">
+          Every card is a thing that silently breaks in real data systems. Every demo runs in your
+          browser.
+        </p>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           One method at two scales: a deep case study (an agentic MLOps platform, built and
           measured end to end) plus small free-standing prototypes, each reverse-engineering one
           company&rsquo;s publicly stated data-systems bottleneck and solving a slice of it, honestly
           measured. Same unit contract, same evidence tiers, so the reader sees one discipline
           applied at two densities, not a pile of demos.
         </p>
+
+        {/* the story menu */}
+        <div className="mt-16 grid gap-6 md:grid-cols-2">
+          {UNIT_CARDS.map((card) => (
+            <article
+              key={card.href}
+              className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]"
+            >
+              <div className="mb-4 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
+                  <span aria-hidden="true">●</span> Shipped · Tier 4
+                </span>
+                <span className="inline-flex items-center rounded-sm border border-rule px-3 py-1 font-mono text-xs uppercase text-ink-2">
+                  live in your browser
+                </span>
+              </div>
+              <h2 className="text-3xl leading-tight text-ink-0">{card.title}</h2>
+              <p className="mt-5 text-base leading-7 text-ink-1">{card.hook}</p>
+              <p className="mt-3 font-mono text-sm leading-6 text-ink-0">
+                <span aria-hidden="true">▸</span> {card.action}
+              </p>
+              <p className="mt-4 flex-1 text-sm leading-6 text-ink-2">{card.numbers}</p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-sm">
+                <Link
+                  href={card.href}
+                  className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
+                >
+                  Run the demo <span aria-hidden="true">→</span>
+                </Link>
+                <a
+                  href={card.source}
+                  className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
+                >
+                  Source <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <p className="mt-4 border-t border-rule pt-3 font-mono text-xs uppercase text-ink-2">
+                {card.meta}
+              </p>
+            </article>
+          ))}
+
+          {/* the flagship atlas */}
+          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/40 p-8">
+            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
+              <span aria-hidden="true">●</span> Flagship · in build
+            </div>
+            <h2 className="text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
+            <p className="mt-5 text-base leading-7 text-ink-1">
+              The deep one. One platform proving one claim: the classic MLOps loop still holds when
+              the thing served is an LLM agent, once you add a token/cost axis and a
+              reasoning-trace artifact.
+            </p>
+            <p className="mt-3 flex-1 font-mono text-sm leading-6 text-ink-0">
+              <span aria-hidden="true">▸</span> Take the guided tour: three acts, seven stops, then
+              explore all fourteen lifecycle stations.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-sm">
+              <Link
+                href="/projects/agentic-mlops"
+                className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
+              >
+                Open the atlas <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <p className="mt-4 border-t border-rule pt-3 font-mono text-xs uppercase text-ink-2">
+              the deep case study · ten units
+            </p>
+          </article>
+        </div>
 
         {/* the competency grid */}
         <div className="mt-16">
@@ -62,128 +221,6 @@ export default function GalleryPage() {
           <p className="mt-4 font-mono text-xs text-ink-2">
             A new unit must claim an open class or go materially deeper in a filled one.
           </p>
-        </div>
-
-        {/* entries */}
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          {/* shipped gallery unit */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span aria-hidden="true">●</span> Shipped · Tier 4
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Silent data-regression guardrail</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">Physical Intelligence · data core · class A</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches the corruptions that leave a table structurally valid so a schema contract misses
-              them. <span className="font-mono">6/6 vs 1/6</span> on a real robot dataset, zero false
-              positives, 1.8 ms.
-            </p>
-            <Link
-              href="/projects/silent-data-regression-guardrail"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Read the unit <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-
-          {/* point-in-time correctness unit */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span aria-hidden="true">●</span> Shipped · Tier 4
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Point-in-time correctness guardrail</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">feature stores · data core · class B</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches training data built from future feature values, the temporal leak a schema check passes and
-              offline accuracy <span className="italic">rewards</span>. <span className="font-mono">0.999 leaked vs
-              0.771 correct</span>; only the guardrail sees it.
-            </p>
-            <Link
-              href="/projects/point-in-time-correctness"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Read the unit <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-
-          {/* silent cache-miss unit */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span aria-hidden="true">●</span> Shipped · Tier 4
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">prompt caching · throughput · class C</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches a cache that silently never hits: functional tests pass, every request pays full cost.{" "}
-              <span className="font-mono">95% hit-ratio working vs 0%</span> (20× redundant compute), invisible to a
-              correctness check.
-            </p>
-            <Link
-              href="/projects/silent-cache-miss"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Read the unit <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-
-          {/* columnar-scan bytes unit */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span aria-hidden="true">●</span> Shipped · Tier 4
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Columnar-scan bytes guardrail</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">columnar formats · storage · class E</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              A two-column query returns the right rows whether it reads 2 columns or all 12, so correctness passes a
-              full scan reading <span className="font-mono">44.7× the bytes</span>. The guardrail counts bytes, not rows.
-            </p>
-            <Link
-              href="/projects/columnar-scan-bytes-guardrail"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Read the unit <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-
-          {/* ingestion data-contract unit */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-              <span aria-hidden="true">●</span> Shipped · Tier 4
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">ELT · schema-drift · class G</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches drift that keeps the column present and non-null: a silent unit change reads revenue as{" "}
-              <span className="font-mono">$157k vs a true $299k</span>, zero errors, zero nulls. Schema/null checks pass
-              it; the contract doesn&rsquo;t.
-            </p>
-            <Link
-              href="/projects/ingestion-data-contract"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Read the unit <span aria-hidden="true">→</span>
-            </Link>
-          </article>
-
-          {/* the flagship atlas */}
-          <article className="flex flex-col rounded-lg border border-rule bg-bg-1/40 p-8">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-              <span aria-hidden="true">●</span> Flagship · in build
-            </div>
-            <h2 className="text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
-            <p className="mt-2 font-mono text-xs uppercase text-ink-2">the deep case study · ten units</p>
-            <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              One platform proving one claim: the classic MLOps loop still holds when the thing served is
-              an LLM agent, once you add a token/cost axis and a reasoning-trace artifact. Explore it as a
-              14-stop data lifecycle.
-            </p>
-            <Link
-              href="/projects/agentic-mlops"
-              className="focus-ring mt-6 inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
-            >
-              Open the atlas <span aria-hidden="true">→</span>
-            </Link>
-          </article>
         </div>
 
         <div className="mt-14 border-t border-rule pt-8">

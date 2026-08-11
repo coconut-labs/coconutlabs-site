@@ -59,6 +59,41 @@ export default function AgenticMlopsPage() {
         </div>
       </section>
 
+      <section className="content-band pt-0" aria-label="The story in three acts">
+        <div className="content-inner">
+          <p className="font-mono text-xs uppercase text-ink-2">the story, in three acts</p>
+          <ol className="mt-6 grid gap-4 md:grid-cols-3">
+            <li className="rounded-lg border border-rule bg-bg-1/60 p-6">
+              <p className="font-mono text-xs uppercase text-ink-2">Act 1 · Ship</p>
+              <p className="mt-2 text-base leading-7 text-ink-1">
+                An agent ships like any model: every version goes into a registry and must pass a
+                gate before it moves.
+              </p>
+            </li>
+            <li className="rounded-lg border border-rule bg-bg-1/60 p-6">
+              <p className="font-mono text-xs uppercase text-ink-2">Act 2 · Drift</p>
+              <p className="mt-2 text-base leading-7 text-ink-1">
+                Production drifts. A canary slice and monitoring on four axes, tokens and cost
+                included, catch it before users do.
+              </p>
+            </li>
+            <li className="rounded-lg border border-rule bg-bg-1/60 p-6">
+              <p className="font-mono text-xs uppercase text-ink-2">Act 3 · Recover</p>
+              <p className="mt-2 text-base leading-7 text-ink-1">
+                Rollback is a first-class path back to serving, and every run can be proved after
+                the fact from its traces.
+              </p>
+            </li>
+          </ol>
+          <p className="mt-6 max-w-[var(--measure)] text-base leading-7 text-ink-1">
+            The map below tells that story as fourteen stops and ten units. Click any station and
+            it lights up with who owns it and what that unit proves. Or press{" "}
+            <b className="font-semibold text-ink-0">Take the tour</b> for a guided walk through
+            seven stops.
+          </p>
+        </div>
+      </section>
+
       <section className="content-band pt-0">
         <div className="content-inner">
           <LifecycleMap />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./atlas.module.css";
 
 /* Data lifecycle — §4.2, fourteen stops. Loop-backs: 8→5 (late labels reshape
@@ -47,6 +47,49 @@ const UNITS: Unit[] = [
   { id: "U10", title: "Scale envelope", layer: "swe", tier: "T3", jd: "scalable microservice architectures", claim: "A documented capacity envelope names the actual binding constraint." },
 ];
 
+/* Guided tour — seven stations picked for narrative weight, in act order.
+   Every other station stays fully explorable outside the tour. */
+type TourTarget = { kind: "stop"; id: number } | { kind: "unit"; id: string };
+type TourStep = { target: TourTarget; act: 1 | 2 | 3; title: string; line: string; why: string };
+const ACT_NAMES: Record<1 | 2 | 3, string> = { 1: "Ship", 2: "Drift", 3: "Recover" };
+const TOUR: TourStep[] = [
+  {
+    target: { kind: "unit", id: "U1" }, act: 1, title: "Registry + lineage",
+    line: "Every agent version is registered, the same way any model artifact would be.",
+    why: "If a version is not in the registry it cannot ship, so nothing reaches users unexplained.",
+  },
+  {
+    target: { kind: "stop", id: 11 }, act: 1, title: "Gate",
+    line: "Before a version moves forward it must pass a fixed evaluation gate.",
+    why: "The gate turns \"looks good\" into a recorded pass or fail.",
+  },
+  {
+    target: { kind: "stop", id: 6 }, act: 2, title: "Serve",
+    line: "The gated version meets real traffic here.",
+    why: "This is the only stop users ever touch. Every later stop exists to protect it.",
+  },
+  {
+    target: { kind: "stop", id: 9 }, act: 2, title: "Monitor",
+    line: "Production drifts. Monitoring watches quality, latency, errors, and a fourth axis: tokens and cost.",
+    why: "An agent can fail while returning 200s. Token spend is often the first signal that gives it away.",
+  },
+  {
+    target: { kind: "stop", id: 12 }, act: 2, title: "Canary",
+    line: "A new version gets a small slice of traffic before it gets all of it.",
+    why: "A bad version hurts a few requests, not every user.",
+  },
+  {
+    target: { kind: "stop", id: 14 }, act: 3, title: "Roll back",
+    line: "Rollback is its own stop. It returns traffic to serve (stop 6) in one gated move.",
+    why: "Recovery that is a first-class path takes minutes, not a war room.",
+  },
+  {
+    target: { kind: "unit", id: "U7" }, act: 3, title: "Reasoning path",
+    line: "Every run can be rebuilt afterward from stored spans alone.",
+    why: "After an incident you can prove what the agent did, without keeping raw reasoning text.",
+  },
+];
+
 type Pin = { kind: "stop"; id: number } | { kind: "unit"; id: string } | null;
 
 export default function LifecycleMap() {
@@ -54,26 +97,125 @@ export default function LifecycleMap() {
   const [hoverStop, setHoverStop] = useState<number | null>(null);
   const [hoverUnit, setHoverUnit] = useState<string | null>(null);
   const [pin, setPin] = useState<Pin>(null);
+  const [tourIndex, setTourIndex] = useState<number | null>(null);
+  // "Every station, every claim" — open on desktop, closed on mobile (set on mount).
+  const [claimsOpen, setClaimsOpen] = useState(true);
 
-  const activeStop = hoverStop ?? (pin?.kind === "stop" ? pin.id : null);
-  const activeUnit = hoverUnit ?? (pin?.kind === "unit" ? pin.id : null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const startBtnRef = useRef<HTMLButtonElement | null>(null);
+  const stationRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const registerStation = (key: string) => (el: HTMLButtonElement | null) => {
+    if (el) stationRefs.current.set(key, el);
+    else stationRefs.current.delete(key);
+  };
+
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 767px)").matches) setClaimsOpen(false);
+  }, []);
+
+  const touring = tourIndex != null;
+  const tourStep = touring ? TOUR[tourIndex] : null;
+  const tourStopId = tourStep?.target.kind === "stop" ? tourStep.target.id : null;
+  const tourUnitId = tourStep?.target.kind === "unit" ? tourStep.target.id : null;
+
+  // The tour drives the highlight while active; hover/pin drive it otherwise.
+  const activeStop = touring ? tourStopId : hoverStop ?? (pin?.kind === "stop" ? pin.id : null);
+  const activeUnit = touring ? tourUnitId : hoverUnit ?? (pin?.kind === "unit" ? pin.id : null);
 
   const activeStopObj = STOPS.find((s) => s.n === activeStop) ?? null;
   const activeUnitObj = UNITS.find((u) => u.id === activeUnit) ?? null;
   const loopTargetN = activeStopObj?.loopTo ?? null;
   const stopsForActiveUnit = activeUnit ? STOPS.filter((s) => s.units.includes(activeUnit)).map((s) => s.n) : [];
 
-  const togglePin = (next: Pin) =>
+  const togglePin = (next: Pin) => {
+    // Clicking any station hands control back to free exploration.
+    if (touring) setTourIndex(null);
     setPin((cur) =>
       cur && next && cur.kind === next.kind && cur.id === next.id ? null : next
     );
+  };
+
+  const startTour = () => {
+    setPin(null);
+    setHoverStop(null);
+    setHoverUnit(null);
+    setTourIndex(0);
+  };
+  const exitTour = () => {
+    setTourIndex(null);
+    requestAnimationFrame(() => startBtnRef.current?.focus());
+  };
+  const tourNext = () => {
+    if (tourIndex == null) return;
+    if (tourIndex >= TOUR.length - 1) exitTour();
+    else setTourIndex(tourIndex + 1);
+  };
+  const tourBack = () => {
+    if (tourIndex == null) return;
+    if (tourIndex > 0) setTourIndex(tourIndex - 1);
+  };
+  const handleTourKeys = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") { e.preventDefault(); tourNext(); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); tourBack(); }
+    else if (e.key === "Escape") { e.preventDefault(); exitTour(); }
+  };
+
+  // Bring the current tour station into view. Reduced motion: jump, no panning.
+  useEffect(() => {
+    if (tourIndex == null) return;
+    const step = TOUR[tourIndex];
+    if (!step) return;
+    if (step.target.kind === "unit") setClaimsOpen(true);
+    const key = step.target.kind === "stop" ? `stop-${step.target.id}` : `unit-${step.target.id}`;
+    const raf = requestAnimationFrame(() => {
+      const el = stationRefs.current.get(key);
+      if (el) {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+      }
+      panelRef.current?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [tourIndex]);
+
+  // Escape exits even if focus has drifted off the panel.
+  useEffect(() => {
+    if (!touring) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setTourIndex(null);
+        requestAnimationFrame(() => startBtnRef.current?.focus());
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [touring]);
 
   return (
     <div className={styles.wrap}>
+      {/* Announces the current tour stop; lives outside the panel so it exists
+          before the first step renders. */}
+      <div aria-live="polite" className="sr-only">
+        {tourStep
+          ? `Tour stop ${(tourIndex ?? 0) + 1} of ${TOUR.length}: ${tourStep.title}. ${tourStep.line}`
+          : ""}
+      </div>
+
       <section aria-label="Data lifecycle map">
         <div className={styles.mapHead}>
           <h2 className={styles.mapTitle}>The data lifecycle, fourteen stops</h2>
-          <span className={styles.mapHint}>hover or tap a stop → the units that claim it · a unit → the stops it owns</span>
+          <div className={styles.mapControls}>
+            <button
+              type="button"
+              ref={startBtnRef}
+              className={styles.tourStart}
+              onClick={startTour}
+              aria-pressed={touring}
+            >
+              Take the tour
+            </button>
+            <span className={styles.mapHint}>seven stops · or hover / tap any station</span>
+          </div>
         </div>
         <ol className={styles.ribbon}>
           {STOPS.map((s) => {
@@ -81,15 +223,17 @@ export default function LifecycleMap() {
             const dim = activeUnit != null && !s.units.includes(activeUnit);
             const loopTarget = loopTargetN === s.n;
             const pinned = pin?.kind === "stop" && pin.id === s.n;
+            const tourFocus = tourStopId === s.n;
             return (
               <li key={s.n} className="list-none">
                 <button
                   type="button"
+                  ref={registerStation(`stop-${s.n}`)}
                   aria-pressed={pinned}
-                  className={`${styles.stop} ${lit ? styles.lit : ""} ${loopTarget ? styles.loopTarget : ""} ${dim ? styles.dim : ""}`}
-                  onMouseEnter={() => setHoverStop(s.n)}
+                  className={`${styles.stop} ${lit ? styles.lit : ""} ${loopTarget ? styles.loopTarget : ""} ${dim ? styles.dim : ""} ${tourFocus ? styles.tourFocus : ""}`}
+                  onMouseEnter={() => !touring && setHoverStop(s.n)}
                   onMouseLeave={() => setHoverStop(null)}
-                  onFocus={() => setHoverStop(s.n)}
+                  onFocus={() => !touring && setHoverStop(s.n)}
                   onBlur={() => setHoverStop(null)}
                   onClick={() => togglePin({ kind: "stop", id: s.n })}
                   aria-label={`Stop ${s.n}, ${s.name}. Claimed by ${s.units.join(", ")}.${s.loopTo ? ` Loops back to stop ${s.loopTo}.` : ""}`}
@@ -107,10 +251,7 @@ export default function LifecycleMap() {
             );
           })}
         </ol>
-      </section>
-
-      <section aria-label="Units by layer">
-        <div className={styles.claimRow} aria-live="polite">
+        <div className={styles.claimRow} aria-live={touring ? "off" : "polite"}>
           {activeUnitObj ? (
             <span>
               <b>{activeUnitObj.id}</b> claims stops {stopsForActiveUnit.join(", ")}: {activeUnitObj.claim}
@@ -124,50 +265,98 @@ export default function LifecycleMap() {
             <span>Ten units, one per JD requirement. Each is built and written before the next starts.</span>
           )}
         </div>
-        <div className={styles.layers}>
-          {LAYERS.map((layer) => {
-            const units = UNITS.filter((u) => u.layer === layer.key);
-            return (
-              <div key={layer.key} className={styles.layer}>
-                <div className={styles.layerHead}>
-                  <span className={`${styles.glyph} ${layer.glyph ?? ""}`} aria-hidden />
-                  <span className={styles.layerName}>{layer.name}</span>
-                  <span className={styles.layerMeta}>{layer.blurb}</span>
-                </div>
-                <div className={styles.layerUnits}>
-                  {units.map((u) => {
-                    const active =
-                      activeUnit === u.id || (activeStop != null && (STOPS.find((s) => s.n === activeStop)?.units.includes(u.id) ?? false));
-                    const pinned = pin?.kind === "unit" && pin.id === u.id;
-                    return (
-                      <button
-                        type="button"
-                        key={u.id}
-                        aria-pressed={pinned}
-                        className={`${styles.unit} ${active ? styles.unitActive : ""}`}
-                        onMouseEnter={() => setHoverUnit(u.id)}
-                        onMouseLeave={() => setHoverUnit(null)}
-                        onFocus={() => setHoverUnit(u.id)}
-                        onBlur={() => setHoverUnit(null)}
-                        onClick={() => togglePin({ kind: "unit", id: u.id })}
-                        aria-label={`${u.id} ${u.title}, target ${u.tier}. ${u.claim}`}
-                      >
-                        <span className={styles.unitTop}>
-                          <span className={styles.unitId}>{u.id}</span>
-                          <span className={styles.unitTitle}>{u.title}</span>
-                          <span className={styles.tier} title="target evaluation tier (§12)">{u.tier}</span>
-                        </span>
-                        <span className={styles.unitClaim}>{u.claim}</span>
-                        <span className={styles.unitJd}>JD · {u.jd}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </div>
       </section>
+
+      {/* Progressive disclosure: the full per-unit claim index. Open on desktop,
+          closed on mobile. Nothing removed; the tour opens it when it needs to. */}
+      <details
+        className={styles.claims}
+        open={claimsOpen}
+        onToggle={(e) => setClaimsOpen(e.currentTarget.open)}
+      >
+        <summary className={styles.claimsSummary}>
+          <span className={styles.claimsTitle}>Every station, every claim</span>
+          <span className={styles.claimsMeta}>ten units across four layers · each carries one falsifiable claim</span>
+        </summary>
+        <section aria-label="Units by layer">
+          <div className={styles.layers}>
+            {LAYERS.map((layer) => {
+              const units = UNITS.filter((u) => u.layer === layer.key);
+              return (
+                <div key={layer.key} className={styles.layer}>
+                  <div className={styles.layerHead}>
+                    <span className={`${styles.glyph} ${layer.glyph ?? ""}`} aria-hidden />
+                    <span className={styles.layerName}>{layer.name}</span>
+                    <span className={styles.layerMeta}>{layer.blurb}</span>
+                  </div>
+                  <div className={styles.layerUnits}>
+                    {units.map((u) => {
+                      const active =
+                        activeUnit === u.id || (activeStop != null && (STOPS.find((s) => s.n === activeStop)?.units.includes(u.id) ?? false));
+                      const pinned = pin?.kind === "unit" && pin.id === u.id;
+                      const tourFocus = tourUnitId === u.id;
+                      return (
+                        <button
+                          type="button"
+                          key={u.id}
+                          ref={registerStation(`unit-${u.id}`)}
+                          aria-pressed={pinned}
+                          className={`${styles.unit} ${active ? styles.unitActive : ""} ${tourFocus ? styles.tourFocus : ""}`}
+                          onMouseEnter={() => !touring && setHoverUnit(u.id)}
+                          onMouseLeave={() => setHoverUnit(null)}
+                          onFocus={() => !touring && setHoverUnit(u.id)}
+                          onBlur={() => setHoverUnit(null)}
+                          onClick={() => togglePin({ kind: "unit", id: u.id })}
+                          aria-label={`${u.id} ${u.title}, target ${u.tier}. ${u.claim}`}
+                        >
+                          <span className={styles.unitTop}>
+                            <span className={styles.unitId}>{u.id}</span>
+                            <span className={styles.unitTitle}>{u.title}</span>
+                            <span className={styles.tier} title="target evaluation tier (§12)">{u.tier}</span>
+                          </span>
+                          <span className={styles.unitClaim}>{u.claim}</span>
+                          <span className={styles.unitJd}>JD · {u.jd}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </details>
+
+      {tourStep && (
+        <div
+          ref={panelRef}
+          tabIndex={-1}
+          role="group"
+          aria-label="Guided tour"
+          className={styles.tourPanel}
+          onKeyDown={handleTourKeys}
+        >
+          <p className={styles.tourMeta}>
+            Stop {(tourIndex ?? 0) + 1} of {TOUR.length} · Act {tourStep.act} · {ACT_NAMES[tourStep.act]}
+          </p>
+          <p className={styles.tourLine}>
+            <b>{tourStep.title}.</b> {tourStep.line}
+          </p>
+          <p className={styles.tourWhy}>Why it matters: {tourStep.why}</p>
+          <div className={styles.tourNav}>
+            <button type="button" className={styles.tourBtn} onClick={tourBack} disabled={tourIndex === 0}>
+              ← Back
+            </button>
+            <button type="button" className={`${styles.tourBtn} ${styles.tourBtnPrimary}`} onClick={tourNext}>
+              {tourIndex === TOUR.length - 1 ? "Finish" : "Next →"}
+            </button>
+            <button type="button" className={styles.tourBtn} onClick={exitTour}>
+              Exit
+            </button>
+            <span className={styles.tourKeys}>arrow keys move · Esc exits</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
