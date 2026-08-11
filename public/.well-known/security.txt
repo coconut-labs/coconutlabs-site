@@ -1,0 +1,7 @@
+# Security disclosure for Coconut Labs (coconutlabs.org and subdomains)
+Contact: mailto:info@coconutlabs.org
+Contact: mailto:shreypatel@coconutlabs.org
+Expires: 2027-08-11T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://coconutlabs.org/.well-known/security.txt
+Policy: https://coconutlabs.org/contact
