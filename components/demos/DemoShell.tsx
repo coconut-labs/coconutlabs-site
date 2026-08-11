@@ -49,7 +49,7 @@ export default function DemoShell({
   footnote?: ReactNode;
 }) {
   return (
-    <section className="rounded-lg border border-rule bg-bg-1/60">
+    <section data-testid="demo-shell" className="rounded-lg border border-rule bg-bg-1/60">
       <div className="border-b border-rule p-5 md:p-7">
         <p className="font-mono text-xs uppercase text-ink-2">scenario sandbox</p>
         <p className="mt-2 max-w-2xl text-base leading-7 text-ink-1">{scenario}</p>
@@ -59,7 +59,11 @@ export default function DemoShell({
         <div className="mt-3">{controls}</div>
 
         {/* outcome banner: always mounted so the live region announces changes */}
-        <div aria-live="polite" className={`mt-6 rounded-sm border p-4 md:p-5 ${TONE_BOX[outcome.tone]}`}>
+        <div
+          data-testid="demo-outcome"
+          aria-live="polite"
+          className={`mt-6 rounded-sm border p-4 md:p-5 ${TONE_BOX[outcome.tone]}`}
+        >
           <p className={`font-mono text-xs uppercase tracking-wide ${TONE_TEXT[outcome.tone]}`}>
             <span aria-hidden="true">{GLYPH[outcome.tone]}</span> {outcome.label}
           </p>
