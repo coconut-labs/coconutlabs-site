@@ -28,7 +28,7 @@ export default function ColophonPage() {
         </p>
         <div className="mt-16">
           <ColophonSection title="Type">
-            <p>Instrument Serif for display, Fraunces for editorial body copy, Geist for interface text, and Geist Mono for metadata.</p>
+            <p>Geist for display, body, and interface text; Geist Mono for labels, numbers, and code. One family, locked in the design system.</p>
           </ColophonSection>
           <ColophonSection title="Stack">
             <p>Next.js App Router, React, TypeScript, Tailwind CSS, MDX content files, Playwright, Vitest, axe-core, and Lighthouse CI.</p>

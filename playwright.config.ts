@@ -39,7 +39,11 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev -- --hostname 127.0.0.1 --port 3000",
+    // Production server: `next dev` injects the dev-tools indicator into
+    // rendered pages, which contaminated visual baselines. test:all builds
+    // before running playwright; run `npm run build` first if invoking
+    // playwright directly.
+    command: "npx next start --hostname 127.0.0.1 --port 3000",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

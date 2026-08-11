@@ -3,18 +3,8 @@ import { loadResearchFeed } from "@/lib/content";
 
 // Direction A status strip: full width, directly under the header. Leads
 // with a live dot, items separated by middle dots, everything mono and
-// quiet. This replaced the LiveSignalsStrip that used to sit at the page
-// bottom where nobody scrolled.
-function relativeDate(date: string): string {
-  const diffMs = Date.now() - new Date(date).getTime();
-  const days = Math.max(0, Math.round(diffMs / 86_400_000));
-  if (days === 0) return "today";
-  if (days === 1) return "1 day ago";
-  if (days < 7) return `${days} days ago`;
-  const weeks = Math.round(days / 7);
-  return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`;
-}
-
+// quiet. Dates are absolute: relative dates rot visual baselines daily and
+// carry less information.
 export async function StatusStrip() {
   const [signals, feed] = await Promise.all([getRepoSignals(), loadResearchFeed()]);
   const latest = feed[0];
@@ -22,7 +12,7 @@ export async function StatusStrip() {
   const items = [
     `${signals.commitsThisWeek} commits this week`,
     `${signals.repos} repos tracked`,
-    latest ? `latest note ${relativeDate(latest.date)}` : "",
+    latest ? `latest note ${latest.date}` : "",
     "kvwarden v0.1.6 on pypi",
   ].filter(Boolean);
 
