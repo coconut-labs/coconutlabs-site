@@ -62,6 +62,11 @@ export default function ColumnarScanPage() {
         <div className="mt-14 border-t border-rule">
           <h2 className="sr-only">Go deeper</h2>
 
+          <Disclosure summary="Watch the walkthrough (45 s, silent)">
+            <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/columnar-scan-walkthrough.webm" />
+            <p className="mt-2 font-mono text-[10.5px] text-ink-2">The same query reading 2 columns or all 12 · recorded from this page, unedited.</p>
+          </Disclosure>
+
           <Disclosure summary="The measured result: 44.7x over-read" defaultOpenDesktop>
             <p className="max-w-2xl font-mono text-lg leading-relaxed text-ink-0">
               The query returns the <span className="text-accent">right rows</span>. It just read the whole table to get

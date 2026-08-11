@@ -96,6 +96,20 @@ export default function AgenticMlopsPage() {
 
       <section className="content-band pt-0">
         <div className="content-inner">
+          <details className="group rounded-sm border border-rule bg-bg-1">
+            <summary className="focus-ring flex cursor-pointer items-center gap-2 p-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2">
+              Watch the walkthrough (45 s, silent)
+            </summary>
+            <div className="border-t border-[var(--hair)] p-4">
+              <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/atlas-tour-walkthrough.webm" />
+              <p className="mt-2 font-mono text-[10.5px] text-ink-2">The guided tour, seven stops through the lifecycle · recorded from this page, unedited.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section className="content-band pt-0">
+        <div className="content-inner">
           <LifecycleMap />
           <div className="mt-14 flex flex-wrap gap-6 border-t border-rule pt-8 font-mono text-sm">
             <Link href="/projects/gallery" className="focus-ring rounded-sm text-accent hover:opacity-80">

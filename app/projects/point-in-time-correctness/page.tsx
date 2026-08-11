@@ -62,6 +62,11 @@ export default function PointInTimePage() {
         <div className="mt-14 border-t border-rule">
           <h2 className="sr-only">Go deeper</h2>
 
+          <Disclosure summary="Watch the walkthrough (45 s, silent)">
+            <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/point-in-time-walkthrough.webm" />
+            <p className="mt-2 font-mono text-[10.5px] text-ink-2">The leaky join scored against the as-of join · recorded from this page, unedited.</p>
+          </Disclosure>
+
           <Disclosure summary="The measured result: AUC 0.999 vs 0.771" defaultOpenDesktop>
             <p className="max-w-2xl font-mono text-lg leading-relaxed text-ink-0">
               The one bug where offline accuracy goes <span className="text-accent">up</span>. So accuracy can&rsquo;t

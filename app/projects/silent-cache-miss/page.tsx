@@ -61,6 +61,11 @@ export default function SilentCacheMissPage() {
         <div className="mt-14 border-t border-rule">
           <h2 className="sr-only">Go deeper</h2>
 
+          <Disclosure summary="Watch the walkthrough (45 s, silent)">
+            <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/silent-cache-miss-walkthrough.webm" />
+            <p className="mt-2 font-mono text-[10.5px] text-ink-2">Four cache keys, one honest hit rate · recorded from this page, unedited.</p>
+          </Disclosure>
+
           <Disclosure summary="The measured result: 95% vs 0% hits" defaultOpenDesktop>
             <p className="max-w-2xl font-mono text-lg leading-relaxed text-ink-0">
               A cache with a key bug still returns the <span className="text-accent">right answer</span>. It just never
