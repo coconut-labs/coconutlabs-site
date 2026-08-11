@@ -18,9 +18,37 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      # The locked design system's mechanical gate. Blocking: raw hex, em
+      # dashes in prose, icon libraries, radius literals, retired palette.
+      - run: npm run lint:design
       - run: npm run test
       - run: npm run build
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:e2e
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+
+  visual:
+    # Pixel gate. Baselines are platform-suffixed; committed baselines are
+    # darwin (the local hard gate). This linux leg runs the same spec and
+    # uploads diffs as artifacts; it becomes blocking once linux baselines
+    # are committed. See docs/design-system.md section 8.
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:visual
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-diffs
+          path: test-results/
+          retention-days: 7
