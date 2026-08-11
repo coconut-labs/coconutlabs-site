@@ -35,7 +35,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "motion"],
+    optimizePackageImports: ["motion"],
   },
   async redirects() {
     return [
@@ -43,6 +43,11 @@ const nextConfig: NextConfig = {
       { source: "/papers",        destination: "/research?type=papers",    permanent: true },
       { source: "/podcasts",      destination: "/research?type=podcasts",  permanent: true },
       { source: "/projects/weft", destination: "/projects/mlxd",           permanent: true },
+      // coconutos.org is the standalone Coconut OS landing; these catch
+      // on-site guesses at it.
+      { source: "/coconut-os",         destination: "/projects/coconut-os", permanent: true },
+      { source: "/coconutos",          destination: "/projects/coconut-os", permanent: true },
+      { source: "/projects/coconutos", destination: "/projects/coconut-os", permanent: true },
       // Umbrella affordances: memorable paths on the main domain that hand
       // off to the gated library and the masterclass subdomains.
       { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },

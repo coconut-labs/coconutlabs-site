@@ -62,6 +62,16 @@ Text.`,
     expect(project.outbound).toBe("https://kvwarden.org");
   });
 
+  it("loads coconut-os as research pointing at coconutos.org", async () => {
+    const project = await loadProject("coconut-os");
+    expect(project.status).toBe("research");
+    // Red line: `result` renders huge in ProjectHero — no dates, pricing, or
+    // metrics in it, and no pinning of exact copy here.
+    expect(project.result).toBeTruthy();
+    expect(project.result).not.toMatch(/[0-9$%]/);
+    expect(project.outbound).toBe("https://coconutos.org");
+  });
+
   it("loads both founders", async () => {
     const people = await loadPeople();
     expect(people.map((person) => person.name)).toEqual(["Shrey Patel", "Jay Patel"]);

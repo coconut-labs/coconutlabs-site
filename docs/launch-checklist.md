@@ -36,6 +36,7 @@
 
 - [ ] Vercel production deploy.
 - [ ] Cloudflare DNS confirmation.
+- [ ] Pick the primary Vercel host: apex 307s to www while canonicals, OG, and sitemap mint apex.
 - [ ] GitHub `GITHUB_PAT` secret for live signals, if private/rate-limit-proof fetches are needed.
 
 ## Content sign-off

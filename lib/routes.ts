@@ -16,10 +16,11 @@ export const ROUTES: RouteEntry[] = [
   { href: "/contact",  label: "Contact",  nav: true },
 
   // Hub-internal (URL-stable, not in top nav)
-  { href: "/research/[slug]",   label: "Research post" },
-  { href: "/projects/kvwarden", label: "KVWarden" },
-  { href: "/projects/mlxd",     label: "mlxd" },
-  { href: "/projects/gallery",  label: "Hall of demos" },
+  { href: "/research/[slug]",     label: "Research post" },
+  { href: "/projects/kvwarden",   label: "KVWarden" },
+  { href: "/projects/mlxd",       label: "mlxd" },
+  { href: "/projects/coconut-os", label: "Coconut OS" },
+  { href: "/projects/gallery",    label: "Hall of demos" },
   { href: "/projects/agentic-mlops", label: "Agentic MLOps atlas" },
   { href: "/projects/silent-data-regression-guardrail", label: "Silent data-regression guardrail" },
   { href: "/projects/point-in-time-correctness", label: "Point-in-time correctness guardrail" },
