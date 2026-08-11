@@ -95,7 +95,7 @@ export default function PointInTimePage() {
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
             <b>Schema validation checks the shape.</b> A leaky training table and a correct one have identical
-            columns and types, the leak is in <em>which value</em> got joined, not the schema. It passes.
+            columns and types; the leak is in <em>which value</em> got joined, not the schema. It passes.
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>Offline accuracy is actively misleading.</b> The leak <em>raises</em> the score, so the metric you use

@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Schema-drift contract guardrail · Coconut Labs",
   description:
-    "Silent schema drift keeps the column present and non-null, so schema, null, and row-count checks all pass, and the number downstream goes quietly wrong. A pinned data contract catches it.",
+    "Silent schema drift keeps a column present and non-null, so standard checks pass while the number goes quietly wrong. A pinned data contract catches it.",
   path: "/projects/ingestion-data-contract",
 });
 
@@ -140,7 +140,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
         <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           The contract&rsquo;s categorical domains are declared, so a genuinely new-but-legitimate category reads as a drift
-          until the contract is updated, that friction is the point, but it is friction. The magnitude and precision bands
+          until the contract is updated; that friction is the point, but it is friction. The magnitude and precision bands
           are fitted from a golden sample and tuned for this table; production needs per-column tuning. And the hardest
           drift class is out of reach of any per-column contract: a <em>cross-field</em> one, say, amounts that stop being
           normalized to a common currency while every column stays in its own domain, corrupts the sum with no new value

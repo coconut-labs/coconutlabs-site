@@ -125,7 +125,7 @@ export default function Demo() {
       </div>
 
       <p className="mt-5 font-mono text-[0.7rem] leading-5 text-ink-2">
-        The workload, cache and both checks are live and deterministic, the same logic as the Python run above, verified
+        The workload, cache, and both checks are live and deterministic, the same logic as the Python run above, verified
         by <span className="text-ink-1">web/parity-check.mts</span> (PARITY OK, identical hit ratios).
       </p>
     </div>

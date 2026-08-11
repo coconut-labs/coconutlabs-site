@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "The gallery · Coconut Labs",
   description:
-    "One method at two scales: a deep MLOps platform, and small measured prototypes each reverse-engineering a real company's data-systems bottleneck.",
+    "One method at two scales: a deep MLOps platform and small measured prototypes, each reverse-engineering a real company's data-systems bottleneck.",
   path: "/projects/gallery",
 });
 
@@ -29,7 +29,7 @@ export default function GalleryPage() {
         <p className="mt-8 max-w-2xl text-lg leading-8 text-ink-1">
           One method at two scales: a deep case study (an agentic MLOps platform, built and
           measured end to end) plus small free-standing prototypes, each reverse-engineering one
-          company&rsquo;s publicly-stated data-systems bottleneck and solving a slice of it, honestly
+          company&rsquo;s publicly stated data-systems bottleneck and solving a slice of it, honestly
           measured. Same unit contract, same evidence tiers, so the reader sees one discipline
           applied at two densities, not a pile of demos.
         </p>
@@ -114,7 +114,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Silent cache-miss guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">prompt caching · throughput · class C</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches a cache that silently never hits, functional tests pass, every request pays full cost.{" "}
+              Catches a cache that silently never hits: functional tests pass, every request pays full cost.{" "}
               <span className="font-mono">95% hit-ratio working vs 0%</span> (20× redundant compute), invisible to a
               correctness check.
             </p>
@@ -153,7 +153,7 @@ export default function GalleryPage() {
             <h2 className="text-3xl leading-tight text-ink-0">Ingestion data-contract guardrail</h2>
             <p className="mt-2 font-mono text-xs uppercase text-ink-2">ELT · schema-drift · class G</p>
             <p className="mt-5 flex-1 text-base leading-7 text-ink-1">
-              Catches drift that keeps the column present and non-null, a silent unit change reads revenue as{" "}
+              Catches drift that keeps the column present and non-null: a silent unit change reads revenue as{" "}
               <span className="font-mono">$157k vs a true $299k</span>, zero errors, zero nulls. Schema/null checks pass
               it; the contract doesn&rsquo;t.
             </p>

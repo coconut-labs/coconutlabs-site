@@ -4,7 +4,7 @@ import { CopyCommand } from "./CopyCommand";
 export const metadata = buildMetadata({
   title: "Benchmarks · Coconut Labs",
   description:
-    "The lab's public proof page. Every number carries its hardware, sample count, and methodology, and links the raw artifact that produced it.",
+    "The lab's public proof page. Every number carries its hardware, sample count, and methodology, and links to the raw artifact that produced it.",
   path: "/benchmarks",
 });
 
@@ -47,7 +47,7 @@ export default function BenchmarksPage() {
 
         <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
           One rule holds everywhere on this page: a number without its hardware, sample count, and
-          methodology is not a result. Every figure below carries all three and links the raw
+          methodology is not a result. Every figure below carries all three and links to the raw
           artifact that produced it.
         </p>
 
@@ -106,8 +106,8 @@ export default function BenchmarksPage() {
             <h2 className="font-mono text-[11px] uppercase tracking-[0.14em] text-danger">what this does not show</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-ink-1">
               <li>The starvation regime is A100-at-saturation. On H100 at the same offered load, FIFO does not starve, so the mechanism runs clean but is not stressed.</li>
-              <li>An earlier run on vLLM 0.8.5 measured 523× starvation. The v1 batcher absorbs cold-start backpressure better; 29× is the honest steady-state number and the only one we cite.</li>
-              <li>Full-bench p99 for the kvwarden arm is 1,230 ms including the warmup transient. The 61.5 ms hero is post-warmup by stated method, not by trimming inconvenient data silently.</li>
+              <li>An earlier run on vLLM 0.8.5 measured 523× starvation. The v1 batcher absorbs cold-start backpressure better; 26× is the honest steady-state number and the only one we cite.</li>
+              <li>Full-bench p99 for the KVWarden arm is 1,230 ms including the warmup transient. The 61.5 ms hero is post-warmup by stated method, not by trimming inconvenient data silently.</li>
               <li>Flooder rejections are the mechanism working: 6,488 requests got 429, by design.</li>
             </ul>
           </div>

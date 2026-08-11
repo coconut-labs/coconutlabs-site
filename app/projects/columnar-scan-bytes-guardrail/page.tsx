@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Columnar scan / bytes-read guardrail · Coconut Labs",
   description:
-    "A two-column query that scans the whole table returns the right rows, so correctness checks pass while it reads 40x the bytes. This reads the bytes, not the rows.",
+    "A two-column query that scans the whole table returns the right rows, so correctness passes a 44.7x over-read. This counts the bytes, not the rows.",
   path: "/projects/columnar-scan-bytes-guardrail",
 });
 
@@ -43,7 +43,7 @@ export default function ColumnarScanPage() {
 
         <p className="mt-14 font-mono text-[clamp(1.4rem,3vw,2.4rem)] leading-tight text-ink-0">
           The query returns the <span className="text-accent">right rows</span>. It just read the whole table to get
-          two columns &mdash; and nothing that checks correctness can see it.
+          two columns, and nothing that checks correctness can see it.
         </p>
 
         {/* three-way scorecard, the hero */}
@@ -82,7 +82,7 @@ export default function ColumnarScanPage() {
           <p className="mt-5 font-mono text-xs leading-6 text-ink-2">
             Both reads return the identical <span className="text-ink-1">18 groups</span>. The full scan pulled{" "}
             <span className="text-ink-1">8.6 MB</span> through the reader to do it; the projected read pulled{" "}
-            <span className="text-ink-1">192 KB</span> &mdash; <span className="text-ink-1">44.7x</span> less, measured on
+            <span className="text-ink-1">192 KB</span>, <span className="text-ink-1">44.7x</span> less, measured on
             a real Parquet file. Against a row-oriented CSV of the same data it is <span className="text-ink-1">460x</span>.
           </p>
         </div>
@@ -102,8 +102,8 @@ export default function ColumnarScanPage() {
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>The cost is invisible until it scales.</b> On a laptop file it is a warm-cache blip; on a wide table in
-            object storage it is the bill and the latency. A row layout &mdash; or a columnar file read without projection
-            pushdown &mdash; reads every column to answer a two-column question.
+            object storage it is the bill and the latency. A row layout (or a columnar file read without projection
+            pushdown) reads every column to answer a two-column question.
           </li>
         </ul>
         <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
@@ -124,7 +124,7 @@ guardrail: flag when bytes_read > tolerance x projection_budget`}
         {/* evidence */}
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          Tier 4 &mdash; a real off-the-shelf control. The harness writes a real Parquet file and a real CSV, then counts
+          Tier 4, a real off-the-shelf control. The harness writes a real Parquet file and a real CSV, then counts
           the bytes physically pulled through the reader (pre-buffering off) for the same query three ways. The
           instrumented projected read (192 KB) is cross-checked against the file&rsquo;s own column-chunk metadata
           (130 KB floor), so the number is I/O, not buffer coalescing. Synthetic table (read-amplification needs a
@@ -137,15 +137,15 @@ guardrail: flag when bytes_read > tolerance x projection_budget`}
         {/* gaps */}
         <h2 className="mt-16 text-2xl text-ink-0">Honest gaps</h2>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
-          The dataset is synthetic and deterministic (<span className="font-mono text-sm">seed=7</span>) &mdash; showing
+          The dataset is synthetic and deterministic (<span className="font-mono text-sm">seed=7</span>): showing
           read amplification needs a controlled row width, so the numbers are on a designed table, but the failure mode is
-          real and cited. The <span className="text-ink-1">44.7x</span> is projection isolated &mdash; same file, same
-          compression on both sides &mdash; and reflects projecting two low-cardinality dict-encoded columns; project a fat
+          real and cited. The <span className="text-ink-1">44.7x</span> is projection isolated (same file, same
+          compression on both sides) and reflects projecting two low-cardinality dict-encoded columns; project a fat
           string column like <span className="font-mono text-sm">url</span> and the ratio shrinks. The{" "}
           <span className="text-ink-1">460x</span> CSV figure additionally includes compression, so it is a second axis,
           not a like-for-like projection number. The guardrail covers <em>projection</em> (columns read); predicate
           pushdown / row-group skipping is a second mechanism with its own failure modes and is deliberately out of scope.
-          The live browser demo uses the integer read model &mdash; the real compression and encoding effects live only in
+          The live browser demo uses the integer read model; the real compression and encoding effects live only in
           the measured Parquet numbers, never in the model, so Python and the TypeScript port agree to the byte.
         </p>
 

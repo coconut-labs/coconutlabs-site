@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildMetadata({
   title: "The Library",
   description:
-    "The private study practice behind the lab: a systems atlas, a practice shelf, and essays. What it is, how it works, and the parts that surface publicly as research notes.",
+    "The private study practice behind the lab: a systems atlas, a study shelf, and essays. The parts worth publishing surface as research notes.",
 });
 
 const wings = [
@@ -32,7 +32,7 @@ export default function LibraryPage() {
       <h1 className="mt-3 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em] text-ink-0">The Library</h1>
       <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-1">
         The lab publishes measurements. The Library is where the understanding gets built first: one
-        private study practice, three wings, one rule. Go one level below what the job requires,
+        private study practice, two wings, one rule. Go one level below what the job requires,
         every day, and write it down well enough to teach.
       </p>
 

@@ -4,7 +4,7 @@ import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Projects · Coconut Labs",
-  description: "One lab, several surfaces. kvwarden.org and coconutos.org are separate domains for now, but everything here is Coconut Labs. Plus the small things that keep the lab honest.",
+  description: "The lab's projects: KVWarden, mlxd, Coconut OS, the hall of demos, and the smaller tools behind the public work. One lab, several surfaces.",
   path: "/projects",
 });
 

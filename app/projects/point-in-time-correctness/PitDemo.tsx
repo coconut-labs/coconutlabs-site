@@ -80,7 +80,7 @@ export default function PitDemo() {
         </div>
         <p className="mt-3 font-mono text-[0.72rem] leading-5 text-ink-2">
           {flagged
-            ? `${leaked}/${rows.length} rows use a feature from after the label, the leaky join time-travels. A schema check passes this; offline accuracy rewards it.`
+            ? `${leaked}/${rows.length} rows use a feature from after the label; the leaky join time-travels. A schema check passes this; offline accuracy rewards it.`
             : `0/${rows.length} rows use a future feature. Every feature was available when its label was recorded.`}
         </p>
       </div>

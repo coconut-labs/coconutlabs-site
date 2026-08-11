@@ -54,8 +54,8 @@ export default function GuardrailUnitPage() {
           </p>
         </div>
         <p className="mt-6 max-w-2xl font-mono text-xs leading-6 text-ink-2">
-          An independent prototype inspired by a publicly-stated problem. Not affiliated with, or a replica of, any
-          proprietary system, the title names the problem, never a company&rsquo;s internals.
+          An independent prototype inspired by a publicly stated problem. Not affiliated with, or a replica of, any
+          proprietary system; the title names the problem, never a company&rsquo;s internals.
         </p>
 
         {/* claim */}
@@ -145,7 +145,7 @@ export default function GuardrailUnitPage() {
         <h2 className="mt-16 text-3xl text-ink-0">Evidence</h2>
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4, a controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
-          strict statistical config was <em>disqualified</em> for false-positing on clean holdout; that&rsquo;s recorded,
+          strict statistical config was <em>disqualified</em> for false positives on clean holdout; that&rsquo;s recorded,
           not hidden. Reproduce it yourself:
         </p>
         <pre className="mt-5 overflow-x-auto rounded-lg border border-rule bg-bg-2/50 p-5 font-mono text-sm text-ink-1">

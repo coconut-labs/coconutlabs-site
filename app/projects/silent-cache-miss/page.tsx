@@ -5,7 +5,7 @@ import Demo from "./Demo";
 export const metadata = buildMetadata({
   title: "Silent cache-miss guardrail · Coconut Labs",
   description:
-    "A cache with a key bug returns correct answers and passes every functional test while never hitting, paying full cost on every request. A hit-ratio guardrail catches it.",
+    "A cache with a key bug returns correct answers while never hitting, so functional tests pass and every request pays full cost. A hit-ratio guardrail catches it.",
   path: "/projects/silent-cache-miss",
 });
 
@@ -94,9 +94,9 @@ export default function SilentCacheMissPage() {
         <h2 className="mt-16 text-3xl text-ink-0">Why the functional test can&rsquo;t see it</h2>
         <ul className="mt-6 max-w-2xl space-y-4 text-lg leading-8 text-ink-1">
           <li className="border-l-2 border-rule pl-5">
-            <b>The answer is computed from the query, not the cache.</b> A wrong cache key never produces a wrong result
-           , on a miss the system recomputes correctly. So a test that checks outputs passes whether the cache hit or
-            not.
+            <b>The answer is computed from the query, not the cache.</b> A wrong cache key never produces a wrong
+            result; on a miss the system recomputes correctly. So a test that checks outputs passes whether the cache
+            hit or not.
           </li>
           <li className="border-l-2 border-rule pl-5">
             <b>The failure is silent by design.</b> Below the minimum length the provider declines to store and returns
@@ -122,8 +122,9 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
         <p className="mt-4 max-w-2xl font-mono text-xs leading-6 text-ink-2">
           Tier 4, one warm workload run through four key configs, scored by the guardrail and by a real functional
           correctness test. The functional test is the sharp part: the thing teams trust to validate a cache passes
-          every silently-broken config. Anchored on Python&rsquo;s own <span className="text-ink-1">functools.lru_cache</span>{" "}
-         , a real off-the-shelf cache, whose <span className="text-ink-1">cache_info()</span> shows the identical miss
+          every silently broken config. Anchored on Python&rsquo;s own{" "}
+          <span className="text-ink-1">functools.lru_cache</span>, a real off-the-shelf cache, whose{" "}
+          <span className="text-ink-1">cache_info()</span> shows the identical miss
           (0 hits / 240 on the volatile key). Synthetic workload; the repetition is known by construction, stated on the
           page.
         </p>

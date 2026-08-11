@@ -113,7 +113,7 @@ export default function LifecycleMap() {
         <div className={styles.claimRow} aria-live="polite">
           {activeUnitObj ? (
             <span>
-              <b>{activeUnitObj.id}</b> claims stops {stopsForActiveUnit.join(", ")}, {activeUnitObj.claim}
+              <b>{activeUnitObj.id}</b> claims stops {stopsForActiveUnit.join(", ")}: {activeUnitObj.claim}
             </span>
           ) : activeStopObj ? (
             <span>

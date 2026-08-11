@@ -11,7 +11,7 @@ const STARTING_PATHS = [
   {
     title: "Reproduce Gate 2 on your own hardware.",
     body:
-      "The Gate 2 numbers (53.9 ms solo, 61.5 ms under flooder, 26× better than FIFO) were measured on A100 with vLLM 0.19.1. Re-run the harness on different hardware, H100, L40S, MI300X, even a 4090, and open a PR with your traces and a one-page note. The harness is at coconut-labs/kvwarden/bench/. Reproductions on hardware we do not own are the most useful contribution we can receive right now.",
+      "The Gate 2 numbers (53.9 ms solo, 61.5 ms under flooder, 26× better than FIFO) were measured on A100 with vLLM 0.19.1. Re-run the harness on different hardware (H100, L40S, MI300X, even a 4090) and open a PR with your traces and a one-page note. The harness is at coconut-labs/kvwarden/bench/. Reproductions on hardware we do not own are the most useful contribution we can receive right now.",
   },
   {
     title: "Run the H100 saturation case.",
@@ -26,7 +26,7 @@ const STARTING_PATHS = [
   {
     title: "Find a failure mode in the fairness claim.",
     body:
-      "The Gate 2 result is narrow on purpose: one quiet tenant, one flooder, one trace shape. Construct a workload where KVWarden does worse than FIFO, different arrival distributions, adversarial prompt lengths, mixed model sizes. We will publish the counter-example as a research note with co-authorship if it holds up. Adversarial reproductions are at least as valuable to us as confirmatory ones.",
+      "The Gate 2 result is narrow on purpose: one quiet tenant, one flooder, one trace shape. Construct a workload where KVWarden does worse than FIFO: different arrival distributions, adversarial prompt lengths, mixed model sizes. We will publish the counter-example as a research note with co-authorship if it holds up. Adversarial reproductions are at least as valuable to us as confirmatory ones.",
   },
   {
     title: "Patch the harness.",
