@@ -70,7 +70,27 @@ test("footer carries the Steady Cadence row and the outpost row", async ({ page 
   await expect(footer.getByLabel("Email address")).toBeVisible();
   await expect(footer.getByRole("button", { name: "SUBSCRIBE" })).toBeVisible();
 
-  // Row 2: the original two items plus real outposts only.
+  // Row 2: the sitemap. Four columns mirroring the header menu plus the
+  // subdomain surfaces; one representative link per kind is asserted.
+  const sitemap = footer.getByRole("navigation", { name: "Site map" });
+  await expect(sitemap).toBeVisible();
+  for (const col of ["WORK", "WRITING", "LAB", "SURFACES"]) {
+    await expect(sitemap.getByText(col, { exact: true })).toBeVisible();
+  }
+  await expect(sitemap.getByRole("link", { name: "Working drawings" })).toHaveAttribute(
+    "href",
+    "/drawings",
+  );
+  await expect(sitemap.getByRole("link", { name: "Hall of demos" })).toHaveAttribute(
+    "href",
+    "/projects/gallery",
+  );
+  await expect(sitemap.getByRole("link", { name: /Masterclass/ })).toHaveAttribute(
+    "href",
+    "https://masterclass.coconutlabs.org",
+  );
+
+  // Row 3: the original two items plus real outposts only.
   await expect(footer.getByText("Coconut Labs · one lab, several surfaces")).toBeVisible();
   await expect(footer.getByRole("link", { name: "GitHub ↗" })).toHaveAttribute(
     "href",

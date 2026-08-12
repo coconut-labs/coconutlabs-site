@@ -3,7 +3,8 @@ import { expect, test } from "@playwright/test";
 test("research index and post render", async ({ page }) => {
   await page.goto("/research");
   await expect(page.getByRole("heading", { name: "Research" })).toBeVisible();
-  await page.getByRole("link", { name: /Tenant fairness/ }).click();
+  // Scoped to main: the sitemap footer now carries the same post link.
+  await page.getByRole("main").getByRole("link", { name: /Tenant fairness/ }).click();
   await expect(page.getByRole("heading", { name: "Tenant fairness on shared inference" })).toBeVisible();
   await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
 });
