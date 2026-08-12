@@ -36,8 +36,21 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       className={`${geistSans.variable} ${geistMono.variable}`}
       lang="en"
+      suppressHydrationWarning
     >
       <body>
+        {/* No-flash theme replay. Parser-blocking and first in the document
+            body, so a stored explicit theme lands on <html> before anything
+            paints. App Router owns <head>, and React does not hoist inline
+            scripts, so first-in-body is the earliest slot we control; it
+            runs before first paint of any content below it. Kept tiny and
+            try/wrapped: storage can be unavailable (private mode). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t)}}catch(e){}})();',
+          }}
+        />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

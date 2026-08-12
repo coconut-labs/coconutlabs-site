@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
       { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
       { source: "/library/enter", destination: "https://library.coconutlabs.org",     permanent: false },
       { source: "/masterclass",   destination: "https://masterclass.coconutlabs.org", permanent: false },
+      // Steady Cadence: the signup lives in the footer band on every page,
+      // anchored at #cadence. Non-permanent in case the letter ever gets a
+      // page of its own.
+      { source: "/newsletter",    destination: "/#cadence",  permanent: false },
+      { source: "/cadence",       destination: "/#cadence",  permanent: false },
     ];
   },
 };

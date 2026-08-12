@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 /* Direction A chrome. The five-item inline nav + CTA is gone; the header is
    a wordmark on the left and a MENU toggle on the right, with a full-width
@@ -99,20 +100,23 @@ export function Header() {
           coconut<span className="text-accent">labs</span>
         </Link>
 
-        <button
-          aria-controls="site-menu"
-          aria-expanded={open}
-          className="focus-ring flex min-h-[44px] cursor-pointer items-center justify-end gap-[10px] rounded-sm px-[2px] py-[6px] font-mono text-[11px] tracking-[0.14em] text-ink-1"
-          onClick={() => setOpen((value) => !value)}
-          ref={buttonRef}
-          type="button"
-        >
-          {open ? "CLOSE" : "MENU"}
-          <span aria-hidden="true" className="flex flex-col gap-[3px]">
-            <span className="block h-px w-4 bg-ink-1" />
-            <span className="block h-px w-4 bg-ink-1" />
-          </span>
-        </button>
+        <div className="flex items-center gap-[clamp(16px,3vw,28px)]">
+          <button
+            aria-controls="site-menu"
+            aria-expanded={open}
+            className="focus-ring flex min-h-[44px] cursor-pointer items-center justify-end gap-[10px] rounded-sm px-[2px] py-[6px] font-mono text-[11px] tracking-[0.14em] text-ink-1"
+            onClick={() => setOpen((value) => !value)}
+            ref={buttonRef}
+            type="button"
+          >
+            {open ? "CLOSE" : "MENU"}
+            <span aria-hidden="true" className="flex flex-col gap-[3px]">
+              <span className="block h-px w-4 bg-ink-1" />
+              <span className="block h-px w-4 bg-ink-1" />
+            </span>
+          </button>
+          <ThemeToggle />
+        </div>
       </div>
 
       <div className="menu-panel border-b border-rule bg-bg-1" hidden={!open} id="site-menu">
