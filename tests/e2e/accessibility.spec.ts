@@ -13,6 +13,7 @@ const routes = [
   "/projects/mlxd",
   "/projects/coconut-os",
   "/projects/silent-data-regression-guardrail",
+  "/projects/risk-hotpath",
   "/projects/point-in-time-correctness",
   "/projects/silent-cache-miss",
   "/projects/columnar-scan-bytes-guardrail",

@@ -18,6 +18,7 @@ const CLASSES: { key: string; name: string; cover: { label: string; href?: strin
   { key: "E", name: "Format & storage tradeoffs", cover: { label: "Columnar-scan bytes guardrail", href: "/projects/columnar-scan-bytes-guardrail" } },
   { key: "F", name: "Eval & replay", cover: { label: "Atlas · reasoning path", href: "/projects/agentic-mlops" } },
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
+  { key: "H", name: "Hot-path admission & latency", cover: { label: "Pre-trade risk gate", href: "/projects/risk-hotpath" } },
 ];
 
 // Each shipped unit as a story card: a plain-language hook, one thing you can do
@@ -102,6 +103,21 @@ const UNIT_CARDS: UnitCard[] = [
     meta: "ELT · schema-drift · class G",
     href: "/projects/ingestion-data-contract",
     source: "https://github.com/coconut-labs/ingestion-data-contract-guardrail",
+  },
+  {
+    title: "Pre-trade risk gate",
+    hook: "An order gets nanoseconds to be checked before the market moves. Too slow loses the trade; too lax loses the firm.",
+    action: "Stream a fat-finger session through the real Rust crate, compiled to wasm, running in your browser.",
+    numbers: (
+      <>
+        <span className="font-mono">37ns</span> full 7-check evaluation ·{" "}
+        <span className="font-mono">23M evals/sec</span> native (Criterion, repo hardware) · 3.3KB
+        wasm build
+      </>
+    ),
+    meta: "electronic trading · execution core · class H",
+    href: "/projects/risk-hotpath",
+    source: "https://github.com/ShreyPatel4/risk-hotpath-hft",
   },
 ];
 

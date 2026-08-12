@@ -67,9 +67,10 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
   ).toBeVisible();
 
   // Five shipped unit cards, each with a live link and a source link.
-  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(5);
-  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(5);
-  await expect(page.getByText("live in your browser")).toHaveCount(5);
+  // 6 units since the pre-trade risk gate joined (class H, 2026-08-12).
+  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(6);
+  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(6);
+  await expect(page.getByText("live in your browser")).toHaveCount(6);
 
   // A what-you-can-do line on a card.
   await expect(
