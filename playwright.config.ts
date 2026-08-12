@@ -45,7 +45,10 @@ export default defineConfig({
     // playwright directly.
     command: "npx next start --hostname 127.0.0.1 --port 3000",
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
+    // Never reuse: a long-lived next start serving a .next that a later
+    // build replaced underneath it hands out mixed chunks, hydration dies,
+    // and every interactivity test fails while static assertions pass.
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

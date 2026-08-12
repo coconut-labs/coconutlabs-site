@@ -154,11 +154,6 @@ export default function LifecycleMap() {
     if (tourIndex == null) return;
     if (tourIndex > 0) setTourIndex(tourIndex - 1);
   };
-  const handleTourKeys = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowRight") { e.preventDefault(); tourNext(); }
-    else if (e.key === "ArrowLeft") { e.preventDefault(); tourBack(); }
-    else if (e.key === "Escape") { e.preventDefault(); exitTour(); }
-  };
 
   // Bring the current tour station into view. Reduced motion: jump, no panning.
   useEffect(() => {
@@ -178,13 +173,30 @@ export default function LifecycleMap() {
     return () => cancelAnimationFrame(raf);
   }, [tourIndex]);
 
-  // Escape exits even if focus has drifted off the panel.
+  // Tour keys live at the window level, as the panel footer promises:
+  // arrows move and Escape exits even when focus is not inside the panel
+  // (a panel-scoped handler broke whenever focus drifted, and WebKit never
+  // grants it to a tabIndex=-1 div). Bound ONCE per tour with functional
+  // updates: rebinding per stop opened a gap where rapid keypresses were
+  // dropped between remove and re-add.
   useEffect(() => {
     if (!touring) return;
+    const exitToStart = () => requestAnimationFrame(() => startBtnRef.current?.focus());
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        setTourIndex((i) => {
+          if (i == null) return i;
+          if (i >= TOUR.length - 1) { exitToStart(); return null; }
+          return i + 1;
+        });
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        setTourIndex((i) => (i == null || i === 0 ? i : i - 1));
+      } else if (e.key === "Escape") {
+        e.preventDefault();
         setTourIndex(null);
-        requestAnimationFrame(() => startBtnRef.current?.focus());
+        exitToStart();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -334,7 +346,6 @@ export default function LifecycleMap() {
           role="group"
           aria-label="Guided tour"
           className={styles.tourPanel}
-          onKeyDown={handleTourKeys}
         >
           <p className={styles.tourMeta}>
             Stop {(tourIndex ?? 0) + 1} of {TOUR.length} · Act {tourStep.act} · {ACT_NAMES[tourStep.act]}
