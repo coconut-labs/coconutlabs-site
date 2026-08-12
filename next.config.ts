@@ -51,8 +51,10 @@ const nextConfig: NextConfig = {
       // Steady Cadence: the signup lives in the footer band on every page,
       // anchored at #cadence. Non-permanent in case the letter ever gets a
       // page of its own.
+      // /newsletter -> the signup band; /cadence is a real page (the nightly
+      // record) and must NOT be redirected — two agents built these in
+      // parallel and the redirect would have shadowed the route.
       { source: "/newsletter",    destination: "/#cadence",  permanent: false },
-      { source: "/cadence",       destination: "/#cadence",  permanent: false },
     ];
   },
 };
