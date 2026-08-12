@@ -64,6 +64,14 @@ export default function RiskHotpathPage() {
         <div className="mt-14 border-t border-rule">
           <h2 className="sr-only">Go deeper</h2>
 
+          <Disclosure summary="Watch the walkthrough (35 s, silent)">
+            <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/risk-hotpath-walkthrough.webm" />
+            <p className="mt-2 font-mono text-[10.5px] text-ink-2">
+              Four sessions streamed through the gate, then the hardware bench · recorded from this
+              page, unedited.
+            </p>
+          </Disclosure>
+
           <Disclosure summary="The measured result: 37ns per evaluation" defaultOpenDesktop>
             <p className="max-w-2xl font-mono text-lg leading-relaxed text-ink-0">
               The full seven-check evaluation runs in 37 nanoseconds with zero heap allocation.

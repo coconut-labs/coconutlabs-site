@@ -60,11 +60,13 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 - prefers-reduced-motion collapses all motion (global clamp in tokens.css).
 - Brand-motion exceptions (KernelSilk, kernel-tail, DotField): pause
   offscreen and on hidden tabs, render a static frame under reduced motion,
-  opacity/transform-class motion only. DotField is the one sanctioned
-  background instance: the home page's full-height dot ground (fixed
-  viewport canvas, world-space grid that scrolls with the page) with its
-  diagonal request wave and pointer proximity response, alphas kept low so
-  text contrast never moves. No other page background may animate.
+  opacity/transform-class motion only (canvas alpha/radius/displacement
+  counts). DotField is the one sanctioned background instance: the home
+  page's full-height dot fabric (fixed viewport canvas, world-space grid
+  that scrolls with the page) with its diagonal request wave, pointer
+  gravity dimple, and click ripples whose weight scales with the clicked
+  element's size. Alphas kept low so text contrast never moves. No other
+  page background may animate.
 
 ## 6. Voice (enforced in copy review, linted where mechanical)
 
