@@ -24,6 +24,7 @@ const routes = [
   "/contact",
   "/colophon",
   "/benchmarks",
+  "/drawings",
 ];
 
 for (const route of routes) {

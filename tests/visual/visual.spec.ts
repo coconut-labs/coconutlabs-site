@@ -28,6 +28,7 @@ const ROUTES = [
   "/projects/mlxd",
   "/projects/coconut-os",
   "/library",
+  "/drawings",
   "/about",
   "/joinus",
   "/contact",
