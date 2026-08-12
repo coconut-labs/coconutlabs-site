@@ -143,6 +143,123 @@ export function schemaControlFlags(profile: Profile, ds: Dataset): boolean {
   return profile.columns.some((c) => !ds.columns.includes(c));
 }
 
+// ---- per-step check trace (additive, for the live demo) ---------------------
+// The same comparisons check() makes, one step per measurement. Verdicts come
+// from check()'s actual violations, so the flagged step count always equals
+// the number of violations the banner reports. Per-episode lines are "info":
+// raw measurements that roll up into their aggregate step.
+
+export type CheckStep = {
+  /** short mono label, e.g. "schema", "s[0] mean", "ep 4 start" */
+  name: string;
+  observed: string;
+  expected: string;
+  verdict: "ok" | "flag" | "info";
+  /** violation kind when verdict is "flag" */
+  kind?: string;
+};
+
+export function checkTrace(profile: Profile, ds: Dataset): CheckStep[] {
+  const violations = check(profile, ds);
+  const flagOf = (kind: string) => violations.find((v) => v.kind === kind);
+  const steps: CheckStep[] = [];
+  const { rows, columns } = ds;
+
+  const schemaHit = flagOf("schema_drift");
+  steps.push({
+    name: "schema",
+    observed: columns.join(","),
+    expected: profile.columns.join(","),
+    verdict: schemaHit ? "flag" : "ok",
+    ...(schemaHit ? { kind: "schema_drift" } : {}),
+  });
+
+  const first = rows[0];
+  if (!first) return steps;
+
+  for (const key of ["s", "a"] as const) {
+    if (!columns.includes(key)) continue; // mirrors check(): schema's job
+    const got = first[key].length;
+    const dimKind = key === "s" ? "state_dim" : "action_dim";
+    const dimHit = flagOf(dimKind);
+    steps.push({
+      name: `${key} dims`,
+      observed: String(got),
+      expected: String(profile.dims[key]),
+      verdict: dimHit ? "flag" : "ok",
+      ...(dimHit ? { kind: dimKind } : {}),
+    });
+    const stats = profile.stats[key];
+    for (let j = 0; j < Math.min(stats.length, got); j++) {
+      const base = stats[j];
+      if (!base) continue;
+      const span = Math.max(base.max - base.min, 1e-9);
+      const hit = violations.find((v) => v.kind === "value_scale" && v.detail.startsWith(`${key}[${j}]`));
+      steps.push({
+        name: `${key}[${j}] mean`,
+        observed: mean(col(rows, key, j)).toFixed(1),
+        expected: `${base.mean.toFixed(1)} (tol ${(SCALE_TOL * span).toFixed(1)})`,
+        verdict: hit ? "flag" : "ok",
+        ...(hit ? { kind: "value_scale" } : {}),
+      });
+    }
+  }
+
+  if (profile.period > 0) {
+    const frameHit = flagOf("frame_rate");
+    steps.push({
+      name: "frame period",
+      observed: `${median(episodePeriods(rows)).toFixed(3)}s`,
+      expected: `${profile.period.toFixed(3)}s`,
+      verdict: frameHit ? "flag" : "ok",
+      ...(frameHit ? { kind: "frame_rate" } : {}),
+    });
+  }
+
+  const episodes = [...byEpisode(rows).entries()].sort((a, b) => a[0] - b[0]);
+
+  for (const [ep, g] of episodes) {
+    steps.push({
+      name: `ep ${ep} start`,
+      observed: `t=${Math.min(...g.map((r) => r.t)).toFixed(2)}s`,
+      expected: `t=${profile.tsStart.toFixed(2)}s (tol ${START_TOL.toFixed(2)}s)`,
+      verdict: "info",
+    });
+  }
+  const badStarts = episodes.filter(
+    ([, g]) => Math.abs(Math.min(...g.map((r) => r.t)) - profile.tsStart) > START_TOL,
+  ).length;
+  const tsHit = flagOf("timestamp");
+  steps.push({
+    name: "ts alignment",
+    observed: tsHit ? `${badStarts} episode(s) off` : "all aligned",
+    expected: "0 off",
+    verdict: tsHit ? "flag" : "ok",
+    ...(tsHit ? { kind: "timestamp" } : {}),
+  });
+
+  const floor = profile.minEpLen * (1 - TRUNC_FRAC);
+  for (const [ep, g] of episodes) {
+    steps.push({
+      name: `ep ${ep} frames`,
+      observed: String(g.length),
+      expected: `at least ${floor.toFixed(0)}`,
+      verdict: "info",
+    });
+  }
+  const short = episodes.filter(([, g]) => g.length < floor).length;
+  const truncHit = flagOf("truncation");
+  steps.push({
+    name: "ep length",
+    observed: truncHit ? `${short} episode(s) short` : "none short",
+    expected: `all at least ${floor.toFixed(0)} frames`,
+    verdict: truncHit ? "flag" : "ok",
+    ...(truncHit ? { kind: "truncation" } : {}),
+  });
+
+  return steps;
+}
+
 // ---- corruptions (each keeps the table structurally plausible) --------------
 const cloneRows = (rows: Row[]): Row[] => rows.map((r) => ({ ...r, s: [...r.s], a: [...r.a] }));
 

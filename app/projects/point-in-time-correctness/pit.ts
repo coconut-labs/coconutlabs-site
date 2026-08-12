@@ -59,5 +59,36 @@ export function leakyJoin(ents: Entity[]): JoinRow[] {
 // The guardrail: count rows whose feature is timestamped after the label.
 export const leakedCount = (rows: JoinRow[]): number => rows.filter((r) => r.leaked).length;
 
+// Per-entity join trace (additive, for the live demo): what each strategy
+// actually picked, derived from the same asofJoin/leakyJoin rows the table
+// and banner use. Nothing is recomputed differently for the animation.
+export type JoinPick = {
+  id: number;
+  labelTs: number;
+  /** feature rows in this entity's history */
+  candidates: number;
+  /** rows with t at or before the label, what an as-of join may use */
+  eligible: number;
+  pickedTs: number;
+  pickedValue: number;
+  leaked: boolean;
+};
+
+export function joinTrace(ents: Entity[], mode: "asof" | "leaky"): JoinPick[] {
+  const rows = mode === "asof" ? asofJoin(ents) : leakyJoin(ents);
+  return ents.map((e, i) => {
+    const r = rows[i];
+    return {
+      id: e.id,
+      labelTs: e.labelTs,
+      candidates: e.feature.length,
+      eligible: e.feature.filter((p) => p.t <= e.labelTs).length,
+      pickedTs: r?.featureTs ?? 0,
+      pickedValue: r?.featureValue ?? 0,
+      leaked: r?.leaked ?? false,
+    };
+  });
+}
+
 // Cited, measured (Python harness) — not recomputed live.
 export const CITED_AUC = { leaky: 0.999, asof: 0.771 } as const;

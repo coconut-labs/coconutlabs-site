@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import LiveLog, { type LogLine } from "@/components/demos/LiveLog";
 import PresetButton from "@/components/demos/PresetButton";
 import VerdictCard from "@/components/demos/VerdictCard";
-import { fitProfile, check, schemaControlFlags, CORRUPTIONS, type Dataset, type Row } from "./guardrail";
+import { fitProfile, check, checkTrace, schemaControlFlags, CORRUPTIONS, type Dataset, type Row } from "./guardrail";
 import sample from "./sample.json";
 
 const CLEAN: Dataset = { columns: ["s", "a", "e", "f", "t"], rows: sample.rows as Row[] };
@@ -12,10 +13,38 @@ const CLEAN: Dataset = { columns: ["s", "a", "e", "f", "t"], rows: sample.rows a
 export default function Demo() {
   const profile = useMemo(() => fitProfile(CLEAN), []);
   const [activeId, setActiveId] = useState<string | null>(null);
+  // The check log renders only after the first preset click, so the route's
+  // default visual state is byte-identical to the pre-log page.
+  const [touched, setTouched] = useState(false);
+
+  const pick = (id: string | null) => {
+    setActiveId(id);
+    setTouched(true);
+  };
 
   const active = CORRUPTIONS.find((c) => c.id === activeId) ?? null;
   const ds = active ? active.fn(CLEAN) : CLEAN;
   const violations = check(profile, ds);
+
+  // Derived from the same check() run the banner reports: one step per
+  // comparison, flagged steps are exactly the violations. Recomputed only on
+  // preset change (the only state changes this component has), which is also
+  // what restarts the replay.
+  const logLines: LogLine[] = checkTrace(profile, ds).map((s) => ({
+    content: (
+      <>
+        <span className="text-ink-2">{s.name}</span>{" "}
+        <span className="text-ink-1">{s.observed}</span>{" "}
+        <span className="text-ink-2">expect {s.expected}</span>{" "}
+        {s.verdict === "flag" ? (
+          <span className="text-danger">✕ {s.kind}</span>
+        ) : s.verdict === "ok" ? (
+          <span className="text-success">✓ ok</span>
+        ) : null}
+      </>
+    ),
+    flagged: s.verdict === "flag",
+  }));
   const controlFlagged = schemaControlFlags(profile, ds);
   const guardrailFlagged = violations.length > 0;
 
@@ -46,11 +75,11 @@ export default function Demo() {
       controlsLabel="inject a corruption"
       controls={
         <div className="flex flex-wrap gap-2">
-          <PresetButton active={activeId === null} onClick={() => setActiveId(null)}>
+          <PresetButton active={activeId === null} onClick={() => pick(null)}>
             Clean data
           </PresetButton>
           {CORRUPTIONS.map((c) => (
-            <PresetButton key={c.id} danger active={activeId === c.id} onClick={() => setActiveId(c.id)}>
+            <PresetButton key={c.id} danger active={activeId === c.id} onClick={() => pick(c.id)}>
               {c.label}
             </PresetButton>
           ))}
@@ -67,6 +96,18 @@ export default function Demo() {
         </>
       }
     >
+      {touched ? (
+        <div className="mb-6">
+          <LiveLog
+            title="guardrail · check log"
+            lines={logLines}
+            counterNoun="steps"
+            flaggedNoun="flagged"
+            linesPerTick={1}
+            tickMs={190}
+          />
+        </div>
+      ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         <VerdictCard
           name="The guardrail"

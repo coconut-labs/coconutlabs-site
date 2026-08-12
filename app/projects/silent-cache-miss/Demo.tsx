@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import LiveLog, { type LogLine } from "@/components/demos/LiveLog";
 import PresetButton from "@/components/demos/PresetButton";
 import VerdictCard from "@/components/demos/VerdictCard";
 import {
@@ -23,12 +24,40 @@ const LABELS: Record<string, string> = {
 export default function Demo() {
   const stream = useMemo(() => generate(), []);
   const [config, setConfig] = useState("volatile_timestamp");
+  // The request log renders only after the first preset click, so the route's
+  // default visual state is byte-identical to the pre-log page.
+  const [touched, setTouched] = useState(false);
+
+  const pick = (name: string) => {
+    setConfig(name);
+    setTouched(true);
+  };
 
   const active = CONFIGS.find((c) => c.name === config);
   if (!active) return null;
   const res = runModeled(stream, active.keyFn, active.name);
-  const trace = traceModeled(stream, active.keyFn).slice(0, 8);
+  const fullTrace = traceModeled(stream, active.keyFn);
+  const trace = fullTrace.slice(0, 8);
   const flagged = checkHitRatio(res.hitRatio, res.hits + res.misses).length > 0;
+
+  // Derived from the same per-request trace the table excerpts: all 240
+  // hit/miss decisions in stream order. Misses count as flagged, so the final
+  // counter equals the banner's "paid full cost" total. Recomputed only on
+  // preset change, which is also what restarts the replay.
+  const logLines: LogLine[] = fullTrace.map((row) => ({
+    content: (
+      <>
+        <span className="text-ink-2">#{String(row.i).padStart(3, "0")}</span>{" "}
+        <span className="text-ink-1">{row.key.length > 34 ? `${row.key.slice(0, 34)}…` : row.key}</span>{" "}
+        {row.hit ? (
+          <span className="text-success">✓ hit</span>
+        ) : (
+          <span className="text-danger">✕ miss</span>
+        )}
+      </>
+    ),
+    flagged: !row.hit,
+  }));
   const controlFlags = functionalControlFlags(stream, res);
   const pct = (res.hitRatio * 100).toFixed(0);
 
@@ -52,7 +81,7 @@ export default function Demo() {
       controls={
         <div className="flex flex-wrap gap-2">
           {CONFIGS.map((c) => (
-            <PresetButton key={c.name} danger={c.buggy} active={c.name === config} onClick={() => setConfig(c.name)}>
+            <PresetButton key={c.name} danger={c.buggy} active={c.name === config} onClick={() => pick(c.name)}>
               {LABELS[c.name] ?? c.name}
             </PresetButton>
           ))}
@@ -66,6 +95,18 @@ export default function Demo() {
         </>
       }
     >
+      {touched ? (
+        <div className="mb-6">
+          <LiveLog
+            title="cache · request log"
+            lines={logLines}
+            counterNoun="requests"
+            flaggedNoun="misses"
+            linesPerTick={2}
+            tickMs={40}
+          />
+        </div>
+      ) : null}
       {/* per-request trace */}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[30rem] border-collapse font-mono text-xs">
