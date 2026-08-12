@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test --project=chromium --project=firefox --project=webkit",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
     "test:all": "npm run typecheck && npm run lint:design && npm run test && npm run build && npm run test:e2e",
     "analyze": "ANALYZE=true next build",
