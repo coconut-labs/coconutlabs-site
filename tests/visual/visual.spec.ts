@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
  * Pixel-deterministic visual regression — the hard design gate.
  *
  * Determinism levers: fixed viewports, deviceScaleFactor 1, reduced-motion
- * forced (collapses every UI transition AND freezes KernelSilk/TenantLanes
+ * forced (collapses every UI transition AND freezes KernelSilk/DotField
  * to their static frames), fonts awaited, animations disabled at screenshot
  * time, network idle. maxDiffPixels 0: any rendered change fails until a
  * baseline is deliberately updated.
@@ -66,6 +66,13 @@ for (const vp of VIEWPORTS) {
               animations: "disabled",
               caret: "hide",
               maxDiffPixels: 0,
+              // maxDiffPixels alone is NOT strict: it counts pixels above
+              // pixelmatch's default per-pixel color threshold (0.2), which
+              // silently passed a full hero-background swap in the dark
+              // theme (lanes -> dots, channel deltas ~20-50 on near-black).
+              // threshold 0 flags any channel delta; rendering is
+              // deterministic per platform, so this stays green run-to-run.
+              threshold: 0,
             },
           );
         });

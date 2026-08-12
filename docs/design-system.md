@@ -45,7 +45,8 @@ on bg-1 floor). Do not lighten either. There is no accent-2 or accent-3.
 - Cards: bg-1, 1px --rule border, --rad, padding 20-24px.
 - Stat rails: cells separated by 1px --rule via gap-px on a --rule background.
 - No shadows except --shadow-soft/--shadow-paper on elevated cards.
-- No gradients, no glassmorphism, no text shadows, no animated backgrounds.
+- No gradients, no glassmorphism, no text shadows, no animated backgrounds
+  (sole exception: the §5 DotField hero instance).
 
 ## 4. Iconography and glyphs
 
@@ -57,12 +58,12 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 
 - UI transitions under 200ms, opacity/transform only.
 - prefers-reduced-motion collapses all motion (global clamp in tokens.css).
-- Brand-motion exceptions (KernelSilk, kernel-tail, TenantLanes): pause
+- Brand-motion exceptions (KernelSilk, kernel-tail, DotField): pause
   offscreen and on hidden tabs, render a static frame under reduced motion,
-  opacity/transform only. TenantLanes is the one sanctioned background
-  instance: the home-hero strip-chart drift plus pointer hairline, kept
-  under 0.5 opacity so text contrast never moves. No other page background
-  may animate.
+  opacity/transform-class motion only. DotField is the one sanctioned
+  background instance: the home-hero dot grid with its diagonal request
+  wave and pointer proximity response, alphas kept low so text contrast
+  never moves. No other page background may animate.
 
 ## 6. Voice (enforced in copy review, linted where mechanical)
 
@@ -94,7 +95,9 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
   literals outside the token file.
 - `npm run test:visual` (tests/visual/visual.spec.ts): pixel-deterministic
   screenshots of every stable route at 1440x900 and 375x812, light and dark,
-  maxDiffPixels 0 against committed baselines. Motion disabled via reduced
-  motion; fonts awaited; deviceScaleFactor 1.
+  maxDiffPixels 0 AND per-pixel threshold 0 against committed baselines
+  (threshold 0 matters: pixelmatch's default 0.2 ignores low-contrast
+  changes and once passed a whole dark-theme background swap). Motion
+  disabled via reduced motion; fonts awaited; deviceScaleFactor 1.
 - Baseline update is a deliberate act: `npm run test:visual -- --update-snapshots`
   plus a commit message explaining what changed visually and why.

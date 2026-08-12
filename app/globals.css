@@ -140,65 +140,6 @@
   position: relative;
 }
 
-/* TenantLanes motion (design-system §5 named exception). Strip-chart drift:
-   the tick field slides one full pattern width and loops; the flooder runs
-   faster for depth; the quiet lane pulses in place. Everything lives inside
-   the no-preference media block, so reduced-motion users, and the pixel
-   gate's reduced-motion contexts, get the exact static frame. Opacity and
-   transform only; [data-paused] freezes it when the hero is offscreen. */
-.lanes-cursor {
-  background: var(--rule);
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  transform: translateX(var(--mx, 50vw));
-  transition: opacity 180ms var(--ease-paper);
-  width: 1px;
-}
-
-[data-cursor="on"] > .lanes-cursor {
-  opacity: 0.7;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes lanes-drift {
-    to {
-      transform: translateX(-1600px);
-    }
-  }
-
-  @keyframes lanes-pulse {
-    0%,
-    100% {
-      stroke-opacity: 0.3;
-    }
-
-    50% {
-      stroke-opacity: 0.62;
-    }
-  }
-
-  .lanes-drift-slow {
-    animation: lanes-drift 110s linear infinite;
-  }
-
-  .lanes-drift-fast {
-    animation: lanes-drift 70s linear infinite;
-  }
-
-  .lanes-pulse {
-    animation: lanes-pulse 2.8s ease-in-out infinite;
-  }
-
-  [data-paused="on"] .lanes-drift-slow,
-  [data-paused="on"] .lanes-drift-fast,
-  [data-paused="on"] .lanes-pulse {
-    animation-play-state: paused;
-  }
-}
-
 /* The 34px grid overlay that used to ride on .paper-texture is gone. It was
    two more hardcoded warm gradients on a ground that is now flat. */
 
