@@ -26,6 +26,10 @@ export const ROUTES: RouteEntry[] = [
   { href: "/projects/silent-cache-miss", label: "Silent cache-miss guardrail" },
   { href: "/projects/columnar-scan-bytes-guardrail", label: "Columnar-scan bytes guardrail" },
   { href: "/projects/ingestion-data-contract", label: "Ingestion data-contract guardrail" },
+  { href: "/projects/coconut-os", label: "Coconut OS" },
+  { href: "/benchmarks", label: "Benchmarks" },
+  { href: "/drawings", label: "Working drawings" },
+  { href: "/cadence", label: "The nightly record" },
 
   // Footer-only
   { href: "/colophon", label: "Colophon" },
