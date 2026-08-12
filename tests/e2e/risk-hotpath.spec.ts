@@ -57,6 +57,22 @@ test("rejection breakdown table matches the banner", async ({ page }) => {
   await expect(table).toContainText("46");
 });
 
+test("session replays as a live order tape with running counters", async ({ page }) => {
+  await ready(page);
+  // Credit burn: once the line is spent every later order is refused, so the
+  // tape's visible tail (last 14 lines) is deterministically all rejects.
+  await page.getByRole("button", { name: "Credit limit burn" }).click();
+  const tape = page.getByTestId("order-tape");
+  await expect(tape).toBeVisible();
+  // The replay finishes in ~5s (600 lines at 125/sec); the counter must
+  // land exactly on the computed totals. Reduced-motion contexts land
+  // instantly; either way the end state is the same fact.
+  await expect(tape).toContainText("600/600 orders", { timeout: 15_000 });
+  await expect(tape).toContainText("554 accepted");
+  await expect(tape).toContainText("46 rejected");
+  await expect(tape).toContainText("✕ CreditLimit");
+});
+
 test("reset returns the gate to armed", async ({ page }) => {
   await ready(page);
   await page.getByRole("button", { name: "Fat-finger order" }).click();

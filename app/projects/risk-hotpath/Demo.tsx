@@ -7,12 +7,87 @@ import {
   type GateExports,
   type RunResult,
   type ScenarioId,
+  type TapeEntry,
   SCENARIOS,
   STREAM_LEN,
   loadGate,
   initDefault,
   runScenario,
 } from "./gate";
+
+/* The live tape: the session's 600 already-computed decisions replay as a
+   scrolling wire log with running counters, so the page reads as software
+   operating, not a form submitting. The banner and table state the final
+   truth instantly (the functional tier asserts those); the tape is
+   presentation. Under prefers-reduced-motion it renders the finished tail
+   with no replay. */
+const TAPE_WINDOW = 14;
+const TAPE_LINES_PER_TICK = 5;
+const TAPE_TICK_MS = 40;
+
+function TapeLine({ e }: { e: TapeEntry }) {
+  const rejected = e.decision !== "Accept";
+  return (
+    <p className="whitespace-nowrap leading-5">
+      <span className="text-ink-2">#{String(e.id).padStart(3, "0")}</span>{" "}
+      <span className={e.side === "BUY" ? "text-ink-0" : "text-ink-1"}>{e.side}</span>{" "}
+      <span className="text-ink-1">
+        {e.qty}@{e.price.toFixed(2)}
+      </span>{" "}
+      <span className="text-ink-2">S{String(e.symbol).padStart(3, "0")}</span>{" "}
+      {rejected ? (
+        <span className="text-danger">✕ {e.decision.replace("Reject", "")}</span>
+      ) : (
+        <span className="text-success">✓ accept</span>
+      )}
+    </p>
+  );
+}
+
+function OrderTape({ tape }: { tape: TapeEntry[] }) {
+  const [pos, setPos] = useState(0);
+
+  useEffect(() => {
+    setPos(0);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setPos(tape.length);
+      return;
+    }
+    const timer = setInterval(() => {
+      setPos((p) => {
+        const nextPos = p + TAPE_LINES_PER_TICK;
+        if (nextPos >= tape.length) {
+          clearInterval(timer);
+          return tape.length;
+        }
+        return nextPos;
+      });
+    }, TAPE_TICK_MS);
+    return () => clearInterval(timer);
+  }, [tape]);
+
+  const seen = tape.slice(0, pos);
+  const accepted = seen.filter((e) => e.decision === "Accept").length;
+  const visible = seen.slice(-TAPE_WINDOW);
+
+  return (
+    <div className="rounded-sm border border-rule bg-bg-2/60" data-testid="order-tape">
+      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-b border-hair px-4 py-2 font-mono text-[10.5px] uppercase tracking-[0.1em] text-ink-2">
+        <span>wire · session tape</span>
+        <span aria-live="off">
+          {pos}/{tape.length} orders · <span className="text-success">{accepted} accepted</span> ·{" "}
+          <span className={pos - accepted > 0 ? "text-danger" : ""}>{pos - accepted} rejected</span>
+        </span>
+      </div>
+      <div className="h-[19rem] overflow-hidden px-4 py-3 font-mono text-[12px]">
+        {visible.map((e, i) => (
+          <TapeLine e={e} key={`${pos}-${i}`} />
+        ))}
+        {pos < tape.length ? <p className="leading-5 text-ink-2">▮</p> : null}
+      </div>
+    </div>
+  );
+}
 
 const RULE_LABEL: Record<string, string> = {
   RejectMaxQuantity: "max quantity",
@@ -161,7 +236,9 @@ export default function Demo() {
       }
     >
       {result ? (
-        <div className="overflow-x-auto">
+        <div className="space-y-6">
+          <OrderTape tape={result.tape} />
+          <div className="overflow-x-auto">
           <table className="w-full min-w-[26rem] border-collapse font-mono text-sm">
             <thead>
               <tr className="border-b border-rule text-left text-xs uppercase text-ink-2">
@@ -187,8 +264,10 @@ export default function Demo() {
           </table>
           <p className="mt-4 font-mono text-[10.5px] text-ink-2">
             {STREAM_LEN} evaluations took {result.elapsedMs < 1 ? "under a millisecond" : `${result.elapsedMs.toFixed(1)} ms`} through
-            the wasm boundary, measured just now.
+            the wasm boundary, measured just now. The tape replays those decisions at reading
+            speed; the gate itself was already done.
           </p>
+          </div>
         </div>
       ) : null}
     </DemoShell>

@@ -1,13 +1,10 @@
 import Link from "next/link";
 import { CoconutLabsLogo } from "@/components/primitives/CoconutLabsLogo";
-import { DotField } from "@/components/home/DotField";
 import { getLatestPostSlug } from "@/lib/content";
 
 // Direction A home hero: measurement first. Left column is the claim, right
-// column is the plot card that backs it, stat rail underneath. The background
-// is DotField: the wordmark's bracket dots scaled to a field, with a slow
-// request wave passing through. (TenantLanes, the ruled tick chart, retired
-// 2026-08-12 on user direction; the thesis texture lives on in the drawings.)
+// column is the plot card that backs it, stat rail underneath. The DotField
+// ground behind it is mounted page-wide by app/page.tsx, not here.
 const BARS = [
   { label: "solo", ms: 53.9, cls: "bg-ink-2" },
   { label: "kvwarden", ms: 61.5, cls: "bg-accent" },
@@ -19,7 +16,6 @@ export async function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden px-[var(--space-page-x)] py-20">
-      <DotField />
       <div className="relative mx-auto grid max-w-[88rem] items-end gap-[clamp(24px,4vw,56px)] md:grid-cols-[minmax(320px,1.15fr)_minmax(320px,1fr)]">
         <div>
           <p className="mb-6 font-mono text-xs uppercase tracking-[0.16em] text-ink-2">independent inference research</p>

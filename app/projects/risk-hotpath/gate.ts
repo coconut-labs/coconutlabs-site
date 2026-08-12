@@ -183,12 +183,23 @@ export function scenarioStream(id: ScenarioId): StreamOrder[] {
   return orders;
 }
 
+export type TapeEntry = {
+  id: number;
+  symbol: number;
+  side: "BUY" | "SELL";
+  qty: number;
+  price: number;
+  decision: DecisionName;
+};
+
 export type RunResult = {
   total: number;
   accepted: number;
   rejected: number;
   byRule: Partial<Record<DecisionName, number>>;
   elapsedMs: number;
+  /** Per-order decisions in stream order, for the live tape replay. */
+  tape: TapeEntry[];
 };
 
 /** Run a scenario through the real gate. Resets the gate first so runs are
@@ -198,6 +209,7 @@ export function runScenario(gate: GateExports, id: ScenarioId): RunResult {
   initDefault(gate);
   const orders = scenarioStream(id);
   const byRule: Partial<Record<DecisionName, number>> = {};
+  const tape: TapeEntry[] = [];
   let accepted = 0;
   const t0 = performance.now();
   for (let i = 0; i < orders.length; i++) {
@@ -225,6 +237,14 @@ export function runScenario(gate: GateExports, id: ScenarioId): RunResult {
     const name = DECISIONS[d] ?? "RejectInvalidConfig";
     if (name === "Accept") accepted += 1;
     else byRule[name] = (byRule[name] ?? 0) + 1;
+    tape.push({
+      id: Number(o.orderId),
+      symbol: o.symbolId,
+      side: o.side === 0 ? "BUY" : "SELL",
+      qty: Number(o.quantity),
+      price: o.price,
+      decision: name,
+    });
   }
   const elapsedMs = performance.now() - t0;
   return {
@@ -233,5 +253,6 @@ export function runScenario(gate: GateExports, id: ScenarioId): RunResult {
     rejected: orders.length - accepted,
     byRule,
     elapsedMs,
+    tape,
   };
 }

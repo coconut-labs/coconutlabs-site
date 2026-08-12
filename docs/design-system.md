@@ -61,9 +61,10 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 - Brand-motion exceptions (KernelSilk, kernel-tail, DotField): pause
   offscreen and on hidden tabs, render a static frame under reduced motion,
   opacity/transform-class motion only. DotField is the one sanctioned
-  background instance: the home-hero dot grid with its diagonal request
-  wave and pointer proximity response, alphas kept low so text contrast
-  never moves. No other page background may animate.
+  background instance: the home page's full-height dot ground (fixed
+  viewport canvas, world-space grid that scrolls with the page) with its
+  diagonal request wave and pointer proximity response, alphas kept low so
+  text contrast never moves. No other page background may animate.
 
 ## 6. Voice (enforced in copy review, linted where mechanical)
 
