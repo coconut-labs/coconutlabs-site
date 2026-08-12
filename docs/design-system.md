@@ -57,9 +57,12 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 
 - UI transitions under 200ms, opacity/transform only.
 - prefers-reduced-motion collapses all motion (global clamp in tokens.css).
-- Brand-motion exceptions (KernelSilk, kernel-tail): contained objects, never
-  page backgrounds, pause offscreen and on hidden tabs, render a static frame
-  under reduced motion.
+- Brand-motion exceptions (KernelSilk, kernel-tail, TenantLanes): pause
+  offscreen and on hidden tabs, render a static frame under reduced motion,
+  opacity/transform only. TenantLanes is the one sanctioned background
+  instance: the home-hero strip-chart drift plus pointer hairline, kept
+  under 0.5 opacity so text contrast never moves. No other page background
+  may animate.
 
 ## 6. Voice (enforced in copy review, linted where mechanical)
 

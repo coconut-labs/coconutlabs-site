@@ -53,6 +53,8 @@ const MENU_COLUMNS: MenuColumn[] = [
       { label: "Library", href: "/library" },
       { label: "Join us", href: "/joinus" },
       { label: "Benchmarks", href: "/benchmarks" },
+      { label: "Working drawings", href: "/drawings" },
+      { label: "The nightly record", href: "/cadence" },
       { label: "Colophon", href: "/colophon" },
     ],
   },
