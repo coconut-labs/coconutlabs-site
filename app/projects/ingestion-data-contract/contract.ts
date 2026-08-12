@@ -104,6 +104,52 @@ export function check(contract: Contract, ds: Dataset): Violation[] {
   return out;
 }
 
+// ---- per-clause check log ---------------------------------------------------
+// The same check() run, unrolled into one step per contract clause so the demo
+// can stream it as a live log. Additive: check() itself is untouched; this
+// calls it and maps each returned violation onto the clause that produced it.
+// Kinds are disjoint per clause and column-level details always carry the
+// quoted column name, so every violation lands on exactly one step and the
+// count of "violation" steps always equals check().length.
+export type ContractStep = {
+  /** Clause name, e.g. "dtype amount_minor" or "enum currency". */
+  name: string;
+  /** "skipped" mirrors check(): downstream clauses do not run on a column whose dtype failed. */
+  status: "ok" | "violation" | "skipped";
+  violation: Violation | null;
+};
+
+export function contractSteps(contract: Contract, ds: Dataset): ContractStep[] {
+  const violations = check(contract, ds);
+  const forCol = (kinds: string[], col: string): Violation | null =>
+    violations.find((v) => kinds.includes(v.kind) && v.detail.includes(`'${col}'`)) ?? null;
+  const dtypeBad = (col: string): boolean => forCol(["missing_column", "type_drift"], col) !== null;
+
+  const steps: ContractStep[] = [];
+  for (const col of Object.keys(DECLARED_DTYPE)) {
+    const v = forCol(["missing_column", "type_drift"], col);
+    steps.push({ name: `dtype ${col}`, status: v ? "violation" : "ok", violation: v });
+  }
+  for (const col of Object.keys(ENUM_DOMAINS)) {
+    const v = forCol(["enum_drift"], col);
+    steps.push({ name: `enum ${col}`, status: v ? "violation" : dtypeBad(col) ? "skipped" : "ok", violation: v });
+  }
+  const amountBad = dtypeBad("amount_minor");
+  const scale = violations.find((v) => v.kind === "scale_drift") ?? null;
+  steps.push({
+    name: "magnitude amount_minor",
+    status: scale ? "violation" : amountBad ? "skipped" : "ok",
+    violation: scale,
+  });
+  const precision = violations.find((v) => v.kind === "precision_drift") ?? null;
+  steps.push({
+    name: "granularity amount_minor",
+    status: precision ? "violation" : amountBad ? "skipped" : "ok",
+    violation: precision,
+  });
+  return steps;
+}
+
 // ---- the off-the-shelf control: schema (dtype+range) + null + rowcount, at defaults
 export type Fitted = { rows: number; range: Record<string, { min: number; max: number }> };
 const NUMERIC_COLS = ["order_id", "amount_minor", "event_ts"] as const;

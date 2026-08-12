@@ -79,6 +79,57 @@ export function readReport(projection: readonly string[], layout: Layout, nRows:
   return { bytesRead, budget, flagged, overRead: budget ? bytesRead / budget : Infinity };
 }
 
+// ---- per-batch read log -----------------------------------------------------
+// The same deterministic read, split into fixed row batches so the demo can
+// stream it as a live log. Additive: nothing above this line changes. The sum
+// of step bytes equals bytesReadRow / bytesReadColumnar exactly, and each
+// batch runs through the same checkScan guardrail against its own slice of
+// the projection budget. Widths are uniform per row, so a batch flags exactly
+// when the whole read flags.
+export const SCAN_BATCHES = 64;
+
+export type ScanStep = {
+  /** 1-based batch index. */
+  batch: number;
+  /** Rows this batch covers. */
+  rows: number;
+  /** Columns physically touched: all of them in row layout, the projection in columnar. */
+  colsRead: number;
+  /** Bytes this batch touched. */
+  bytes: number;
+  /** Running total after this batch. The last step's value equals readReport().bytesRead. */
+  totalBytes: number;
+  /** checkScan on this batch's bytes against this batch's projection budget. */
+  flagged: boolean;
+};
+
+export function scanSteps(
+  projection: readonly string[],
+  layout: Layout,
+  nRows: number = N_ROWS,
+  batches: number = SCAN_BATCHES,
+): ScanStep[] {
+  const width = layout === "row" ? totalWidth() : projectedWidth(projection);
+  const colsRead = layout === "row" ? COLUMN_NAMES.length : projection.length;
+  const base = Math.floor(nRows / batches);
+  const steps: ScanStep[] = [];
+  let total = 0;
+  for (let i = 0; i < batches; i++) {
+    const rows = i === batches - 1 ? nRows - base * (batches - 1) : base;
+    const bytes = rows * width;
+    total += bytes;
+    steps.push({
+      batch: i + 1,
+      rows,
+      colsRead,
+      bytes,
+      totalBytes: total,
+      flagged: checkScan(bytes, projectionBudget(projection, rows)).length > 0,
+    });
+  }
+  return steps;
+}
+
 // Cited, measured by the Python harness (real Parquet + CSV, byte-counted) — not
 // recomputed live. See results/scan.json.
 export const CITED_MEASURED = {

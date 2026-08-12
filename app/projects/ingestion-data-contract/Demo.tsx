@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import LiveLog, { type LogLine } from "@/components/demos/LiveLog";
 import PresetButton from "@/components/demos/PresetButton";
 import VerdictCard from "@/components/demos/VerdictCard";
 import {
@@ -9,6 +10,7 @@ import {
   fitControl,
   check,
   controlFlags,
+  contractSteps,
   revenueUsd,
   refundCount,
   currencyBuckets,
@@ -28,9 +30,12 @@ export default function Demo() {
   const cleanRefunds = useMemo(() => refundCount(CLEAN), []);
   const cleanBuckets = useMemo(() => currencyBuckets(CLEAN), []);
   const [activeId, setActiveId] = useState<string | null>(null);
+  // The check log only exists once a preset has been touched, so the route's
+  // default render (and its visual baseline) is byte-identical.
+  const [interacted, setInteracted] = useState(false);
 
   const active = DRIFTS.find((c) => c.id === activeId) ?? null;
-  const ds = active ? active.fn(CLEAN) : CLEAN;
+  const ds = useMemo(() => (active ? active.fn(CLEAN) : CLEAN), [active]);
   const violations = check(contract, ds);
   const controlFlagged = controlFlags(fitted, ds);
   const guardrailFlagged = violations.length > 0;
@@ -38,6 +43,46 @@ export default function Demo() {
   const rev = revenueUsd(ds);
   const refunds = refundCount(ds);
   const buckets = currencyBuckets(ds);
+
+  // The morning load as it lands, then the contract's clauses: 240 row lines
+  // straight from the (possibly drifted) table, then one line per clause from
+  // contractSteps in contract.ts. Flagged lines are exactly check()'s
+  // violations; nothing is invented for the animation.
+  const steps = useMemo(() => contractSteps(contract, ds), [contract, ds]);
+  const logLines = useMemo<LogLine[]>(
+    () => [
+      ...ds.rows.map((r, i) => ({
+        content: (
+          <>
+            <span className="text-ink-2">#{String(i + 1).padStart(3, "0")}</span>{" "}
+            <span className="text-ink-0">
+              {typeof r.amount_minor === "number" ? r.amount_minor : `"${r.amount_minor}"`}
+            </span>{" "}
+            <span className="text-ink-1">{r.currency}</span> <span className="text-ink-1">{r.country}</span>{" "}
+            <span className="text-ink-2">refund {String(r.is_refund)}</span>
+          </>
+        ),
+      })),
+      ...steps.map((s) => ({
+        flagged: s.status === "violation",
+        content: (
+          <>
+            <span className="text-ink-1">check {s.name}</span>{" "}
+            {s.status === "violation" ? (
+              <span className="text-danger">
+                ✕ {s.violation?.kind}: {s.violation?.detail}
+              </span>
+            ) : s.status === "skipped" ? (
+              <span className="text-ink-2">skipped, dtype failed upstream</span>
+            ) : (
+              <span className="text-success">✓ ok</span>
+            )}
+          </>
+        ),
+      })),
+    ],
+    [ds, steps],
+  );
 
   // what the downstream report reads now vs clean
   const effect = active
@@ -83,11 +128,25 @@ export default function Demo() {
       controlsLabel="inject a drift"
       controls={
         <div className="flex flex-wrap gap-2">
-          <PresetButton active={activeId === null} onClick={() => setActiveId(null)}>
+          <PresetButton
+            active={activeId === null}
+            onClick={() => {
+              setActiveId(null);
+              setInteracted(true);
+            }}
+          >
             Clean data
           </PresetButton>
           {DRIFTS.map((c) => (
-            <PresetButton key={c.id} danger active={activeId === c.id} onClick={() => setActiveId(c.id)}>
+            <PresetButton
+              key={c.id}
+              danger
+              active={activeId === c.id}
+              onClick={() => {
+                setActiveId(c.id);
+                setInteracted(true);
+              }}
+            >
               {c.label}
             </PresetButton>
           ))}
@@ -104,6 +163,22 @@ export default function Demo() {
         </>
       }
     >
+      {/* the load and the contract run, replayed at reading speed. The banner
+          above already stated the verdict; the flagged counter lands on the
+          same violation count. */}
+      {interacted ? (
+        <div className="mb-4">
+          <LiveLog
+            title="contract · check log"
+            lines={logLines}
+            counterNoun="steps"
+            flaggedNoun="flagged"
+            linesPerTick={3}
+            tickMs={60}
+          />
+        </div>
+      ) : null}
+
       {/* two verdicts */}
       <div className="grid gap-4 sm:grid-cols-2">
         <VerdictCard

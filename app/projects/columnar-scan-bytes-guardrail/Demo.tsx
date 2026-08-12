@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DemoShell, { type Outcome } from "@/components/demos/DemoShell";
+import LiveLog, { type LogLine } from "@/components/demos/LiveLog";
 import PresetButton from "@/components/demos/PresetButton";
 import {
   COLUMNS,
@@ -9,6 +10,7 @@ import {
   N_ROWS,
   readReport,
   bytesReadRow,
+  scanSteps,
   CITED_MEASURED,
   type Layout,
 } from "./scan";
@@ -29,6 +31,9 @@ const fmtBytes = (n: number): string => {
 export default function Demo() {
   const [queryId, setQueryId] = useState("by_country_device");
   const [layout, setLayout] = useState<Layout>("columnar");
+  // The read log only exists once a preset has been touched, so the route's
+  // default render (and its visual baseline) is byte-identical.
+  const [interacted, setInteracted] = useState(false);
 
   const query = QUERIES.find((q) => q.id === queryId) ?? QUERIES[0]!;
   const projection = query.projection;
@@ -36,6 +41,34 @@ export default function Demo() {
 
   const report = readReport(projection, layout);
   const flagged = report.flagged;
+
+  // The same read, split into 64 batches by scanSteps in scan.ts. The last
+  // step's running total is report.bytesRead by construction; nothing here is
+  // invented for the animation.
+  const steps = useMemo(() => scanSteps(projection, layout), [projection, layout]);
+  const logLines = useMemo<LogLine[]>(
+    () =>
+      steps.map((s) => ({
+        flagged: s.flagged,
+        content: (
+          <>
+            <span className="text-ink-2">batch {String(s.batch).padStart(2, "0")}</span>{" "}
+            <span className="text-ink-1">{s.rows.toLocaleString()} rows</span>{" "}
+            <span className="text-ink-2">
+              {s.colsRead}/{COLUMN_NAMES.length} cols
+            </span>{" "}
+            <span className="text-ink-0">+{fmtBytes(s.bytes)}</span>{" "}
+            <span className="text-ink-1">total {fmtBytes(s.totalBytes)}</span>{" "}
+            {s.flagged ? (
+              <span className="text-danger">✕ over budget</span>
+            ) : (
+              <span className="text-success">✓ ok</span>
+            )}
+          </>
+        ),
+      })),
+    [steps],
+  );
 
   const outcome: Outcome = flagged
     ? {
@@ -65,17 +98,37 @@ export default function Demo() {
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2">
             {QUERIES.map((q) => (
-              <PresetButton key={q.id} active={q.id === queryId} onClick={() => setQueryId(q.id)}>
+              <PresetButton
+                key={q.id}
+                active={q.id === queryId}
+                onClick={() => {
+                  setQueryId(q.id);
+                  setInteracted(true);
+                }}
+              >
                 {q.label}
                 <span className="ml-1 text-ink-2">· {q.projection.length}/{COLUMN_NAMES.length} col</span>
               </PresetButton>
             ))}
           </div>
           <div className="flex flex-wrap gap-2">
-            <PresetButton active={layout === "columnar"} onClick={() => setLayout("columnar")}>
+            <PresetButton
+              active={layout === "columnar"}
+              onClick={() => {
+                setLayout("columnar");
+                setInteracted(true);
+              }}
+            >
               Columnar + projection
             </PresetButton>
-            <PresetButton danger active={layout === "row"} onClick={() => setLayout("row")}>
+            <PresetButton
+              danger
+              active={layout === "row"}
+              onClick={() => {
+                setLayout("row");
+                setInteracted(true);
+              }}
+            >
               Row layout
             </PresetButton>
           </div>
@@ -117,6 +170,22 @@ export default function Demo() {
         <span className="text-accent">needed by the query</span> ·{" "}
         <span className="text-danger">read but not needed</span> · <span className="text-ink-2">skipped</span>
       </p>
+
+      {/* the read as it happens: 64 batches from scanSteps, replayed at reading
+          speed. The banner above already stated the totals; the last line's
+          running total lands on the same bytesRead. */}
+      {interacted ? (
+        <div className="mt-6">
+          <LiveLog
+            title="scan · read log"
+            lines={logLines}
+            counterNoun="batches"
+            flaggedNoun="over budget"
+            linesPerTick={1}
+            tickMs={80}
+          />
+        </div>
+      ) : null}
 
       {/* bytes-read meter */}
       <div className="mt-6 rounded-lg border border-rule bg-bg-2/40 p-5">
