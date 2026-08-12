@@ -29,12 +29,10 @@ jobs:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
 
   visual:
-    # Pixel gate. Baselines are platform-suffixed; committed baselines are
-    # darwin (the local hard gate). This linux leg runs the same spec and
-    # uploads diffs as artifacts; it becomes blocking once linux baselines
-    # are committed. See docs/design-system.md section 8.
+    # Pixel gate, BLOCKING. Both darwin (local) and linux (CI) baselines are
+    # committed; any rendered pixel change fails until a baseline is updated
+    # with a stated reason. See docs/design-system.md section 8.
     runs-on: ubuntu-latest
-    continue-on-error: true
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     steps:
