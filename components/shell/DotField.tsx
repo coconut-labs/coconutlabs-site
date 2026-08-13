@@ -76,6 +76,12 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
     let running = false;
     let pointer: { x: number; y: number } | null = null;
     let ripples: Ripple[] = [];
+    // Scroll physics: the viewport dragging past the fabric shears it.
+    // A critically-damped spring tracks smoothed scroll velocity; each dot
+    // lags by its own factor so the shear reads organic, then settles.
+    let lastScrollY = -1;
+    let scrollVel = 0;
+    let shear = 0;
     // Content-dim grid: viewport cells covered by text blocks get a dim
     // factor so the field recedes under prose. Rebuilt on layout-affecting
     // events and every ~200ms while animating (cheap: <=120 rects into a
@@ -159,6 +165,24 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
       // motion (wave, pulse, gravity, ripples) is animate-gated.
       const scrollY = window.scrollY;
       const phaseShift = animate ? (t % cfg.periodMs) / cfg.periodMs : 0;
+      if (animate) {
+        if (lastScrollY < 0) lastScrollY = scrollY;
+        const dv = scrollY - lastScrollY;
+        lastScrollY = scrollY;
+        scrollVel = scrollVel * 0.82 + dv * 0.18;
+        // Spring toward the velocity target, clamped so fast flings stay
+        // composed; decays to zero within ~400ms of the scroll stopping.
+        const target = Math.max(-16, Math.min(16, scrollVel * 0.9));
+        shear += (target - shear) * 0.16;
+        if (Math.abs(shear) < 0.01 && Math.abs(scrollVel) < 0.01) {
+          shear = 0;
+          scrollVel = 0;
+        }
+      } else {
+        shear = 0;
+        scrollVel = 0;
+        lastScrollY = -1;
+      }
       if (t - lastDimBuild > 200 || lastDimBuild < 0) {
         buildDimGrid();
         lastDimBuild = t;
@@ -184,6 +208,12 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
           let alpha = isAccent ? cfg.accentAlpha : cfg.inkAlpha;
           let r = cfg.baseR;
           if (animate) {
+            if (shear !== 0) {
+              // Per-dot lag factor 0.6..1.4 from the grid hash: the fabric
+              // stretches against the scroll instead of translating rigidly.
+              const lag = 0.6 + ((((i * 13 + j * 7) % 5) + 5) % 5) * 0.2;
+              y -= shear * lag;
+            }
             if (cfg.wave !== "none") {
               const along = cfg.wave === "diag" ? worldX + worldY : worldY;
               const phase = along / cfg.wavelength - phaseShift * 2 * Math.PI;
