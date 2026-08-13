@@ -1,64 +1,22 @@
+import snapshot from "@/content/signals.json";
+
+/* Repo signals come from content/signals.json, a committed snapshot that
+   scripts/refresh-signals.mjs rewrites and the nightly cadence workflow
+   commits. The old build-time GitHub fetch made rendered pixels depend on
+   which build won the rate-limit lottery (CI always got the fallback,
+   which also silently hardcoded "14 commits this week"). Committed data
+   keeps builds deterministic, the pixel gate honest, and every number
+   real: commitsThisWeek is null when the API could not be reached on
+   refresh night, and callers must render that as absent, not fake it. */
+
 export type RepoSignals = {
   updatedLabel: string;
-  commitsThisWeek: number;
+  commitsThisWeek: number | null;
   openIssues: number;
   repos: number;
+  asOf: string;
 };
 
-const FALLBACK: RepoSignals = {
-  updatedLabel: "updated recently",
-  commitsThisWeek: 14,
-  openIssues: 1,
-  repos: 3,
-};
-
-type GitHubRepo = {
-  pushed_at?: string;
-  open_issues_count?: number;
-};
-
-function dateLabel(dateString: string | undefined): string {
-  if (!dateString) {
-    return FALLBACK.updatedLabel;
-  }
-
-  const diffMs = Date.now() - new Date(dateString).getTime();
-  const diffHours = Math.max(1, Math.round(diffMs / 3_600_000));
-  if (diffHours < 24) {
-    return `updated ${diffHours}h ago`;
-  }
-  const diffDays = Math.round(diffHours / 24);
-  return `updated ${diffDays}d ago`;
-}
-
-export async function getRepoSignals(fetcher: typeof fetch = fetch): Promise<RepoSignals> {
-  try {
-    const response = await fetcher("https://api.github.com/orgs/coconut-labs/repos?per_page=100", {
-      headers: {
-        Accept: "application/vnd.github+json",
-        ...(process.env.GITHUB_PAT ? { Authorization: `Bearer ${process.env.GITHUB_PAT}` } : {}),
-      },
-      next: { revalidate: 3600 },
-    } as RequestInit);
-
-    if (!response.ok) {
-      return FALLBACK;
-    }
-
-    const repos = (await response.json()) as GitHubRepo[];
-    const newest = repos
-      .map((repo) => repo.pushed_at)
-      .filter((date): date is string => Boolean(date))
-      .sort()
-      .at(-1);
-
-    return {
-      updatedLabel: dateLabel(newest),
-      commitsThisWeek: FALLBACK.commitsThisWeek,
-      openIssues: repos.reduce((sum, repo) => sum + (repo.open_issues_count ?? 0), 0) || FALLBACK.openIssues,
-      repos: repos.length || FALLBACK.repos,
-    };
-  } catch {
-    return FALLBACK;
-  }
+export async function getRepoSignals(): Promise<RepoSignals> {
+  return snapshot as RepoSignals;
 }
