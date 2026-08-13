@@ -40,6 +40,8 @@ export type FieldConfig = {
   crestInk: number;
   crestAccent: number;
   crestR: number;
+  /** Vertical lift as the crest passes: the fabric breathes, not just glows. */
+  crestLift: number;
   /** Metronome tick on the accent subset (benchmarks: steady under load). */
   pulse: boolean;
   pulsePeriodMs: number;
@@ -74,6 +76,65 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
     let running = false;
     let pointer: { x: number; y: number } | null = null;
     let ripples: Ripple[] = [];
+    // Content-dim grid: viewport cells covered by text blocks get a dim
+    // factor so the field recedes under prose. Rebuilt on layout-affecting
+    // events and every ~200ms while animating (cheap: <=120 rects into a
+    // ~50x35 cell grid, then two dilation rings for soft edges).
+    let dimGrid: Float32Array = new Float32Array(0);
+    let dimCols = 0;
+    let dimRows = 0;
+    let lastDimBuild = -1;
+
+    const buildDimGrid = () => {
+      dimCols = Math.ceil(width / cfg.spacing) + 2;
+      dimRows = Math.ceil(height / cfg.spacing) + 2;
+      dimGrid = new Float32Array(dimCols * dimRows);
+      const els = document.querySelectorAll(
+        "main h1, main h2, main h3, main p, main li, main table, main pre, main video, main blockquote",
+      );
+      const n = Math.min(els.length, 140);
+      for (let k = 0; k < n; k++) {
+        const el = els[k]!;
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < -40 || rect.top > height + 40 || rect.width === 0) continue;
+        const pad = 14;
+        const c0 = Math.max(0, Math.floor((rect.left - pad) / cfg.spacing));
+        const c1 = Math.min(dimCols - 1, Math.ceil((rect.right + pad) / cfg.spacing));
+        const r0 = Math.max(0, Math.floor((rect.top - pad) / cfg.spacing));
+        const r1 = Math.min(dimRows - 1, Math.ceil((rect.bottom + pad) / cfg.spacing));
+        for (let r = r0; r <= r1; r++)
+          for (let c = c0; c <= c1; c++) dimGrid[r * dimCols + c] = 1;
+      }
+      // Two dilation rings: 1 -> 0.55 -> 0.25, soft edges without a blur pass.
+      for (const [ring, value] of [
+        [1, 0.55],
+        [2, 0.25],
+      ] as const) {
+        for (let r = 0; r < dimRows; r++) {
+          for (let c = 0; c < dimCols; c++) {
+            if (dimGrid[r * dimCols + c] !== 0) continue;
+            let near = 0;
+            for (let dr = -ring; dr <= ring; dr++) {
+              for (let dc = -ring; dc <= ring; dc++) {
+                const rr = r + dr;
+                const cc = c + dc;
+                if (rr >= 0 && rr < dimRows && cc >= 0 && cc < dimCols && dimGrid[rr * dimCols + cc]! >= 0.55)
+                  near = 1;
+              }
+            }
+            if (near) dimGrid[r * dimCols + c] = value;
+          }
+        }
+      }
+    };
+
+    const dimAt = (x: number, y: number): number => {
+      if (dimCols === 0) return 0;
+      const c = Math.floor(x / cfg.spacing);
+      const r = Math.floor(y / cfg.spacing);
+      if (c < 0 || c >= dimCols || r < 0 || r >= dimRows) return 0;
+      return dimGrid[r * dimCols + c] ?? 0;
+    };
 
     const resolveColors = () => {
       const styles = getComputedStyle(document.documentElement);
@@ -93,8 +154,15 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
       const animate = !reduced.matches;
-      const scrollY = animate ? window.scrollY : 0;
+      // Scroll offset applies in both modes: the world scrolls with the page
+      // and the dim zones track the content, static or not. Only autonomous
+      // motion (wave, pulse, gravity, ripples) is animate-gated.
+      const scrollY = window.scrollY;
       const phaseShift = animate ? (t % cfg.periodMs) / cfg.periodMs : 0;
+      if (t - lastDimBuild > 200 || lastDimBuild < 0) {
+        buildDimGrid();
+        lastDimBuild = t;
+      }
       // Metronome: a brief bright tick, then quiet until the next beat.
       const tick = animate && cfg.pulse
         ? Math.max(0, Math.sin((2 * Math.PI * (t % cfg.pulsePeriodMs)) / cfg.pulsePeriodMs)) ** 6
@@ -122,6 +190,7 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
               const crest = Math.max(0, Math.sin(phase)) ** 3;
               alpha += crest * (isAccent ? cfg.crestAccent : cfg.crestInk);
               r += crest * cfg.crestR;
+              y -= crest * cfg.crestLift;
             }
             if (isAccent && tick > 0) {
               alpha += tick * 0.4;
@@ -159,6 +228,9 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
               }
             }
           }
+          // Local dimming: the field recedes where content sits on it.
+          const dim = dimAt(x, y);
+          if (dim > 0) alpha *= 1 - 0.72 * dim;
           ctx.globalAlpha = Math.min(alpha, 0.95);
           ctx.fillStyle = isAccent ? accent : ink;
           ctx.beginPath();
@@ -188,6 +260,7 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
       stop();
       resolveColors();
       resize();
+      lastDimBuild = -1;
       draw(0);
       start();
     };
@@ -219,6 +292,24 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
     window.addEventListener("pointerout", onLeave, { passive: true });
     window.addEventListener("pointerdown", onDown, { passive: true });
 
+    // Static mode still tracks the page: redraw on scroll (scroll-linked
+    // positioning is not autonomous motion) and after fonts settle layout,
+    // so dim zones and the world grid stay aligned with the content.
+    let scrollRaf = 0;
+    const onScroll = () => {
+      if (running) return; // the loop already reads scrollY every frame
+      cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(() => {
+        lastDimBuild = -1;
+        draw(0);
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.fonts?.ready.then(() => {
+      lastDimBuild = -1;
+      if (!running) draw(0);
+    });
+
     const onVisibility = () => {
       if (document.hidden) stop();
       else start();
@@ -236,6 +327,8 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
 
     return () => {
       stop();
+      cancelAnimationFrame(scrollRaf);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerout", onLeave);
       window.removeEventListener("pointerdown", onDown);
