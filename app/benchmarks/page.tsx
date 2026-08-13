@@ -100,6 +100,20 @@ export default function BenchmarksPage() {
           </p>
         </div>
 
+        {/* walkthrough */}
+        <details className="group mt-10 rounded-sm border border-rule bg-bg-1">
+          <summary className="focus-ring flex cursor-pointer items-center gap-2 p-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2">
+            Watch the walkthrough (35 s, silent)
+          </summary>
+          <div className="border-t border-[var(--hair)] p-4">
+            <video className="w-full rounded-sm" controls preload="none" src="/walkthroughs/benchmarks-walkthrough.webm" />
+            <p className="mt-2 font-mono text-[10.5px] text-ink-2">
+              The proof page top to bottom: plot, tables, the honesty panel, the reproduce bar ·
+              recorded from this page, unedited.
+            </p>
+          </div>
+        </details>
+
         {/* honesty panel */}
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <div className="rounded-sm border border-danger/40 bg-bg-1 p-6">
