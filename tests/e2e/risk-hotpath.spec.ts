@@ -20,7 +20,9 @@ const outcome = (page: import("@playwright/test").Page) => page.getByTestId("dem
 async function ready(page: import("@playwright/test").Page) {
   await page.goto(PATH);
   // wasm fetch + instantiate is async; "gate armed" is the loaded state.
-  await expect(outcome(page)).toContainText("gate armed", { timeout: 10_000 });
+  // 20s: firefox under full-suite parallel load twice blew a 10s budget
+  // (flake, passed isolated); the timeout is load headroom, not slowness.
+  await expect(outcome(page)).toContainText("gate armed", { timeout: 20_000 });
 }
 
 test("gate loads and arms with the real wasm module", async ({ page }) => {

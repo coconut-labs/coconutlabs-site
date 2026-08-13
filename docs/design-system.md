@@ -46,7 +46,7 @@ on bg-1 floor). Do not lighten either. There is no accent-2 or accent-3.
 - Stat rails: cells separated by 1px --rule via gap-px on a --rule background.
 - No shadows except --shadow-soft/--shadow-paper on elevated cards.
 - No gradients, no glassmorphism, no text shadows, no animated backgrounds
-  (sole exception: the §5 DotField hero instance).
+  (sole exception: the §5 DotField ground system).
 
 ## 4. Iconography and glyphs
 
@@ -61,12 +61,15 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 - Brand-motion exceptions (KernelSilk, kernel-tail, DotField): pause
   offscreen and on hidden tabs, render a static frame under reduced motion,
   opacity/transform-class motion only (canvas alpha/radius/displacement
-  counts). DotField is the one sanctioned background instance: the home
-  page's full-height dot fabric (fixed viewport canvas, world-space grid
-  that scrolls with the page) with its diagonal request wave, pointer
-  gravity dimple, and click ripples whose weight scales with the clicked
-  element's size. Alphas kept low so text contrast never moves. No other
-  page background may animate.
+  counts). DotField is the one sanctioned background system: the dot
+  fabric runs as the site-wide ground (fixed viewport canvas, world-space
+  grid that scrolls with the page) with route-keyed variants chosen in
+  FieldGround: home = full fabric (wave, gravity, ripples), benchmarks =
+  metronome tick on the accent subset, cadence = downward ledger wave,
+  drawings = fine graph paper, research posts = faintest reading room,
+  all other routes = quiet default. Same physics, same reduced-motion
+  static frame, only coefficients differ. Alphas kept low so text
+  contrast never moves. No background outside this system may animate.
 
 ## 6. Voice (enforced in copy review, linted where mechanical)
 

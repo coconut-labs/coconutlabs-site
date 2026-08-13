@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { FieldGround } from "@/components/shell/FieldGround";
 import { FirstLoadReveal } from "@/components/shell/FirstLoadReveal";
 import { Footer } from "@/components/shell/Footer";
 import { Header } from "@/components/shell/Header";
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           Skip to content
         </a>
         <div className="page-shell paper-texture">
+          <FieldGround />
           <Header />
           <RouteTransition>
             <main id="main">{children}</main>

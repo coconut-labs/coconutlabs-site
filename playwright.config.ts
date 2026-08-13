@@ -13,21 +13,27 @@ export default defineConfig({
     baseURL: "http://127.0.0.1:3000",
     trace: "retain-on-failure",
   },
+  // All projects force reduced motion. The e2e tier asserts function, not
+  // motion: with the DotField fabric grounding every route, a 60fps canvas
+  // loop on every page under 3-engine parallel load starved the main thread
+  // and made unrelated tests flake (risk-hotpath arm x2, research filter).
+  // Reduced motion stops the loop and lands LiveLog/tape replays on their
+  // final state instantly, which is the state the tests assert anyway.
   projects: [
     {
       name: "chromium",
       testDir: "./tests/e2e",
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Chrome"], contextOptions: { reducedMotion: "reduce" } },
     },
     {
       name: "firefox",
       testDir: "./tests/e2e",
-      use: { ...devices["Desktop Firefox"] },
+      use: { ...devices["Desktop Firefox"], contextOptions: { reducedMotion: "reduce" } },
     },
     {
       name: "webkit",
       testDir: "./tests/e2e",
-      use: { ...devices["Desktop Safari"] },
+      use: { ...devices["Desktop Safari"], contextOptions: { reducedMotion: "reduce" } },
     },
     {
       // Pixel-deterministic design gate. Chromium only: one renderer, one
@@ -35,7 +41,7 @@ export default defineConfig({
       // test:visual, baseline update is a deliberate act.
       name: "visual",
       testDir: "./tests/visual",
-      use: { ...devices["Desktop Chrome"] },
+      use: { ...devices["Desktop Chrome"], contextOptions: { reducedMotion: "reduce" } },
     },
   ],
   webServer: {
