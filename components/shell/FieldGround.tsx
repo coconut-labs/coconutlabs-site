@@ -1,7 +1,12 @@
 "use client";
 
-/* FieldGround — mounts the DotField fabric under every page and picks the
-   variant from the route, so each page's ground argues that page's case:
+/* FieldGround — mounts the DotField fabric under every page.
+
+   Route variants are RETIRED (2026-08-14, operator's call): one ground,
+   everywhere, and the home page is the reference. Consistency beat
+   per-page cleverness. The config below is the landing page's, verbatim.
+
+   Retired variants, for the record, in case the argument comes back:
 
    - home        the full fabric: diagonal request wave, gravity, ripples.
    - benchmarks  the metronome: no wave, the accent subset ticks a steady
@@ -15,86 +20,32 @@
                  Prose owns the page; the ground just holds it.
    - elsewhere   the quiet default: slow diagonal wave, gentle everything.
 
-   All variants share the same physics and the same §5 discipline; only the
-   coefficients change. Remounts on variant change via key. */
+   They shared the same physics; only coefficients differed. */
 
-import { usePathname } from "next/navigation";
 import { DotField, type FieldConfig } from "./DotField";
 
 const BASE: FieldConfig = {
   spacing: 28,
   baseR: 1.6,
-  inkAlpha: 0.13,
-  accentAlpha: 0.3,
+  inkAlpha: 0.19,
+  accentAlpha: 0.44,
   wave: "diag",
   wavelength: 460,
-  periodMs: 8000,
-  crestInk: 0.26,
-  crestAccent: 0.42,
-  crestR: 1.0,
-  crestLift: 2.5,
+  periodMs: 6600,
+  crestInk: 0.4,
+  crestAccent: 0.62,
+  crestR: 1.3,
+  crestLift: 4,
   pulse: false,
   pulsePeriodMs: 1200,
-  gravityPull: 5,
-  gravityRadius: 190,
+  gravityPull: 7,
+  gravityRadius: 210,
   ripples: true,
-  rippleEnergy: 0.7,
+  rippleEnergy: 1,
 };
 
-const VARIANTS: Record<string, Partial<FieldConfig>> = {
-  home: {
-    inkAlpha: 0.19,
-    accentAlpha: 0.44,
-    periodMs: 6600,
-    crestInk: 0.4,
-    crestAccent: 0.62,
-    crestR: 1.3,
-    crestLift: 4,
-    gravityPull: 7,
-    gravityRadius: 210,
-    rippleEnergy: 1,
-  },
-  metronome: {
-    wave: "none",
-    pulse: true,
-    accentAlpha: 0.34,
-  },
-  ledger: {
-    wave: "down",
-    wavelength: 380,
-    periodMs: 9000,
-    crestLift: 3,
-  },
-  graph: {
-    spacing: 22,
-    baseR: 1.4,
-    inkAlpha: 0.1,
-    accentAlpha: 0.22,
-    wave: "none",
-    gravityPull: 4,
-    rippleEnergy: 0.5,
-  },
-  reading: {
-    inkAlpha: 0.09,
-    accentAlpha: 0.2,
-    wave: "none",
-    gravityPull: 3,
-    rippleEnergy: 0.4,
-  },
-};
 
-function variantFor(path: string): string {
-  if (path === "/") return "home";
-  if (path === "/benchmarks") return "metronome";
-  if (path === "/cadence") return "ledger";
-  if (path === "/drawings") return "graph";
-  if (path.startsWith("/research/")) return "reading";
-  return "default";
-}
 
 export function FieldGround() {
-  const pathname = usePathname();
-  const name = variantFor(pathname ?? "/");
-  const cfg: FieldConfig = { ...BASE, ...(VARIANTS[name] ?? {}) };
-  return <DotField cfg={cfg} key={name} />;
+  return <DotField cfg={BASE} />;
 }
