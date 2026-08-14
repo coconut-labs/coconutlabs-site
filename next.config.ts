@@ -28,6 +28,18 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  /* /live is a Cloudflare Worker (the operations surface: uptime, gap
+     ledger, the nightly loop). The coconutlabs.org zone is DNS-only and
+     Vercel serves it, so a Worker route would never fire; a rewrite is the
+     correct mount. Both entries are required: the bare /live silently
+     drops the index otherwise. */
+  async rewrites() {
+    return [
+      { source: "/live", destination: "https://coconutlabs-live.shrey77-wrk.workers.dev/live" },
+      { source: "/live/:path*", destination: "https://coconutlabs-live.shrey77-wrk.workers.dev/live/:path*" },
+    ];
+  },
+
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   reactStrictMode: true,
   poweredByHeader: false,
