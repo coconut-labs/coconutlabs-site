@@ -8,8 +8,11 @@ export const metadata = buildMetadata({
   path: "/projects/gallery",
 });
 
-// The frozen spine: seven bottleneck classes. A unit must claim a new class or go
-// deeper in an occupied one. Empty cells are shown on purpose — a known frontier.
+// The spine: one bottleneck class per row. A unit must claim a new class or go
+// deeper in an occupied one. Empty cells are shown on purpose, a known frontier.
+// Class I is the newest and the loosest fit: latent diffusion is a mechanism, not
+// a production failure mode, but the 48x it buys is a real compute-cost claim, so
+// the row is named for the cost and not for the model.
 const CLASSES: { key: string; name: string; cover: { label: string; href?: string } | null }[] = [
   { key: "A", name: "Silent data regressions / quality guardrails", cover: { label: "Silent data-regression guardrail", href: "/projects/silent-data-regression-guardrail" } },
   { key: "B", name: "Point-in-time & lineage correctness", cover: { label: "Point-in-time correctness guardrail", href: "/projects/point-in-time-correctness" } },
@@ -19,6 +22,7 @@ const CLASSES: { key: string; name: string; cover: { label: string; href?: strin
   { key: "F", name: "Eval & replay", cover: { label: "Atlas · reasoning path", href: "/projects/agentic-mlops" } },
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
   { key: "H", name: "Hot-path admission & latency", cover: { label: "Pre-trade risk gate", href: "/projects/risk-hotpath" } },
+  { key: "I", name: "Representation cost in generative models", cover: { label: "Latent diffusion mechanics", href: "/projects/latent-diffusion" } },
 ];
 
 // Each shipped unit as a story card: a plain-language hook, one thing you can do
@@ -31,6 +35,10 @@ type UnitCard = {
   meta: string;
   href: string;
   source: string;
+  /* Evidence badge. Defaults to the Tier-4 A/B badge the five guardrail units
+     and the risk gate earned. A unit that carries no measured result must say
+     so here: the badge is a claim like any other. */
+  badge?: string;
 };
 const UNIT_CARDS: UnitCard[] = [
   {
@@ -119,6 +127,22 @@ const UNIT_CARDS: UnitCard[] = [
     href: "/projects/risk-hotpath",
     source: "https://github.com/ShreyPatel4/risk-hotpath-hft",
   },
+  {
+    title: "Latent diffusion mechanics",
+    hook: "Denoising an image one pixel at a time is 786,432 numbers a thousand times over. The word latent is the trick that made it fit on a laptop.",
+    action: "Drag the timestep, watch a field dissolve into noise and come back, then break the noise predictor by 5 percent.",
+    numbers: (
+      <>
+        <span className="font-mono">48x fewer values</span> to denoise at f = 8, computed live from
+        the repo&rsquo;s autoencoder config · schedule and shapes cited to file, no trained model on
+        the page
+      </>
+    ),
+    meta: "CompVis latent diffusion · generative core · class I",
+    href: "/projects/latent-diffusion",
+    source: "https://github.com/ShreyPatel4/Latent-Diffusion-Artbench-OpenImage",
+    badge: "Shipped · mechanism, no measured result",
+  },
 ];
 
 export default function GalleryPage() {
@@ -148,7 +172,7 @@ export default function GalleryPage() {
             >
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-                  <span aria-hidden="true">●</span> Shipped · Tier 4
+                  <span aria-hidden="true">●</span> {card.badge ?? "Shipped · Tier 4"}
                 </span>
                 <span className="inline-flex items-center rounded-sm border border-rule px-3 py-1 font-mono text-xs uppercase text-ink-2">
                   live in your browser

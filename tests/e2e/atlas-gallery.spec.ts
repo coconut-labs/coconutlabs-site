@@ -66,11 +66,16 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
     page.getByText("Every card is a thing that silently breaks in real data systems.")
   ).toBeVisible();
 
-  // Five shipped unit cards, each with a live link and a source link.
-  // 6 units since the pre-trade risk gate joined (class H, 2026-08-12).
-  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(6);
-  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(6);
-  await expect(page.getByText("live in your browser")).toHaveCount(6);
+  // Shipped unit cards, each with a live link and a source link.
+  // 7 units since latent diffusion mechanics joined (class I, 2026-08-15).
+  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(7);
+  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(7);
+  await expect(page.getByText("live in your browser")).toHaveCount(7);
+
+  // The evidence badge is a claim too: six units carry the Tier-4 A/B badge,
+  // latent diffusion carries no measured result and says so on the card.
+  await expect(page.getByText("Shipped · Tier 4")).toHaveCount(6);
+  await expect(page.getByText("Shipped · mechanism, no measured result")).toHaveCount(1);
 
   // A what-you-can-do line on a card.
   await expect(

@@ -18,6 +18,7 @@ const routes = [
   "/projects/silent-cache-miss",
   "/projects/columnar-scan-bytes-guardrail",
   "/projects/ingestion-data-contract",
+  "/projects/latent-diffusion",
   "/projects/gallery",
   "/projects/agentic-mlops",
   "/joinus",

@@ -28,6 +28,7 @@ const ROUTES = [
   "/projects/mlxd",
   "/projects/coconut-os",
   "/projects/risk-hotpath",
+  "/projects/latent-diffusion",
   "/library",
   "/drawings",
   "/about",
