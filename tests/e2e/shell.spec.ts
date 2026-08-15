@@ -57,7 +57,7 @@ test("menu closes on navigation", async ({ page }) => {
   await expect(page.locator("#site-menu")).toBeHidden();
 });
 
-test("footer carries the Steady Cadence row and the outpost row", async ({ page }) => {
+test("footer carries the Steady Cadence row and the baseline row", async ({ page }) => {
   await page.goto("/");
   const footer = page.getByRole("contentinfo");
   await expect(footer).toBeVisible();
@@ -65,7 +65,7 @@ test("footer carries the Steady Cadence row and the outpost row", async ({ page 
 
   // Row 1: the letter pitch plus the live signup form.
   await expect(
-    footer.getByText("Steady Cadence · one letter, measured: what we shipped, measured, and got wrong"),
+    footer.getByText("Steady Cadence · one measured letter: what we shipped and what we got wrong"),
   ).toBeVisible();
   await expect(footer.getByLabel("Email address")).toBeVisible();
   await expect(footer.getByRole("button", { name: "SUBSCRIBE" })).toBeVisible();
@@ -90,7 +90,8 @@ test("footer carries the Steady Cadence row and the outpost row", async ({ page 
     "https://masterclass.coconutlabs.org",
   );
 
-  // Row 3: the original two items plus real outposts only.
+  // Row 3: identity plus the surfaces that actually exist. A surface we do
+  // not have yet gets no row, so there is nothing here promising one.
   await expect(footer.getByText("Coconut Labs · one lab, several surfaces")).toBeVisible();
   await expect(footer.getByRole("link", { name: "GitHub ↗" })).toHaveAttribute(
     "href",
@@ -101,7 +102,7 @@ test("footer carries the Steady Cadence row and the outpost row", async ({ page 
     "href",
     "mailto:info@coconutlabs.org",
   );
-  await expect(footer.getByText("outposts: soon")).toBeVisible();
+  await expect(footer.getByText(/outposts/i)).toHaveCount(0);
 });
 
 test("cadence signup maps the worker's three response shapes", async ({ page }) => {

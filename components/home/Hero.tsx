@@ -32,7 +32,7 @@ export async function Hero() {
           </h1>
           <p className="mt-8 max-w-[44ch] text-xl leading-8 text-ink-1">
             A quiet tenant keeps its latency under load. We build the schedulers that make that
-            true, measure them on rented hardware, and publish the parts that failed.
+            true and measure them on rented hardware. The parts that failed are published too.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Link

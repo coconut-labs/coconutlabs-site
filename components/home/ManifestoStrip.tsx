@@ -16,7 +16,7 @@ export function ManifestoStrip() {
             </p>
           </div>
           <blockquote className="border-l-2 border-ink-0 pl-6 text-[clamp(1.5rem,2.6vw,2.3rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-ink-0">
-            The quiet tenant should still have a name.
+            1,585 ms of waiting for a prompt that costs 53.9 ms with nothing else on the box.
           </blockquote>
         </div>
       </div>

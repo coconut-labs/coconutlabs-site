@@ -8,9 +8,9 @@ import { CadenceSignup } from "./CadenceSignup";
    2. The map: every header-menu destination plus the lab's other surfaces,
       in the same WORK / WRITING / LAB columns the menu uses, with a fourth
       SURFACES column for the subdomains and a fifth for contact.
-   3. The mono baseline row: identity, GitHub, RSS, email, outposts note.
-   Only surfaces that exist today get hrefs; "outposts: soon" stays honest
-   until real handles exist. */
+   3. The mono baseline row: identity, GitHub, RSS, email.
+   Only surfaces that exist today get hrefs. Surfaces we do not have yet get
+   no row at all, rather than a promise of one. */
 
 const footerLinkClass =
   "focus-ring rounded-sm transition hover:underline hover:underline-offset-[3px]";
@@ -68,7 +68,7 @@ export function Footer() {
     >
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
         <p className="max-w-[44ch] font-mono text-[11px] leading-[1.7] text-ink-2">
-          Steady Cadence · one letter, measured: what we shipped, measured, and got wrong
+          Steady Cadence · one measured letter: what we shipped and what we got wrong
         </p>
         <CadenceSignup />
       </div>
@@ -111,7 +111,6 @@ export function Footer() {
           <a className={footerLinkClass} href="mailto:info@coconutlabs.org">
             info@coconutlabs.org
           </a>
-          <span>outposts: soon</span>
         </div>
       </div>
     </footer>

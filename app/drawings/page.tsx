@@ -44,7 +44,7 @@ export default function DrawingsPage() {
               "The admission gate caps requests in flight at max_concurrent. A request that cannot get a slot waits up to 30 seconds, then is shed instead of queueing forever.",
               "The vLLM engine runs continuous batching and is tenant-blind by design; the dash-dot line marks where tenant identity stops existing.",
               "The accent dimension is the measured result: 61.5 ms p99 for a quiet tenant post-warmup, n=311, on 1x A100, Llama-3.1-8B, vLLM 0.19.1, over a 300 s window.",
-              "The dashed dimension is the control: the same quiet tenant behind a flood sees 1,585 ms p99 when requests go straight to the engine FIFO, 26x the gated figure.",
+              "The dashed dimension is the control: the same quiet tenant behind a flood sees 1,585 ms p99 when requests go straight to the engine FIFO, 26× the gated figure.",
             ]}
           >
             <AdmissionPath />

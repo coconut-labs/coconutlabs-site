@@ -1,6 +1,6 @@
 ---
 title: "Tenant fairness on shared inference"
-dek: "A KVWarden Gate 2 note: 53.9 ms quiet TTFT, 61.5 ms under flooder pressure, and 26x better tail behavior than FIFO."
+dek: "A KVWarden Gate 2 note: 53.9 ms quiet TTFT, 61.5 ms under flooder pressure, and 26× better tail behavior than FIFO."
 date: "2026-04-19"
 type: "research note"
 authors:
@@ -13,7 +13,7 @@ status: "published"
 
 Shared inference should not let one noisy tenant turn the rest of the system into a queue of apologies. KVWarden Gate 2 tests a simple fairness question: when a flooder pushes load into the scheduler, does a quiet tenant still get service that resembles solo performance?
 
-The current run holds quiet tenant TTFT at **61.5 ms** under flooder pressure, against **53.9 ms** in the solo case. FIFO does not hold that line. In this setup KVWarden is **26x better than FIFO** at protecting the quiet tenant.
+The current run holds quiet tenant TTFT at **61.5 ms** under flooder pressure, against **53.9 ms** in the solo case. FIFO does not hold that line. In this setup KVWarden is **26× better than FIFO** at protecting the quiet tenant.
 
 ## What changed
 

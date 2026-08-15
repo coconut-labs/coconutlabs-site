@@ -7,7 +7,7 @@ import { Defs, NodeBox, SheetFrame, T, TitleBlock } from "./primitives";
  * response, with the FIFO bypass drawn dashed as the control and the two
  * measured p99 figures as dimension lines between the same endpoints.
  * Numbers are the canonical bench: 61.5 ms post-warmup (n=311) vs 1,585 ms
- * FIFO, 26x, on 1x A100, Llama-3.1-8B, vLLM 0.19.1, 300 s. */
+ * FIFO, 26×, on 1× A100, Llama-3.1-8B, vLLM 0.19.1, 300 s. */
 
 const W = 980;
 const H = 470;
@@ -120,7 +120,7 @@ export function AdmissionPath() {
         y2={345}
       />
       <T fill={INK_DIM} x={469} y={337}>
-        1,585 ms p99 · same tenant when FIFO meets a flood · 26x
+        1,585 ms p99 · same tenant when FIFO meets a flood · 26×
       </T>
 
       {/* regime note: numbers travel with their conditions */}
