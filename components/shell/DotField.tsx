@@ -90,6 +90,7 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
     let dimCols = 0;
     let dimRows = 0;
     let lastDimBuild = -1;
+    let dimScrollY = -1;
     /* Rects cached in DOCUMENT space, refreshed only on layout events.
        getBoundingClientRect inside the animation loop forces synchronous
        layout every frame; that was the frame-time tail. */
@@ -208,8 +209,12 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
         scrollVel = 0;
         lastScrollY = -1;
       }
-      if (t - lastDimBuild > 200 || lastDimBuild < 0) {
+      /* Rebuild only when scroll or layout actually changed. A fixed 200ms
+         timer meant the dilation sweep over ~1700 cells fired even on a
+         still page, which showed up as a periodic frame past vsync. */
+      if (lastDimBuild < 0 || scrollY !== dimScrollY) {
         buildDimGrid();
+        dimScrollY = scrollY;
         lastDimBuild = t;
       }
       // Metronome: a brief bright tick, then quiet until the next beat.
