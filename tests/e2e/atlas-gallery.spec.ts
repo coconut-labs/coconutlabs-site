@@ -67,7 +67,8 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
   ).toBeVisible();
 
   // Shipped unit cards, each with a live link and a source link.
-  // 7 units since latent diffusion mechanics joined (class I, 2026-08-15).
+  // 7 units: 6 on the bottleneck spine plus latent diffusion, which is a
+  // mechanism unit and deliberately sits outside the class table.
   await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(7);
   await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(7);
   await expect(page.getByText("live in your browser")).toHaveCount(7);
@@ -85,6 +86,6 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
   // Flagship atlas card still routes to the atlas.
   await expect(page.getByRole("link", { name: /Open the atlas/ })).toBeVisible();
 
-  // The coverage grid (all seven classes) is intact below the cards.
+  // The coverage grid (the eight bottleneck classes) is intact below the cards.
   await expect(page.getByText("Ingestion & schema-drift")).toBeVisible();
 });

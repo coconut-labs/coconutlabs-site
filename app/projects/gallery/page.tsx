@@ -8,11 +8,15 @@ export const metadata = buildMetadata({
   path: "/projects/gallery",
 });
 
-// The spine: one bottleneck class per row. A unit must claim a new class or go
-// deeper in an occupied one. Empty cells are shown on purpose, a known frontier.
-// Class I is the newest and the loosest fit: latent diffusion is a mechanism, not
-// a production failure mode, but the 48x it buys is a real compute-cost claim, so
-// the row is named for the cost and not for the model.
+/* The spine: one bottleneck class per row. Every class names a failure that
+   HIDES in production, which is what earns a unit: the system keeps answering
+   while the answer goes wrong. A unit must claim a new class or go deeper in an
+   occupied one. Empty cells are shown on purpose, a known frontier.
+
+   A class I was proposed for latent diffusion and rejected. That unit teaches a
+   mechanism nobody can run without the weights, not a failure that hides.
+   Admitting it would have diluted what this table claims, so it sits below the
+   table under its own heading, where the different kind of claim is visible. */
 const CLASSES: { key: string; name: string; cover: { label: string; href?: string } | null }[] = [
   { key: "A", name: "Silent data regressions / quality guardrails", cover: { label: "Silent data-regression guardrail", href: "/projects/silent-data-regression-guardrail" } },
   { key: "B", name: "Point-in-time & lineage correctness", cover: { label: "Point-in-time correctness guardrail", href: "/projects/point-in-time-correctness" } },
@@ -22,7 +26,6 @@ const CLASSES: { key: string; name: string; cover: { label: string; href?: strin
   { key: "F", name: "Eval & replay", cover: { label: "Atlas · reasoning path", href: "/projects/agentic-mlops" } },
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
   { key: "H", name: "Hot-path admission & latency", cover: { label: "Pre-trade risk gate", href: "/projects/risk-hotpath" } },
-  { key: "I", name: "Representation cost in generative models", cover: { label: "Latent diffusion mechanics", href: "/projects/latent-diffusion" } },
 ];
 
 // Each shipped unit as a story card: a plain-language hook, one thing you can do
@@ -138,7 +141,7 @@ const UNIT_CARDS: UnitCard[] = [
         the page
       </>
     ),
-    meta: "CompVis latent diffusion · generative core · class I",
+    meta: "CompVis latent diffusion · mechanism unit, outside the bottleneck spine",
     href: "/projects/latent-diffusion",
     source: "https://github.com/ShreyPatel4/Latent-Diffusion-Artbench-OpenImage",
     badge: "Shipped · mechanism, no measured result",
