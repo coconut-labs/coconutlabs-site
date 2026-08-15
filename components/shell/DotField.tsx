@@ -90,27 +90,52 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
     let dimCols = 0;
     let dimRows = 0;
     let lastDimBuild = -1;
+    /* Rects cached in DOCUMENT space, refreshed only on layout events.
+       getBoundingClientRect inside the animation loop forces synchronous
+       layout every frame; that was the frame-time tail. */
+    let docRects: number[][] | null = null;
+    /* Alpha bucketing was tried here and reverted: quantising to 12 levels
+       put ~4% alpha error on the faintest dots, which banded the wave and
+       failed all 60 pixel baselines. The rect cache below is the win that
+       costs nothing visually. */
+
+    const cacheRects = () => {
+      const els = document.querySelectorAll(
+        "main h1, main h2, main h3, main p, main li, main table, main pre, main video, main blockquote",
+      );
+      const sy = window.scrollY;
+      const sx = window.scrollX;
+      docRects = [];
+      for (let k = 0; k < Math.min(els.length, 200); k++) {
+        const r = els[k]!.getBoundingClientRect();
+        if (r.width === 0) continue;
+        docRects.push([r.left + sx, r.top + sy, r.right + sx, r.bottom + sy]);
+      }
+    };
 
     const buildDimGrid = () => {
       dimCols = Math.ceil(width / cfg.spacing) + 2;
       dimRows = Math.ceil(height / cfg.spacing) + 2;
       dimGrid = new Float32Array(dimCols * dimRows);
-      const els = document.querySelectorAll(
-        "main h1, main h2, main h3, main p, main li, main table, main pre, main video, main blockquote",
-      );
-      const n = Math.min(els.length, 140);
-      for (let k = 0; k < n; k++) {
-        const el = els[k]!;
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom < -40 || rect.top > height + 40 || rect.width === 0) continue;
+      if (!docRects) cacheRects();
+      const sy = window.scrollY;
+      for (const d of docRects!) {
+        const rect = { left: d[0]!, top: d[1]! - sy, right: d[2]!, bottom: d[3]! - sy, width: d[2]! - d[0]! };
+        if (rect.bottom < -40 || rect.top > height + 40) continue;
         const pad = 14;
         const c0 = Math.max(0, Math.floor((rect.left - pad) / cfg.spacing));
         const c1 = Math.min(dimCols - 1, Math.ceil((rect.right + pad) / cfg.spacing));
         const r0 = Math.max(0, Math.floor((rect.top - pad) / cfg.spacing));
         const r1 = Math.min(dimRows - 1, Math.ceil((rect.bottom + pad) / cfg.spacing));
-        for (let r = r0; r <= r1; r++)
-          for (let c = c0; c <= c1; c++) dimGrid[r * dimCols + c] = 1;
+        for (let rr = r0; rr <= r1; rr++)
+          for (let cc = c0; cc <= c1; cc++) dimGrid[rr * dimCols + cc] = 1;
       }
+      dilate();
+    };
+
+
+    const dilate = () => dilateRings();
+    const dilateRings = () => {
       // Two dilation rings: 1 -> 0.55 -> 0.25, soft edges without a blur pass.
       for (const [ring, value] of [
         [1, 0.55],
@@ -261,7 +286,9 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
           // Local dimming: the field recedes where content sits on it.
           const dim = dimAt(x, y);
           if (dim > 0) alpha *= 1 - 0.72 * dim;
-          ctx.globalAlpha = Math.min(alpha, 0.95);
+          const a = Math.min(alpha, 0.95);
+          if (a < 0.012) continue;
+          ctx.globalAlpha = a;
           ctx.fillStyle = isAccent ? accent : ink;
           ctx.beginPath();
           ctx.arc(x, y, r, 0, Math.PI * 2);
@@ -290,6 +317,7 @@ export function DotField({ cfg }: { cfg: FieldConfig }) {
       stop();
       resolveColors();
       resize();
+      docRects = null;
       lastDimBuild = -1;
       draw(0);
       start();
