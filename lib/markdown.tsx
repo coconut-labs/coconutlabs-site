@@ -5,7 +5,8 @@ type MarkdownBlock =
   | { type: "paragraph"; text: string }
   | { type: "quote"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "code"; lang: string; code: string };
+  | { type: "code"; lang: string; code: string }
+  | { type: "table"; head: string[]; rows: string[][] };
 
 function inline(text: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
@@ -66,8 +67,42 @@ export function parseMarkdown(markdown: string): MarkdownBlock[] {
     }
   }
 
-  for (const rawLine of lines) {
+  /* GFM pipe tables. The research notes are rendered by this parser, not by
+     the MDX pipeline, so remark-gfm never sees them: a table used to fall
+     through to the paragraph branch and ship as literal pipes. Cells are
+     split on unescaped pipes and the outer pair is dropped. */
+  function tableCells(line: string): string[] {
+    return line
+      .trim()
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split(/(?<!\\)\|/)
+      .map((cell) => cell.trim().replace(/\\\|/g, "|"));
+  }
+
+  function isTableDivider(line: string): boolean {
+    return /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?$/.test(line.trim());
+  }
+
+  for (let li = 0; li < lines.length; li++) {
+    const rawLine = lines[li] ?? "";
     const line = rawLine.trimEnd();
+
+    // a header row followed by a divider row opens a table
+    if (!code && line.trim().startsWith("|") && isTableDivider(lines[li + 1] ?? "")) {
+      flushParagraph();
+      flushList();
+      const head = tableCells(line);
+      const rows: string[][] = [];
+      li += 2;
+      while (li < lines.length && (lines[li] ?? "").trim().startsWith("|")) {
+        rows.push(tableCells(lines[li] ?? ""));
+        li += 1;
+      }
+      li -= 1;
+      blocks.push({ type: "table", head, rows });
+      continue;
+    }
 
     if (line.startsWith("```")) {
       if (code) {
@@ -151,6 +186,31 @@ export function Markdown({ content }: { content: string }): React.ReactElement {
                 <li key={item}>{inline(item)}</li>
               ))}
             </ul>
+          );
+        }
+
+        if (block.type === "table") {
+          return (
+            <div className="post-table-wrap" key={index}>
+              <table>
+                <thead>
+                  <tr>
+                    {block.head.map((cell, i) => (
+                      <th key={i}>{inline(cell)}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {block.rows.map((row, r) => (
+                    <tr key={r}>
+                      {row.map((cell, c) => (
+                        <td key={c}>{inline(cell)}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           );
         }
 

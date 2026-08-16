@@ -99,3 +99,47 @@
     gap: clamp(3rem, 6vw, 7rem);
   }
 }
+
+/* Pipe tables in research notes. Wide tables scroll inside their own
+   container so the page body never scrolls sideways. */
+.post-table-wrap {
+  margin: 1.8rem 0;
+  overflow-x: auto;
+}
+
+.post-body table {
+  border-collapse: collapse;
+  font-size: 0.94em;
+  min-width: 26rem;
+  width: 100%;
+}
+
+.post-body thead tr {
+  border-bottom: 1px solid var(--rule);
+}
+
+.post-body th {
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.76em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1.1rem 0.5rem 0;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.post-body td {
+  border-bottom: 1px solid var(--hair);
+  color: var(--ink-1);
+  padding: 0.62rem 1.1rem 0.62rem 0;
+  vertical-align: top;
+}
+
+.post-body tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.post-body td:first-child {
+  color: var(--ink-0);
+}
