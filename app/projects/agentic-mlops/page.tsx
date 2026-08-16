@@ -26,7 +26,7 @@ export default function AgenticMlopsPage() {
         <div className="content-inner flex flex-wrap items-start justify-between gap-[clamp(2rem,6vw,5rem)]">
           <div className="min-w-[min(100%,22rem)] flex-[1_1_34rem]">
             <p className="font-mono text-xs uppercase text-ink-2">
-              Working name · unassigned pending audit
+              Flagship · in build
             </p>
             <h1 className="mt-4 max-w-[25ch] text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02] text-ink-0">
               An agentic MLOps platform, built to be measured.

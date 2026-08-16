@@ -238,7 +238,7 @@ export default function GalleryPage() {
 
         {/* the competency grid */}
         <div className="mt-16">
-          <p className="font-mono text-xs uppercase text-ink-2">coverage · the frontier is the point</p>
+          <p className="font-mono text-xs uppercase text-ink-2">coverage · one bottleneck class per row</p>
           <ul className="mt-6 divide-y divide-rule border-y border-rule">
             {CLASSES.map((c) => (
               <li key={c.key} className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
@@ -261,9 +261,6 @@ export default function GalleryPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 font-mono text-xs text-ink-2">
-            A new unit must claim an open class or go materially deeper in a filled one.
-          </p>
         </div>
 
         <div className="mt-14 border-t border-rule pt-8">

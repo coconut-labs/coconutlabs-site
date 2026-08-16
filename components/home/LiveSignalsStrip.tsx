@@ -21,7 +21,7 @@ export async function LiveSignalsStrip() {
   // Order matters: lead with credibility-heaviest signals.
   const items = [
     latestNote,
-    signals.commitsThisWeek === null ? "commits: refresh pending" : `${signals.commitsThisWeek} commits this week`,
+    signals.commitsThisWeek === null ? "" : `${signals.commitsThisWeek} commits this week`,
     KVWARDEN_BANNER,
     `${signals.repos} repos tracked`,
     `${signals.openIssues} rfc open`,

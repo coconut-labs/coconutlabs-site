@@ -274,7 +274,7 @@ export default function LifecycleMap() {
               {activeStopObj.loopTo ? ` · loops back to stop ${activeStopObj.loopTo}` : ""}
             </span>
           ) : (
-            <span>Ten units, one per JD requirement. Each is built and written before the next starts.</span>
+            <span>Ten units across four layers, each carrying one falsifiable claim.</span>
           )}
         </div>
       </section>
@@ -324,10 +324,9 @@ export default function LifecycleMap() {
                           <span className={styles.unitTop}>
                             <span className={styles.unitId}>{u.id}</span>
                             <span className={styles.unitTitle}>{u.title}</span>
-                            <span className={styles.tier} title="target evaluation tier (§12)">{u.tier}</span>
+                            <span className={styles.tier} title="target evaluation tier">{u.tier}</span>
                           </span>
                           <span className={styles.unitClaim}>{u.claim}</span>
-                          <span className={styles.unitJd}>JD · {u.jd}</span>
                         </button>
                       );
                     })}

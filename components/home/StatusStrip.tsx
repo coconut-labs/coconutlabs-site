@@ -10,7 +10,7 @@ export async function StatusStrip() {
   const latest = feed[0];
 
   const items = [
-    signals.commitsThisWeek === null ? "commits: refresh pending" : `${signals.commitsThisWeek} commits this week`,
+    signals.commitsThisWeek === null ? "" : `${signals.commitsThisWeek} commits this week`,
     `${signals.repos} repos tracked`,
     latest ? `latest note ${latest.date}` : "",
     "kvwarden v0.1.6 on pypi",
