@@ -9,7 +9,7 @@ test("home renders the full composition in the new order", async ({ page }) => {
   // Hero: wordmark heading, the measurement claim, both CTAs
   await expect(page.getByRole("heading", { name: "Coconut Labs" })).toBeVisible();
   await expect(page.getByText(/quiet tenant keeps its latency/i)).toBeVisible();
-  await expect(page.getByRole("link", { name: /Read the latest note/i }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Read the latest result/i }).first()).toBeVisible();
   await expect(page.getByRole("main").getByRole("link", { name: /The proof page/i })).toBeVisible();
 
   // Plot card carries provenance, not just numbers
@@ -23,7 +23,18 @@ test("home renders the full composition in the new order", async ({ page }) => {
   // Strips — Projects (three flagships) above Research (rows)
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Coconut OS" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Recent research" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Recent results" })).toBeVisible();
+
+  // SurfacesStrip: the estate map, every surface named with a real sentence.
+  await expect(page.getByRole("heading", { name: "One lab, several surfaces" })).toBeVisible();
+  await expect(page.getByRole("main").getByRole("link", { name: /waterline\.coconutlabs\.org/ })).toHaveAttribute(
+    "href",
+    "https://waterline.coconutlabs.org",
+  );
+  await expect(page.getByRole("main").getByRole("link", { name: /coconutlabs\.org\/live/ })).toHaveAttribute(
+    "href",
+    "/live",
+  );
 
   // PeopleStrip — names hidden, generic copy used.
   await expect(page.getByRole("heading", { name: "Two engineers, close to the work." })).toBeVisible();

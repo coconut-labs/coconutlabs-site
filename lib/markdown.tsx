@@ -67,7 +67,7 @@ export function parseMarkdown(markdown: string): MarkdownBlock[] {
     }
   }
 
-  /* GFM pipe tables. The research notes are rendered by this parser, not by
+  /* GFM pipe tables. The evidence entries are rendered by this parser, not by
      the MDX pipeline, so remark-gfm never sees them: a table used to fall
      through to the paragraph branch and ship as literal pipes. Cells are
      split on unescaped pipes and the outer pair is dropped. */

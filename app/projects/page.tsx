@@ -47,7 +47,7 @@ export default async function ProjectsPage() {
           <div className="mt-8 flex flex-wrap gap-5 font-mono text-xs">
             <Link
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
-              href="/research/tenant-fairness-on-shared-inference"
+              href="/evidence/tenant-fairness-on-shared-inference"
             >
               Read the launch <span aria-hidden="true">→</span>
             </Link>

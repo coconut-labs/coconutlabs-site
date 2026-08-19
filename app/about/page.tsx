@@ -31,7 +31,7 @@ export default async function AboutPage() {
         <p className="mt-6">
           <Link
             className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs uppercase text-accent"
-            href="/benchmarks"
+            href="/evidence/benchmarks"
           >
             See the proof page <span aria-hidden="true">→</span>
           </Link>
@@ -55,6 +55,44 @@ export default async function AboutPage() {
             <PrincipleCard body={principle.body} key={principle.title} title={principle.title} />
           ))}
         </div>
+
+        {/* Merged from the old /library page, which collided by name with the
+            library.coconutlabs.org host and described two wings of a shelf
+            that has four. /library 301s to this anchor. */}
+        <section className="mt-20 rounded-sm border border-rule bg-bg-1 p-6" id="the-library">
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2">the practice behind the lab</p>
+          <h2 className="mt-3 text-xl text-ink-0">The Library</h2>
+          <p className="mt-3 max-w-[68ch] leading-7 text-ink-1">
+            The Library is the private study shelf the public work is built on, and it holds four
+            things: the waterline atlas, the academy curricula, the essay drafts, and the
+            masterclass source. The rule is one rep a day, fifteen minutes, go one level below what
+            the job requires and write it down well enough to teach.
+          </p>
+          <p className="mt-3 max-w-[68ch] leading-7 text-ink-1">
+            It stays behind a login at{" "}
+            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://library.coconutlabs.org">
+              library.coconutlabs.org
+            </a>{" "}
+            because the drafts lean on first-person operational detail. The cleared subset is
+            public: the atlas at{" "}
+            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://waterline.coconutlabs.org">
+              Below the Waterline
+            </a>
+            , the course at{" "}
+            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://masterclass.coconutlabs.org">
+              masterclass
+            </a>
+            , the essays at{" "}
+            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://shreypatel.coconutlabs.org/essays">
+              shreypatel.coconutlabs.org/essays
+            </a>
+            . What the lab measured lands in{" "}
+            <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/evidence">
+              evidence
+            </Link>
+            .
+          </p>
+        </section>
       </div>
     </section>
   );

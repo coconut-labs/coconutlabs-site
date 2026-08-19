@@ -52,7 +52,7 @@ export type ScholarlyArticleInput = {
 };
 
 export function scholarlyArticleJsonLd(input: ScholarlyArticleInput): Record<string, unknown> {
-  const url = new URL(`/research/${input.slug}`, siteUrl()).toString();
+  const url = new URL(`/evidence/${input.slug}`, siteUrl()).toString();
 
   return {
     "@context": "https://schema.org",

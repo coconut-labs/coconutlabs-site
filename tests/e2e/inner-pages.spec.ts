@@ -5,7 +5,7 @@ const routes = [
   ["/projects/kvwarden", "KVWarden"],
   ["/projects/mlxd", "mlxd"],
   ["/projects/coconut-os", "Coconut OS"],
-  ["/research", "Research"],
+  ["/evidence", "Evidence"],
   ["/joinus", "Build with us."],
   ["/about", "A small lab for shared inference."],
   ["/contact", "Write the lab."],
@@ -71,14 +71,17 @@ test("/projects shows KVWarden + mlxd + Coconut OS + tools section", async ({ pa
   await expect(page.getByText(/In research/i).first()).toBeVisible();
 });
 
-test("/research filter row routes to type-filtered views", async ({ page }) => {
-  await page.goto("/research", { waitUntil: "domcontentloaded" });
+// The filter row is gone: five tabs over three empty arrays, two of them the
+// destination of a cached permanent redirect. /evidence carries one kind of
+// thing and lists it plainly.
+test("/evidence carries no filter nav", async ({ page }) => {
+  await page.goto("/evidence", { waitUntil: "domcontentloaded" });
 
   for (const label of ["all", "notes", "papers", "podcasts", "talks"]) {
-    await expect(page.getByRole("link", { name: label, exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: label, exact: true })).toHaveCount(0);
   }
-
-  await page.getByRole("link", { name: "papers", exact: true }).click();
-  await expect(page).toHaveURL(/\/research\?type=paper/);
-  await expect(page.getByText(/No papers yet/i)).toBeVisible();
+  await expect(page.getByRole("link", { name: "benchmarks page" })).toHaveAttribute(
+    "href",
+    "/evidence/benchmarks",
+  );
 });

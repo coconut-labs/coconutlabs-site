@@ -3,9 +3,9 @@ import { expect, test } from "@playwright/test";
 
 const routes = [
   "/",
-  "/research",
-  "/library",
-  "/research/tenant-fairness-on-shared-inference",
+  "/evidence",
+  "/evidence/benchmarks",
+  "/evidence/tenant-fairness-on-shared-inference",
   "/work",
   "/papers",
   "/podcasts",
@@ -25,7 +25,6 @@ const routes = [
   "/about",
   "/contact",
   "/colophon",
-  "/benchmarks",
   "/drawings",
 ];
 

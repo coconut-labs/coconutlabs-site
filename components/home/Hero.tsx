@@ -38,13 +38,13 @@ export async function Hero() {
             <Link
               className="focus-ring inline-flex min-h-[44px] items-center gap-2 rounded-sm bg-ink-0 px-[18px] font-mono text-[11.5px] uppercase tracking-[0.1em] text-bg-0 transition hover:opacity-90"
               data-cta="hero"
-              href={`/research/${latestSlug}`}
+              href={`/evidence/${latestSlug}`}
             >
-              Read the latest note <span aria-hidden="true">→</span>
+              Read the latest result <span aria-hidden="true">→</span>
             </Link>
             <Link
               className="focus-ring inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-rule bg-bg-0/80 px-[18px] font-mono text-[11.5px] uppercase tracking-[0.1em] text-ink-0 transition hover:border-accent hover:text-accent"
-              href="/benchmarks"
+              href="/evidence/benchmarks"
             >
               The proof page
             </Link>
@@ -77,7 +77,7 @@ export async function Hero() {
           </div>
           <p className="mt-4 border-t border-[var(--hair)] pt-3 font-mono text-[10.5px] leading-5 text-ink-2">
             1× A100 · Llama-3.1-8B · vLLM 0.19.1 · n=311 post-warmup · FIFO bar off scale.{" "}
-            <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/benchmarks">
+            <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/evidence/benchmarks">
               full provenance
             </Link>
           </p>

@@ -8,15 +8,15 @@ export const ROUTES: RouteEntry[] = [
   { href: "/", label: "Home" },
 
   // Top nav (primary)
-  { href: "/research", label: "Research", nav: true },
-  { href: "/library",  label: "Library",  nav: true },
   { href: "/projects", label: "Projects", nav: true },
+  { href: "/evidence", label: "Evidence", nav: true },
   { href: "/joinus",   label: "Join us",  nav: true },
   { href: "/about",    label: "About",    nav: true },
   { href: "/contact",  label: "Contact",  nav: true },
 
   // Hub-internal (URL-stable, not in top nav)
-  { href: "/research/[slug]",   label: "Research post" },
+  { href: "/evidence/[slug]",   label: "Evidence entry" },
+  { href: "/evidence/benchmarks", label: "Benchmarks" },
   { href: "/projects/kvwarden", label: "KVWarden" },
   { href: "/projects/mlxd",     label: "mlxd" },
   { href: "/projects/gallery",  label: "Hall of demos" },
@@ -29,9 +29,12 @@ export const ROUTES: RouteEntry[] = [
   { href: "/projects/risk-hotpath", label: "Pre-trade risk gate" },
   { href: "/projects/latent-diffusion", label: "Latent diffusion mechanics" },
   { href: "/projects/coconut-os", label: "Coconut OS" },
-  { href: "/benchmarks", label: "Benchmarks" },
   { href: "/drawings", label: "Working drawings" },
   { href: "/cadence", label: "The nightly record" },
+  // /live is a rewrite onto the operations Worker (see next.config.ts). It is
+  // a real public URL, so it belongs in the sitemap and the nav; it is kept
+  // out of the visual and a11y suites because those would then need network.
+  { href: "/live", label: "Live status" },
 
   // Footer-only
   { href: "/colophon", label: "Colophon" },

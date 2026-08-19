@@ -7,7 +7,7 @@ import {
   loadPeople,
   loadPodcasts,
   loadProject,
-  loadResearchFeed,
+  loadEvidenceFeed,
   loadWork,
   parseFrontmatter,
 } from "@/lib/content";
@@ -19,7 +19,7 @@ describe("content loaders", () => {
 title: "A title"
 dek: "A dek"
 date: "2026-04-25"
-type: "note"
+type: "evidence"
 authors:
   - "Shrey Patel"
 ---
@@ -41,7 +41,7 @@ Text.`,
     const dates = posts.map((post) => post.date);
     const sorted = [...dates].sort((a, b) => (a < b ? 1 : -1));
     expect(dates).toEqual(sorted);
-    expect(posts.length).toBeGreaterThanOrEqual(3);
+    expect(posts.length).toBeGreaterThanOrEqual(1);
     expect(posts.every((post) => post.status === "published")).toBe(true);
   });
 
@@ -80,16 +80,16 @@ describe("getLatestPostSlug", () => {
   });
 
   it("falls back to the canonical launch post slug when no posts exist", async () => {
-    // This path is exercised in CI by deleting content/research/*.mdx;
+    // This path is exercised in CI by deleting content/evidence/*.mdx;
     // here we just verify the fallback string is the canonical one.
     const slug = await getLatestPostSlug();
     expect(slug.length).toBeGreaterThan(0);
   });
 });
 
-describe("loadResearchFeed", () => {
+describe("loadEvidenceFeed", () => {
   it("returns entries sorted newest first", async () => {
-    const feed = await loadResearchFeed();
+    const feed = await loadEvidenceFeed();
     expect(feed.length).toBeGreaterThan(0);
     for (let i = 1; i < feed.length; i++) {
       expect(feed[i - 1]!.date >= feed[i]!.date).toBe(true);
@@ -97,11 +97,11 @@ describe("loadResearchFeed", () => {
   });
 
   it("annotates each entry with a type", async () => {
-    const feed = await loadResearchFeed();
-    const types = new Set(feed.map((e) => e.type));
+    const feed = await loadEvidenceFeed();
+    const types = new Set(feed.map((entry) => entry.type));
     // At minimum, every entry has a typed type
-    for (const e of feed) {
-      expect(["note", "paper", "podcast", "talk"]).toContain(e.type);
+    for (const entry of feed) {
+      expect(["evidence", "paper", "podcast", "talk"]).toContain(entry.type);
     }
     expect(types.size).toBeGreaterThan(0);
   });

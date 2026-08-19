@@ -1,18 +1,18 @@
 import { getRepoSignals } from "@/lib/github";
-import { loadResearchFeed } from "@/lib/content";
+import { loadEvidenceFeed } from "@/lib/content";
 
 // Direction A status strip: full width, directly under the header. Leads
 // with a live dot, items separated by middle dots, everything mono and
 // quiet. Dates are absolute: relative dates rot visual baselines daily and
 // carry less information.
 export async function StatusStrip() {
-  const [signals, feed] = await Promise.all([getRepoSignals(), loadResearchFeed()]);
+  const [signals, feed] = await Promise.all([getRepoSignals(), loadEvidenceFeed()]);
   const latest = feed[0];
 
   const items = [
     signals.commitsThisWeek === null ? "" : `${signals.commitsThisWeek} commits this week`,
     `${signals.repos} repos tracked`,
-    latest ? `latest note ${latest.date}` : "",
+    latest ? `latest result ${latest.date}` : "",
     "kvwarden v0.1.6 on pypi",
   ].filter(Boolean);
 

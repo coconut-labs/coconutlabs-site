@@ -26,7 +26,7 @@ const STARTING_PATHS = [
   {
     title: "Find a failure mode in the fairness claim.",
     body:
-      "The Gate 2 result is narrow on purpose: one quiet tenant, one flooder, one trace shape. Construct a workload where KVWarden does worse than FIFO: different arrival distributions, adversarial prompt lengths, mixed model sizes. We will publish the counter-example as a research note with co-authorship if it holds up. Adversarial reproductions are at least as valuable to us as confirmatory ones.",
+      "The Gate 2 result is narrow on purpose: one quiet tenant, one flooder, one trace shape. Construct a workload where KVWarden does worse than FIFO: different arrival distributions, adversarial prompt lengths, mixed model sizes. We will publish the counter-example as an evidence entry with co-authorship if it holds up. Adversarial reproductions are at least as valuable to us as confirmatory ones.",
   },
   {
     title: "Patch the harness.",
@@ -73,7 +73,7 @@ export default async function JoinUsPage() {
         <h2 className="mt-24 text-[clamp(2.4rem,5vw,4rem)] leading-tight">What we give back</h2>
         <ul className="mt-7 grid max-w-3xl gap-4 text-lg leading-8 text-ink-1">
           <li><strong className="text-ink-0">Commit attribution.</strong> Every PR lands with your name on the commit. We do not squash to hide who did the work.</li>
-          <li><strong className="text-ink-0">Co-authorship on substantive contributions.</strong> If your work materially shapes a research note, your name goes on the byline. We will negotiate this in the PR thread, not after the fact.</li>
+          <li><strong className="text-ink-0">Co-authorship on substantive contributions.</strong> If your work materially shapes an evidence entry, your name goes on the byline. We will negotiate this in the PR thread, not after the fact.</li>
           <li><strong className="text-ink-0">A contributor list.</strong> Your name lands on this page once a PR merges. The list updates from the canonical CONTRIBUTORS file in the relevant repo.</li>
           <li><strong className="text-ink-0">References and endorsements.</strong> If you do good work here and ask, we will write you a real reference for grad school, jobs, or grants.</li>
         </ul>

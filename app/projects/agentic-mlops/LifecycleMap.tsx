@@ -311,6 +311,10 @@ export default function LifecycleMap() {
                         <button
                           type="button"
                           key={u.id}
+                          /* Deep-link target: the gallery sends class D at
+                             #unit-U5 and class F at #unit-U7, so the two
+                             cells stop landing on the same bare page. */
+                          id={`unit-${u.id}`}
                           ref={registerStation(`unit-${u.id}`)}
                           aria-pressed={pinned}
                           className={`${styles.unit} ${active ? styles.unitActive : ""} ${tourFocus ? styles.tourFocus : ""}`}

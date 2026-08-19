@@ -3,62 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { NAV_COLUMNS } from "@/lib/nav";
 import { ThemeToggle } from "./ThemeToggle";
 
 /* Direction A chrome. The five-item inline nav + CTA is gone; the header is
    a wordmark on the left and a MENU toggle on the right, with a full-width
-   panel below carrying four mono-labelled columns. Menu link styling follows
-   the handoff: 17px body links on 44px hit targets, 10.5px/.14em column
-   labels, panel on --bg-1 with a --rule bottom border. */
+   panel below carrying four mono-labelled columns and a status block. Menu
+   link styling follows the handoff: 17px body links on 44px hit targets,
+   10.5px/.14em column labels, panel on --bg-1 with a --rule bottom border.
 
-type MenuLink = {
-  label: string;
-  href: string;
-  external?: boolean;
-};
-
-type MenuColumn = {
-  label: string;
-  links: MenuLink[];
-};
-
-const MENU_COLUMNS: MenuColumn[] = [
-  {
-    label: "WORK",
-    links: [
-      { label: "Projects", href: "/projects" },
-      { label: "Hall of demos", href: "/projects/gallery" },
-      { label: "KVWarden", href: "/projects/kvwarden" },
-      { label: "mlxd", href: "/projects/mlxd" },
-      { label: "Coconut OS", href: "/projects/coconut-os" },
-    ],
-  },
-  {
-    label: "WRITING",
-    links: [
-      { label: "Research", href: "/research" },
-      {
-        label: "Tenant fairness on shared inference",
-        href: "/research/tenant-fairness-on-shared-inference",
-      },
-      { label: "A model in the room", href: "/research/a-model-in-the-room" },
-      { label: "What mixing taught me about evals", href: "/research/mixing-and-evals" },
-      { label: "Masterclass", href: "https://masterclass.coconutlabs.org", external: true },
-    ],
-  },
-  {
-    label: "LAB",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Library", href: "/library" },
-      { label: "Join us", href: "/joinus" },
-      { label: "Benchmarks", href: "/benchmarks" },
-      { label: "Working drawings", href: "/drawings" },
-      { label: "The nightly record", href: "/cadence" },
-      { label: "Colophon", href: "/colophon" },
-    ],
-  },
-];
+   The columns come from lib/nav.ts and are the same object the footer
+   renders. Do not add a link here. */
 
 const menuLinkClass =
   "focus-ring flex min-h-[44px] items-center rounded-sm text-[17px] text-ink-0 transition hover:underline hover:underline-offset-[3px]";
@@ -126,15 +81,19 @@ export function Header() {
           aria-label="Primary"
           className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-[clamp(22px,3vw,44px)] px-[var(--space-page-x)] pb-[clamp(28px,4vw,40px)] pt-[clamp(24px,3vw,36px)]"
         >
-          {MENU_COLUMNS.map((column) => (
+          {NAV_COLUMNS.map((column) => (
             <div className="flex flex-col gap-[2px]" key={column.label}>
               <p className="mb-[10px] font-mono text-[10.5px] tracking-[0.14em] text-ink-2">
                 {column.label}
               </p>
               {column.links.map((link) =>
-                link.external ? (
+                link.external || link.plain ? (
                   <a className={menuLinkClass} href={link.href} key={link.href} onClick={closeMenu}>
                     {link.label}
+                    {/* ml-1: the row is a flex container, so a leading space
+                        inside the span would collapse and the glyph would sit
+                        flush against the label. */}
+                    {link.external ? <span aria-hidden="true" className="ml-1">↗</span> : null}
                   </a>
                 ) : (
                   <Link className={menuLinkClass} href={link.href} key={link.href} onClick={closeMenu}>

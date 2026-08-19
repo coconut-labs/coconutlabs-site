@@ -7,7 +7,7 @@ export function PostBody({ content }: { content: string }) {
         <Markdown content={content} />
       </article>
       <aside className="post-marginalia no-print hidden lg:block">
-        <p>canonical research note</p>
+        <p>canonical result</p>
         <p className="mt-8">citations and side notes collapse inline on narrow screens.</p>
       </aside>
     </div>

@@ -21,9 +21,9 @@ const CLASSES: { key: string; name: string; cover: { label: string; href?: strin
   { key: "A", name: "Silent data regressions / quality guardrails", cover: { label: "Silent data-regression guardrail", href: "/projects/silent-data-regression-guardrail" } },
   { key: "B", name: "Point-in-time & lineage correctness", cover: { label: "Point-in-time correctness guardrail", href: "/projects/point-in-time-correctness" } },
   { key: "C", name: "Throughput & caching", cover: { label: "Silent cache-miss guardrail", href: "/projects/silent-cache-miss" } },
-  { key: "D", name: "Cost & token attribution", cover: { label: "Atlas · cost plane", href: "/projects/agentic-mlops" } },
+  { key: "D", name: "Cost & token attribution", cover: { label: "Atlas unit U5 · cost plane", href: "/projects/agentic-mlops#unit-U5" } },
   { key: "E", name: "Format & storage tradeoffs", cover: { label: "Columnar-scan bytes guardrail", href: "/projects/columnar-scan-bytes-guardrail" } },
-  { key: "F", name: "Eval & replay", cover: { label: "Atlas · reasoning path", href: "/projects/agentic-mlops" } },
+  { key: "F", name: "Eval & replay", cover: { label: "Atlas unit U7 · reasoning path", href: "/projects/agentic-mlops#unit-U7" } },
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
   { key: "H", name: "Hot-path admission & latency", cover: { label: "Pre-trade risk gate", href: "/projects/risk-hotpath" } },
 ];

@@ -23,7 +23,7 @@ test("MENU opens the panel with the four column labels and toggles to CLOSE", as
   await expect(closeButton).toHaveAttribute("aria-expanded", "true");
   await expect(panel).toBeVisible();
 
-  for (const label of ["WORK", "WRITING", "LAB", "STATUS"]) {
+  for (const label of ["WORK", "EVIDENCE", "LEARN", "LAB", "STATUS"]) {
     await expect(panel.getByText(label, { exact: true })).toBeVisible();
   }
   await expect(panel.getByRole("link", { name: "KVWarden" })).toBeVisible();
@@ -52,8 +52,8 @@ test("Escape closes the panel and returns focus to the toggle", async ({ page })
 test("menu closes on navigation", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "MENU" }).click();
-  await page.locator("#site-menu").getByRole("link", { name: "Research", exact: true }).click();
-  await expect(page).toHaveURL(/\/research$/);
+  await page.locator("#site-menu").getByRole("link", { name: "All evidence", exact: true }).click();
+  await expect(page).toHaveURL(/\/evidence$/);
   await expect(page.locator("#site-menu")).toBeHidden();
 });
 
@@ -70,11 +70,11 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
   await expect(footer.getByLabel("Email address")).toBeVisible();
   await expect(footer.getByRole("button", { name: "SUBSCRIBE" })).toBeVisible();
 
-  // Row 2: the sitemap. Four columns mirroring the header menu plus the
-  // subdomain surfaces; one representative link per kind is asserted.
+  // Row 2: the sitemap. The SAME four columns the header menu renders, from
+  // the same lib/nav.ts export; one representative link per kind is asserted.
   const sitemap = footer.getByRole("navigation", { name: "Site map" });
   await expect(sitemap).toBeVisible();
-  for (const col of ["WORK", "WRITING", "LAB", "SURFACES"]) {
+  for (const col of ["WORK", "EVIDENCE", "LEARN", "LAB"]) {
     await expect(sitemap.getByText(col, { exact: true })).toBeVisible();
   }
   await expect(sitemap.getByRole("link", { name: "Working drawings" })).toHaveAttribute(
@@ -90,9 +90,19 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
     "https://masterclass.coconutlabs.org",
   );
 
-  // Row 3: identity plus the surfaces that actually exist. A surface we do
+  // Row 3: the hostname rail, every host in the estate on one mono line.
+  await expect(footer.getByRole("link", { name: "waterline.coconutlabs.org" })).toHaveAttribute(
+    "href",
+    "https://waterline.coconutlabs.org",
+  );
+  await expect(footer.getByRole("link", { name: "library.coconutlabs.org" })).toHaveAttribute(
+    "href",
+    "https://library.coconutlabs.org",
+  );
+
+  // Row 4: identity plus the surfaces that actually exist. A surface we do
   // not have yet gets no row, so there is nothing here promising one.
-  await expect(footer.getByText("Coconut Labs · one lab, several surfaces")).toBeVisible();
+  await expect(footer.getByText("Coconut Labs · independent inference research")).toBeVisible();
   await expect(footer.getByRole("link", { name: "GitHub ↗" })).toHaveAttribute(
     "href",
     "https://github.com/coconut-labs",

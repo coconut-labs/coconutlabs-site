@@ -1,5 +1,5 @@
 import { getRepoSignals } from "@/lib/github";
-import { loadResearchFeed } from "@/lib/content";
+import { loadEvidenceFeed } from "@/lib/content";
 
 const KVWARDEN_BANNER = "kvwarden gate 2 · 1.14× solo · 26× better than fifo";
 
@@ -14,13 +14,13 @@ function relativeDate(date: string): string {
 }
 
 export async function LiveSignalsStrip() {
-  const [signals, feed] = await Promise.all([getRepoSignals(), loadResearchFeed()]);
+  const [signals, feed] = await Promise.all([getRepoSignals(), loadEvidenceFeed()]);
   const latest = feed[0];
-  const latestNote = latest ? `latest note · ${latest.date} (${relativeDate(latest.date)})` : "";
+  const latestResult = latest ? `latest result · ${latest.date} (${relativeDate(latest.date)})` : "";
 
   // Order matters: lead with credibility-heaviest signals.
   const items = [
-    latestNote,
+    latestResult,
     signals.commitsThisWeek === null ? "" : `${signals.commitsThisWeek} commits this week`,
     KVWARDEN_BANNER,
     `${signals.repos} repos tracked`,

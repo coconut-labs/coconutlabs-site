@@ -11,3 +11,13 @@ Coconut OS is the lab's largest bet: a Linux distribution built on the position 
 The work so far is specification and prototype, and we publish the posture honestly: a capability subsystem with explicit tokens for agent operations, an audit path that records what agents did at the kernel boundary rather than trusting them to report it, and scheduling that knows an agent workload from an interactive one. The reserved syscall surface is small on purpose, and most of it is deliberately unwired until the design survives review.
 
 Same lab, same method as KVWarden and mlxd: state the thesis, build the smallest honest version, measure, publish what happened. The landing page lives at [coconutos.org](https://coconutos.org), and like every domain we run, it is one surface of one lab.
+
+## The specs, in full
+
+Five specification pages are public and had no inbound link from this domain until now. In reading order:
+
+- [Thesis](https://coconutos.org/specs/thesis), the position the whole distribution rests on.
+- [Architecture](https://coconutos.org/specs/architecture), the capability subsystem, the audit path, and the syscall surface.
+- [Security](https://coconutos.org/specs/security), the threat model and what the capability tokens are supposed to stop.
+- [Roadmap](https://coconutos.org/specs/roadmap), what is wired today and what is deliberately unwired.
+- [Team](https://coconutos.org/specs/team), who is doing the work.

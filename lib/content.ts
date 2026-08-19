@@ -136,7 +136,7 @@ export function parseFrontmatter(raw: string, fallbackSlug: string): Post {
 }
 
 export async function getAllPosts(options: { includeDrafts?: boolean } = {}): Promise<Post[]> {
-  const directory = path.join(CONTENT, "research");
+  const directory = path.join(CONTENT, "evidence");
   const files = await fs.readdir(directory, { recursive: true });
   const posts = await Promise.all(
     files
@@ -254,7 +254,7 @@ export async function loadPeople(): Promise<Person[]> {
   return Promise.all([loadPerson("shrey-patel"), loadPerson("jay-patel")]);
 }
 
-export type FeedType = "note" | "paper" | "podcast" | "talk";
+export type FeedType = "evidence" | "paper" | "podcast" | "talk";
 
 export type FeedEntry = {
   slug: string;
@@ -266,7 +266,7 @@ export type FeedEntry = {
   href: string;          // canonical link to the artifact
 };
 
-/** Returns the slug of the most recent published post, used for build-time CTA resolution. */
+/** Returns the slug of the most recent published result, used for build-time CTA resolution. */
 export async function getLatestPostSlug(): Promise<string> {
   const posts = await getAllPosts();
   return posts[0]?.slug ?? "tenant-fairness-on-shared-inference";
@@ -285,8 +285,8 @@ function listEntryToFeed(entry: ListEntry, type: FeedType): FeedEntry {
   };
 }
 
-/** Combined chronological feed of research notes + papers + podcasts. Newest first. */
-export async function loadResearchFeed(): Promise<FeedEntry[]> {
+/** Combined chronological feed of evidence entries + papers + podcasts. Newest first. */
+export async function loadEvidenceFeed(): Promise<FeedEntry[]> {
   const [posts, papers, podcasts] = await Promise.all([
     getAllPosts(),
     loadPapers(),
@@ -297,11 +297,11 @@ export async function loadResearchFeed(): Promise<FeedEntry[]> {
     ...posts.map<FeedEntry>((p) => ({
       slug: p.slug,
       date: p.date,
-      type: "note",
+      type: "evidence",
       title: p.title,
       dek: p.dek,
       authors: p.authors,
-      href: `/research/${p.slug}`,
+      href: `/evidence/${p.slug}`,
     })),
     ...papers.map((p) => listEntryToFeed(p, "paper")),
     ...podcasts.map((p) => listEntryToFeed(p, "podcast")),

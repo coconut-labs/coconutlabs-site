@@ -49,22 +49,62 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "motion"],
   },
+  /* Order matters: Next takes the first match. The two moved essays must sit
+     above /research/:slug or the wildcard swallows them. */
   async redirects() {
     return [
       { source: "/work",          destination: "/projects#tools",          permanent: true },
-      { source: "/papers",        destination: "/research?type=papers",    permanent: true },
-      { source: "/podcasts",      destination: "/research?type=podcasts",  permanent: true },
       { source: "/projects/weft", destination: "/projects/mlxd",           permanent: true },
-      // Umbrella affordances: memorable paths on the main domain that hand
-      // off to the gated library and the masterclass subdomains.
-      { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
+
+      /* The rename. /research was pretending to be four things (notes,
+         papers, podcasts, talks) and three of them were empty arrays, so the
+         section is now /evidence and carries one kind of thing.
+         /papers and /podcasts were already permanent:true pointing at the two
+         empty filter views, which browsers have cached; they are repointed at
+         the source rather than chained through /research. */
+      { source: "/papers",        destination: "/evidence",                permanent: true },
+      { source: "/podcasts",      destination: "/evidence",                permanent: true },
+      { source: "/notes",         destination: "/evidence",                permanent: true },
+      { source: "/research",      destination: "/evidence",                permanent: true },
+      { source: "/benchmarks",    destination: "/evidence/benchmarks",     permanent: true },
+
+      /* Two pieces left the lab. They are essays: first person, craft, no
+         bench, and the personal site already carried the longer version.
+         The lab is no longer their home, so these cross-domain 301s are
+         intentional and the personal site is now canonical for both. */
+      {
+        source: "/research/a-model-in-the-room",
+        destination: "https://shreypatel.coconutlabs.org/essays/producing-with-a-model",
+        permanent: true,
+      },
+      {
+        source: "/research/mixing-and-evals",
+        destination: "https://shreypatel.coconutlabs.org/essays/what-mixing-taught-me",
+        permanent: true,
+      },
+      { source: "/research/:slug", destination: "/evidence/:slug",         permanent: true },
+
+      /* /library the page collided by name with library.coconutlabs.org the
+         host, and described two wings of a four-wing shelf. The surviving
+         paragraph lives on /about under the-library anchor. */
       { source: "/library/enter", destination: "https://library.coconutlabs.org",     permanent: false },
+      { source: "/library",       destination: "/about#the-library",       permanent: true },
+
+      // Memorable doors: short paths on the main domain that hand off to the
+      // surfaces that live on their own hosts.
+      { source: "/atlas",         destination: "https://waterline.coconutlabs.org",   permanent: false },
+      { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
       { source: "/masterclass",   destination: "https://masterclass.coconutlabs.org", permanent: false },
+      { source: "/essays",        destination: "https://shreypatel.coconutlabs.org/essays", permanent: false },
+      // Swap this to https://learn.coconutos.org when the CNAME resolves. It
+      // does not today, so the door points at the Pages host that serves it.
+      { source: "/learn",         destination: "https://coconutos-learn.pages.dev",   permanent: false },
+
       // Steady Cadence: the signup lives in the footer band on every page,
       // anchored at #cadence. Non-permanent in case the letter ever gets a
       // page of its own.
       // /newsletter -> the signup band; /cadence is a real page (the nightly
-      // record) and must NOT be redirected — two agents built these in
+      // record) and must NOT be redirected: two agents built these in
       // parallel and the redirect would have shadowed the route.
       { source: "/newsletter",    destination: "/#cadence",  permanent: false },
     ];

@@ -53,9 +53,9 @@ export default function DrawingsPage() {
             provenance for the dimensions:{" "}
             <Link
               className="focus-ring rounded-sm text-accent underline underline-offset-2"
-              href="/benchmarks"
+              href="/evidence/benchmarks"
             >
-              /benchmarks →
+              /evidence/benchmarks →
             </Link>
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function DrawingsPage() {
           <Link className="focus-ring rounded-sm text-accent hover:opacity-80" href="/projects">
             ← All projects
           </Link>
-          <Link className="focus-ring rounded-sm text-ink-1 hover:text-accent" href="/benchmarks">
+          <Link className="focus-ring rounded-sm text-ink-1 hover:text-accent" href="/evidence/benchmarks">
             Benchmarks
           </Link>
         </div>

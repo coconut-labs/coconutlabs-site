@@ -16,7 +16,7 @@ export async function GET() {
   const baseUrl = siteUrl();
   const entries = posts
     .map((post) => {
-      const url = `${baseUrl}/research/${post.slug}`;
+      const url = `${baseUrl}/evidence/${post.slug}`;
       return `<entry>
   <title>${escapeXml(post.title)}</title>
   <link href="${url}" />
@@ -29,8 +29,8 @@ export async function GET() {
 
   const feed = `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Coconut Labs Research</title>
-  <link href="${baseUrl}/research" />
+  <title>Coconut Labs Evidence</title>
+  <link href="${baseUrl}/evidence" />
   <link href="${baseUrl}/rss.xml" rel="self" />
   <author>
     <name>Coconut Labs</name>
