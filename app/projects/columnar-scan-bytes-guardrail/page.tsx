@@ -22,7 +22,7 @@ export default function ColumnarScanPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core · bottleneck class E</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core</p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Columnar scan / bytes-read guardrail
         </h1>
@@ -158,7 +158,7 @@ guardrail: flag when bytes_read > tolerance x projection_budget`}
 
           <Disclosure summary="Evidence + how to reproduce">
             <p className="max-w-2xl font-mono text-xs leading-6 text-ink-2">
-              Tier 4, a real off-the-shelf control. The harness writes a real Parquet file and a real CSV, then counts
+              A real off-the-shelf control. The harness writes a real Parquet file and a real CSV, then counts
               the bytes physically pulled through the reader (pre-buffering off) for the same query three ways. The
               instrumented projected read (192 KB) is cross-checked against the file&rsquo;s own column-chunk metadata
               (130 KB floor), so the number is I/O, not buffer coalescing. Synthetic table (read-amplification needs a

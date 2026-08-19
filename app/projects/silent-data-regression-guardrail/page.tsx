@@ -36,7 +36,7 @@ export default function GuardrailUnitPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core · bottleneck class A</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core</p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Silent data-regression guardrail
         </h1>
@@ -176,7 +176,7 @@ export default function GuardrailUnitPage() {
 
           <Disclosure summary="Evidence + how to reproduce">
             <p className="max-w-2xl font-mono text-xs leading-6 text-ink-2">
-              Tier 4, a controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
+              A controlled A/B against a real off-the-shelf validator (pandera), not a strawman. pandera&rsquo;s
               strict statistical config was <em>disqualified</em> for false positives on clean holdout; that&rsquo;s recorded,
               not hidden. Reproduce it yourself:
             </p>

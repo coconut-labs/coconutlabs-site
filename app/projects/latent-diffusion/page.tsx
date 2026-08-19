@@ -49,7 +49,7 @@ export default function LatentDiffusionPage() {
     <section className="content-band">
       <div className="content-inner max-w-4xl">
         <p className="font-mono text-xs uppercase text-ink-2">
-          gallery unit · generative core · bottleneck class I
+          gallery unit · generative core
         </p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Latent diffusion mechanics

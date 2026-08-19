@@ -11,7 +11,7 @@ export function PaperTear404() {
       >
         <p className="font-mono text-xs uppercase text-ink-2">404</p>
         <h1 className="mt-6 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">This page was never written.</h1>
-        <p className="mt-8 font-mono text-sm leading-7 text-ink-1">// page not found, perhaps it was never written.</p>
+        <p className="mt-8 font-mono text-sm leading-7 text-ink-1">Nothing lives at this address. It may have moved, or it may never have existed.</p>
         <Link className="focus-ring mt-9 inline-block rounded border border-rule px-4 py-3 font-mono text-xs text-accent" href="/">
           Back home
         </Link>

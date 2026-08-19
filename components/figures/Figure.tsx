@@ -47,7 +47,7 @@ export function Figure({ spec }: { spec: FigureSpec }) {
         </div>
 
         {scrubbed ? (
-          <div className="fig-controls" data-fig-controls hidden>
+          <div className="fig-controls" data-fig-controls="" hidden>
             <label className="fig-rail-label" htmlFor={railId}>
               drag to step
             </label>
@@ -68,14 +68,14 @@ export function Figure({ spec }: { spec: FigureSpec }) {
                 <option key={i} value={i} />
               ))}
             </datalist>
-            <span aria-hidden="true" className="fig-readout" data-fig-readout>
+            <span aria-hidden="true" className="fig-readout" data-fig-readout="">
               {`${pad(staticStep + 1)} / ${pad(stepCount)}`}
             </span>
           </div>
         ) : null}
 
         {scrubbed ? (
-          <p aria-live="polite" className="fig-step" data-fig-caption id={`${id}-step`}>
+          <p aria-live="polite" className="fig-step" data-fig-caption="" id={`${id}-step`}>
             {steps[staticStep]}
           </p>
         ) : null}
@@ -96,7 +96,7 @@ export function Figure({ spec }: { spec: FigureSpec }) {
       {scrubbed ? (
         <details className="fig-read">
           <summary>Read this figure</summary>
-          <ol data-fig-walkthrough>
+          <ol data-fig-walkthrough="">
             {steps.map((step) => (
               <li key={step}>{step}</li>
             ))}

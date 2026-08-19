@@ -21,7 +21,7 @@ export default function SilentCacheMissPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · throughput &amp; caching · bottleneck class C</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · throughput &amp; caching</p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">
           Silent cache-miss guardrail
         </h1>
@@ -154,7 +154,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
 
           <Disclosure summary="Evidence + how to reproduce">
             <p className="max-w-2xl font-mono text-xs leading-6 text-ink-2">
-              Tier 4, one warm workload run through four key configs, scored by the guardrail and by a real functional
+              One warm workload run through four key configs, scored by the guardrail and by a real functional
               correctness test. The functional test is the sharp part: the thing teams trust to validate a cache passes
               every silently broken config. Anchored on Python&rsquo;s own{" "}
               <span className="text-ink-1">functools.lru_cache</span>, a real off-the-shelf cache, whose{" "}

@@ -1,7 +1,9 @@
-# Coconut Labs Design System — LOCKED v1.0
+# Coconut Labs Design System — LOCKED v1.1
 
-Locked 2026-08-11. This catalog is the single source of truth for every
-Coconut Labs surface: coconutlabs.org, masterclass, shreypatel, coconutos.org.
+Locked 2026-08-11, amended 2026-08-19 (v1.1: the figure ground narrowed, and
+the figure ink set, taxonomy, honesty rule and interaction grammar added; see
+section 7). This catalog is the single source of truth for every Coconut Labs
+surface: coconutlabs.org, masterclass, shreypatel, coconutos.org.
 Changes require a version bump here and a note in the commit that bumps it.
 `scripts/design-lint.mjs` enforces the mechanical rules; the visual suite
 (`tests/visual/`) enforces the rendered result.
@@ -86,8 +88,38 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
   provenance footnote linking /benchmarks.
 - Honesty panel: danger-bordered card titled "what this does not show".
 - Reproduce bar: mono command + copy button that swaps to "✓ copied" for 1.4s.
-- Dark plate: #0C0C0E contained figure ground for diagrams/brand marks in both
-  themes, with a mono caption bottom-left.
+- Dark plate: #0C0C0E contained figure ground for **working drawings and brand
+  marks** in both themes, with a mono caption bottom-left. v1.1 narrowed this
+  from "diagrams" to "working drawings": the plate pins its inks (see
+  `components/drawings/inks.ts`) so a drawing looks identical in light and
+  dark, which is right for a construction document and wrong for a teaching
+  figure sitting inside a reading column. The three drawings at `/drawings`
+  stay on the plate; they are a separate genre.
+- Inline teaching figures ride the theme. Their ink set is seven names defined
+  once in `styles/figure-tokens.css`, all aliases of tokens above, no new
+  colors: `--fig-ink` (--ink-0), `--fig-dim` (--ink-2), `--fig-rule` (--rule),
+  `--fig-accent` (--accent), `--fig-well` (--bg-2), `--fig-pass` (--success),
+  `--fig-fail` (--danger). One accent per figure: the accent marks the single
+  quantity the figure exists to show, and if a figure needs a second accent it
+  needs to be two figures. `--fig-pass` and `--fig-fail` mark tick and cross
+  rows only, never a series.
+- Figure taxonomy: six primitives (`map`, `flow`, `timeline`, `dist`,
+  `states`, `stack`) and two combinators (`ab`, `scrub`). One renderer,
+  `lib/figures/`, shared by the React components and the vanilla string
+  emitter so a figure is identical on the Next app, a standalone HTML page,
+  and the book build.
+- Figure honesty: every figure carries a `claim` of `measured`, `reported`,
+  `illustrative`, or `schematic`. The renderer refuses to build without it.
+  `measured` additionally requires `conditions` and `provenance`; `reported`
+  requires `source`. Caption row 1 is `fig-<surface>-<nn> · <what it shows>`
+  left and the grade slot right; row 2 is the provenance line, measured only.
+  A figure may assert exactly what the prose beside it may assert.
+- Figure interaction: one control, a native `<input type="range">` step rail.
+  No play button, no hover tooltips, no click targets inside the SVG. Stepping
+  is visibility, not computation: every step's geometry ships in one SVG and
+  the runtime moves one attribute. Without JS a figure renders at its
+  `staticStep` with no rail; under `prefers-reduced-motion` the 140 ms
+  cross-fade goes to 0 ms and the rail still works.
 - DemoShell: scenario line, preset buttons, run affordance, aria-live outcome
   banner in plain words.
 - Details/summary accordions for progressive disclosure; first open on
@@ -95,9 +127,13 @@ No icon libraries. The full set: ● live/status dot, ○ open slot, ✓ pass,
 
 ## 8. Enforcement
 
-- `npm run lint:design` (scripts/design-lint.mjs): fails the gate on raw hex
-  outside tokens.css/plate exceptions, em dashes in prose strings, icon-library
-  imports, border-radius literals, retired-palette values, font-family
+- `npm run lint:design` (scripts/design-lint.mjs): fails the gate on a figure
+  spec with no `claim`, a `measured` spec with no `conditions` or
+  `provenance`, a spec naming a color literal, more than one accent in one
+  figure, and a rendered radius other than 2px. It also fails on raw hex
+  outside tokens.css/plate exceptions, em dashes in prose strings,
+  icon-library imports, border-radius literals, retired-palette values,
+  font-family
   literals outside the token file.
 - `npm run test:visual` (tests/visual/visual.spec.ts): pixel-deterministic
   screenshots of every stable route at 1440x900 and 375x812, light and dark,

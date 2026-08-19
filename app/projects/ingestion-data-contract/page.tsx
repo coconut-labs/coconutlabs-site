@@ -13,11 +13,11 @@ export const metadata = buildMetadata({
 
 // the six drifts, what they do downstream, and which check sees them.
 const ROWS = [
-  { drift: "Partial unit change", effect: "revenue reads $157,512 (true $299,354)", std: "misses", guard: "catches", note: "cents→dollars, in range" },
+  { drift: "Partial unit change", effect: "revenue reads $157,512 (true $299,354)", std: "misses", guard: "catches", note: "cents read as dollars, still in range" },
   { drift: "Precision truncation", effect: "sum drifts; values suspiciously round", std: "misses", guard: "catches", note: "floored to whole dollars" },
   { drift: "New enum value", effect: "a currency bucket nobody handles", std: "misses", guard: "catches", note: "unannounced CAD" },
-  { drift: "Boolean re-encoding", effect: "refund count silently drops to 0", std: "misses", guard: "catches", note: "'true' → 'TRUE'/'1'/'yes'" },
-  { drift: "Type widening", effect: "the revenue sum can't run", std: "misses", guard: "catches", note: "int → text, coerced past" },
+  { drift: "Boolean re-encoding", effect: "refund count silently drops to 0", std: "misses", guard: "catches", note: "'true' re-encoded as 'TRUE', '1', or 'yes'" },
+  { drift: "Type widening", effect: "the revenue sum can't run", std: "misses", guard: "catches", note: "int widened to text, coerced past" },
   { drift: "Out-of-range scale", effect: "values blow past the max", std: "catches", guard: "catches", note: "the one loud drift" },
 ] as const;
 
@@ -25,7 +25,7 @@ export default function IngestionDataContractPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core · bottleneck class G</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · data core</p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">Schema-drift contract guardrail</h1>
 
         {/* hook */}
@@ -159,7 +159,7 @@ contract       : currency ∈ {USD,EUR,GBP}?  amount mean within ±20%?  ≤10% 
 
           <Disclosure summary="Evidence + how to reproduce">
             <p className="max-w-2xl font-mono text-xs leading-6 text-ink-2">
-              Tier 4, one landing table, six drifts, scored by the contract guardrail and by a real off-the-shelf control
+              One landing table, six drifts, scored by the contract guardrail and by a real off-the-shelf control
               (pandera&rsquo;s inferred schema at defaults, plus explicit row-count and null-ratio checks). The control is not a
               strawman: it catches the one drift that leaves the observed range, and only that one. The rest it waves through,
               and the downstream number moves. Synthetic data (drift needs controlled before/after); stated, not hidden.

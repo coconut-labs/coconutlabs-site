@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
+@import "../styles/figure-tokens.css";
 @import "../styles/post.css";
 @import "../styles/print.css";
 
