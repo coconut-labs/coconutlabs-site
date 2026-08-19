@@ -56,7 +56,6 @@ export const NAV_COLUMNS: NavColumn[] = [
       // learn.coconutos.org does not resolve yet. Point at the Pages host that
       // does and swap both this href and the rail entry when the CNAME lands.
       { label: "The low-level book", href: "https://coconutos-learn.pages.dev", external: true },
-      { label: "Essays", href: "https://shreypatel.coconutlabs.org/essays", external: true },
       { label: "The Library, private", href: "https://library.coconutlabs.org", external: true },
     ],
   },
@@ -80,6 +79,5 @@ export const HOSTNAME_RAIL: { label: string; href: string }[] = [
   { label: "coconutos-learn.pages.dev", href: "https://coconutos-learn.pages.dev" },
   { label: "masterclass.coconutlabs.org", href: "https://masterclass.coconutlabs.org" },
   { label: "waterline.coconutlabs.org", href: "https://waterline.coconutlabs.org" },
-  { label: "shreypatel.coconutlabs.org", href: "https://shreypatel.coconutlabs.org" },
   { label: "library.coconutlabs.org", href: "https://library.coconutlabs.org" },
 ];

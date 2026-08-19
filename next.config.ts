@@ -74,12 +74,12 @@ const nextConfig: NextConfig = {
          intentional and the personal site is now canonical for both. */
       {
         source: "/research/a-model-in-the-room",
-        destination: "https://shreypatel.coconutlabs.org/essays/producing-with-a-model",
+        destination: "/evidence/a-model-in-the-room",
         permanent: true,
       },
       {
         source: "/research/mixing-and-evals",
-        destination: "https://shreypatel.coconutlabs.org/essays/what-mixing-taught-me",
+        destination: "/evidence/mixing-and-evals",
         permanent: true,
       },
       { source: "/research/:slug", destination: "/evidence/:slug",         permanent: true },
@@ -95,7 +95,6 @@ const nextConfig: NextConfig = {
       { source: "/atlas",         destination: "https://waterline.coconutlabs.org",   permanent: false },
       { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
       { source: "/masterclass",   destination: "https://masterclass.coconutlabs.org", permanent: false },
-      { source: "/essays",        destination: "https://shreypatel.coconutlabs.org/essays", permanent: false },
       // Swap this to https://learn.coconutos.org when the CNAME resolves. It
       // does not today, so the door points at the Pages host that serves it.
       { source: "/learn",         destination: "https://coconutos-learn.pages.dev",   permanent: false },

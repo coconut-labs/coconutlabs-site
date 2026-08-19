@@ -82,10 +82,6 @@ export default async function AboutPage() {
             <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://masterclass.coconutlabs.org">
               masterclass
             </a>
-            , the essays at{" "}
-            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://shreypatel.coconutlabs.org/essays">
-              shreypatel.coconutlabs.org/essays
-            </a>
             . What the lab measured lands in{" "}
             <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/evidence">
               evidence

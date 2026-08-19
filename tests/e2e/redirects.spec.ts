@@ -45,11 +45,11 @@ test.describe("legacy route redirects", () => {
     const cases: [string, string][] = [
       [
         "/research/a-model-in-the-room",
-        "https://shreypatel.coconutlabs.org/essays/producing-with-a-model",
+        "/evidence/a-model-in-the-room",
       ],
       [
         "/research/mixing-and-evals",
-        "https://shreypatel.coconutlabs.org/essays/what-mixing-taught-me",
+        "/evidence/mixing-and-evals",
       ],
     ];
     for (const [from, to] of cases) {
@@ -63,7 +63,6 @@ test.describe("legacy route redirects", () => {
     const cases: [string, string][] = [
       ["/atlas", "https://waterline.coconutlabs.org"],
       ["/waterline", "https://waterline.coconutlabs.org"],
-      ["/essays", "https://shreypatel.coconutlabs.org/essays"],
       ["/learn", "https://coconutos-learn.pages.dev"],
       ["/masterclass", "https://masterclass.coconutlabs.org"],
       ["/library/enter", "https://library.coconutlabs.org"],
