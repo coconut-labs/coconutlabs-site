@@ -8,6 +8,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # The suite runs in about three minutes. A run that passes fifteen is hung,
+    # not slow: one sat in_progress for 53 minutes and would have burned the
+    # six-hour default before anyone noticed.
+    timeout-minutes: 15
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     steps:
@@ -33,6 +37,7 @@ jobs:
     # committed; any rendered pixel change fails until a baseline is updated
     # with a stated reason. See docs/design-system.md section 8.
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     steps:
