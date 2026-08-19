@@ -8,12 +8,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    # The e2e suite runs webkit, whose system libraries the ubuntu-latest image
+    # does not ship. Installing them meant `playwright install --with-deps`,
+    # which runs apt-get on every job; it hung for fourteen minutes against the
+    # Ubuntu mirror and took the whole run to the timeout with it. This image
+    # has all three browsers and their libraries baked in, so there is no apt
+    # step to hang. Keep the tag pinned to the @playwright/test version in
+    # package.json: a mismatch and the browsers stop matching the runner.
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
     # The suite runs in about three minutes. A run that passes fifteen is hung,
     # not slow: one sat in_progress for 53 minutes and would have burned the
     # six-hour default before anyone noticed.
     timeout-minutes: 15
-    env:
-      PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,7 +34,6 @@ jobs:
       - run: npm run lint:design
       - run: npm run test
       - run: npm run build
-      - run: npx playwright install chromium firefox webkit
       - run: npm run test:e2e
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
