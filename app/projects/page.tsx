@@ -34,10 +34,6 @@ export default async function ProjectsPage() {
 
         {/* KVWarden, large card */}
         <article className="mt-16 rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)] md:p-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-            <span aria-hidden="true">●</span>
-            Live
-          </div>
           <h2 className="text-[clamp(3rem,7vw,6rem)] leading-none">{kvwarden.name}</h2>
           <p className="mt-3 font-mono text-xs uppercase text-ink-2">{kvwarden.tagline}</p>
           <p className="mt-8 font-mono text-[clamp(1.6rem,3.5vw,3.2rem)] leading-tight text-ink-0">
@@ -68,10 +64,6 @@ export default async function ProjectsPage() {
 
         {/* mlxd, medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-            <span aria-hidden="true">●</span>
-            In research
-          </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">{mlxd.name}</h2>
           <p className="mt-3 font-mono text-xs uppercase text-ink-2">{mlxd.tagline}</p>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-ink-1">{mlxd.content}</p>
@@ -90,10 +82,6 @@ export default async function ProjectsPage() {
 
         {/* Coconut OS, medium card */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-            <span aria-hidden="true">●</span>
-            In research
-          </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">{coconutOs.name}</h2>
           <p className="mt-3 font-mono text-xs uppercase text-ink-2">{coconutOs.tagline}</p>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-ink-1">{coconutOs.content}</p>
@@ -115,16 +103,12 @@ export default async function ProjectsPage() {
 
         {/* Gallery, hall of demos */}
         <article className="mt-10 rounded-lg border border-rule bg-bg-1/40 p-8">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-sm border border-ink-0/30 bg-ink-0/5 px-3 py-1 font-mono text-xs uppercase text-ink-0">
-            <span aria-hidden="true">●</span>
-            Showcase · live demos
-          </div>
           <h2 className="text-[clamp(2.4rem,5vw,4.4rem)] leading-none">Hall of demos</h2>
           <p className="mt-3 font-mono text-xs uppercase text-ink-2">an agentic MLOps atlas + measured prototypes</p>
           <p className="mt-7 max-w-3xl text-lg leading-8 text-ink-1">
-            One method at two scales: a deep agentic-MLOps platform case study, and small
-            free-standing prototypes, each solving one company&rsquo;s real data-systems bottleneck, with a guardrail
-            you can run in your browser. Two shipped, Tier-4, measured.
+            One method at two scales: a deep agentic-MLOps platform case study, and seven small
+            free-standing prototypes, each solving one company&rsquo;s real data-systems bottleneck,
+            with a guardrail you can run in your browser.
           </p>
           <div className="mt-7 flex flex-wrap gap-5 font-mono text-xs">
             <Link
@@ -149,7 +133,16 @@ export default async function ProjectsPage() {
             Smaller things, mostly the scaffolding behind the public work.
           </p>
           {tools.length === 0 ? (
-            <p className="mt-8 font-mono text-xs text-ink-2">// nothing here yet, see github.com/coconut-labs.</p>
+            <p className="mt-8 font-mono text-xs text-ink-2">
+              Nothing here yet. The repos live at{" "}
+              <a
+                className="focus-ring rounded-sm text-accent underline decoration-1 underline-offset-2"
+                href="https://github.com/coconut-labs"
+              >
+                github.com/coconut-labs
+              </a>
+              .
+            </p>
           ) : (
             <ul className="mt-8 grid gap-5 md:grid-cols-2">
               {tools.map((tool) => (
@@ -166,7 +159,14 @@ export default async function ProjectsPage() {
               ))}
             </ul>
           )}
-          <p className="mt-10 font-mono text-xs text-ink-2">RSS for new entries: /rss.xml</p>
+          <p className="mt-10 font-mono text-xs text-ink-2">
+            <a
+              className="focus-ring rounded-sm text-accent underline decoration-1 underline-offset-2"
+              href="/rss.xml"
+            >
+              Subscribe by RSS
+            </a>
+          </p>
         </div>
       </div>
     </section>

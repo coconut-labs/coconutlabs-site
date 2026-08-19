@@ -1,33 +1,27 @@
 import Link from "next/link";
-import { Badge } from "@/components/primitives/Badge";
 import { Card } from "@/components/primitives/Card";
 
-// Direction A: status dot + name + accent metric line + one sentence.
-// Large numbers live at 28-34px, not display size.
+// Direction A: name + accent metric line + one sentence. Large numbers live
+// at 28-34px, not display size. The metric line does the sorting a state pill
+// used to: KVWarden shows measured numbers, the other two show a phrase.
 const projects = [
   {
     name: "KVWarden",
     href: "/projects/kvwarden",
-    status: "Live",
     result: "1.14× of solo · 26× better than FIFO",
     body: "Tenant fairness on shared inference. A quiet tenant stays near solo latency while a flooder pushes the same engine.",
-    tone: "success" as const,
   },
   {
     name: "mlxd",
     href: "/projects/mlxd",
-    status: "In research",
     result: "Tenant-fair inference on Apple Silicon",
-    body: "A scheduler and admission layer on top of mlx_lm.server. Tenant identity first, then fairness on unified memory.",
-    tone: "accent" as const,
+    body: "A scheduler and admission layer on top of mlx_lm.server. Tenant identity first, then fairness on unified memory. Still in research.",
   },
   {
     name: "Coconut OS",
     href: "/projects/coconut-os",
-    status: "In research",
     result: "Agents as kernel primitives",
-    body: "A Linux distribution built on the position that the kernel should know what an agent is, what it may touch, and what it did.",
-    tone: "accent" as const,
+    body: "A Linux distribution built on the position that the kernel should know what an agent is, what it may touch, and what it did. Spec phase, with kernel prototypes.",
   },
 ];
 
@@ -42,8 +36,7 @@ export function ProjectsStrip() {
             <Link className="focus-ring rounded-sm" href={project.href} key={project.name}>
               <Card className="grid gap-6 md:grid-cols-[0.7fr_1.3fr]" tilt>
                 <div>
-                  <Badge tone={project.tone}>{project.status}</Badge>
-                  <h3 className="mt-4 text-[clamp(1.5rem,2.4vw,2rem)] font-semibold leading-none tracking-[-0.02em]">{project.name}</h3>
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] font-semibold leading-none tracking-[-0.02em]">{project.name}</h3>
                 </div>
                 <div>
                   <p className="text-[clamp(24px,2.4vw,32px)] font-semibold leading-tight tracking-[-0.03em] text-accent">{project.result}</p>

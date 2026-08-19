@@ -23,7 +23,7 @@ test("MENU opens the panel with the four column labels and toggles to CLOSE", as
   await expect(closeButton).toHaveAttribute("aria-expanded", "true");
   await expect(panel).toBeVisible();
 
-  for (const label of ["WORK", "EVIDENCE", "LEARN", "LAB", "STATUS"]) {
+  for (const label of ["WORK", "EVIDENCE", "LEARN", "LAB", "WRITE TO US"]) {
     await expect(panel.getByText(label, { exact: true })).toBeVisible();
   }
   await expect(panel.getByRole("link", { name: "KVWarden" })).toBeVisible();
@@ -31,7 +31,10 @@ test("MENU opens the panel with the four column labels and toggles to CLOSE", as
     "href",
     "https://masterclass.coconutlabs.org",
   );
-  await expect(panel.getByText("● LIVE")).toBeVisible();
+  // The panel's last column is an address, not a status readout. The live
+  // dot and the "masterclass · live" line were theatre and came out.
+  await expect(panel.getByRole("link", { name: "info@coconutlabs.org" })).toBeVisible();
+  await expect(panel.getByText("● LIVE")).toHaveCount(0);
 
   // Toggle back closed from the same button.
   await closeButton.click();

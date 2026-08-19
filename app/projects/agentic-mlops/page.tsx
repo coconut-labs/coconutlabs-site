@@ -9,13 +9,14 @@ export const metadata = buildMetadata({
   path: "/projects/agentic-mlops",
 });
 
+// Every row is a plain countable thing. The two target-tier rows that used to
+// sit here counted units by an internal evidence tier the page never defined,
+// so a reader could not use them.
 const GLANCE: [string, string][] = [
   ["Lifecycle stops", "14"],
   ["Loop-backs", "2"],
   ["Units", "10"],
   ["Layers", "4"],
-  ["Target tier 4", "6"],
-  ["Target tier 3", "4"],
   ["Standing cost", "$0"],
 ];
 
@@ -26,16 +27,17 @@ export default function AgenticMlopsPage() {
         <div className="content-inner flex flex-wrap items-start justify-between gap-[clamp(2rem,6vw,5rem)]">
           <div className="min-w-[min(100%,22rem)] flex-[1_1_34rem]">
             <p className="font-mono text-xs uppercase text-ink-2">
-              Flagship · in build
+              the deep case study
             </p>
             <h1 className="mt-4 max-w-[25ch] text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02] text-ink-0">
               An agentic MLOps platform, built to be measured.
             </h1>
             <p className="mt-6 max-w-[var(--measure)] font-body text-lg leading-8 text-ink-1">
-              One claim runs through the whole build: the classic MLOps loop (register, train,
-              gate, canary, promote, roll back) still works when the thing being served is an LLM
-              agent, provided you add a fourth telemetry axis (tokens and cost) and a fifth artifact
-              type (the reasoning trace). Everything below either supports that claim or is cut.
+              This one is still being built. One claim runs through the whole build: the classic
+              MLOps loop (register, train, gate, canary, promote, roll back) still works when the
+              thing being served is an LLM agent, provided you add a fourth telemetry axis (tokens
+              and cost) and a fifth artifact type (the reasoning trace). Everything below either
+              supports that claim or is cut.
             </p>
           </div>
 

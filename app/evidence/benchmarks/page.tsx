@@ -16,9 +16,9 @@ export const metadata = buildMetadata({
 const REGIME = "1× A100 SXM4 · Llama-3.1-8B · vLLM 0.19.1 · 300 s · flooder 32 RPS / quiet 1 RPS";
 
 const STATS = [
-  { label: "quiet tenant p99 TTFT", value: "61.5", unit: "ms", note: "▲ 1.14× of solo · post-warmup · n=311", tone: "good" },
+  { label: "quiet tenant p99 TTFT", value: "61.5", unit: "ms", note: "1.14× of solo · post-warmup · n=311", tone: "good" },
   { label: "solo baseline p99", value: "53.9", unit: "ms", note: "same box, no contention · n=320", tone: "plain" },
-  { label: "tail vs FIFO", value: "26×", unit: "", note: "1,585 ms → 61.5 ms", tone: "plain" },
+  { label: "tail vs FIFO", value: "26×", unit: "", note: "1,585 ms down to 61.5 ms", tone: "plain" },
   { label: "quiet requests", value: "321", unit: "ok", note: "0 errors, both arms", tone: "plain" },
 ] as const;
 

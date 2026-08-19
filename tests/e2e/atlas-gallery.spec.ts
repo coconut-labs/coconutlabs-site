@@ -45,8 +45,12 @@ test("atlas keeps every station explorable and the claim index intact", async ({
   // The dense claim index moved into an accordion, open on desktop, nothing deleted.
   const summary = page.getByText("Every station, every claim");
   await expect(summary).toBeVisible();
-  await expect(page.getByRole("button", { name: /^U1 Registry \+ lineage/ })).toBeVisible();
-  await expect(page.getByRole("button", { name: /^U10 Scale envelope/ })).toHaveCount(1);
+  // The unit buttons dropped the U-number from their accessible name; the
+  // #unit-U5 / #unit-U7 deep-link ids the gallery uses are unchanged.
+  await expect(page.getByRole("button", { name: /^Registry \+ lineage\./ })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^Scale envelope\./ })).toHaveCount(1);
+  await expect(page.locator("#unit-U5")).toHaveCount(1);
+  await expect(page.locator("#unit-U7")).toHaveCount(1);
 });
 
 test("atlas has no horizontal overflow at 375px", async ({ page }) => {
@@ -73,10 +77,12 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
   await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(7);
   await expect(page.getByText("live in your browser")).toHaveCount(7);
 
-  // The evidence badge is a claim too: six units carry the Tier-4 A/B badge,
-  // latent diffusion carries no measured result and says so on the card.
-  await expect(page.getByText("Shipped · Tier 4")).toHaveCount(6);
-  await expect(page.getByText("Shipped · mechanism, no measured result")).toHaveCount(1);
+  // The Tier-4 chip is gone. The honesty it carried is now a sentence: the one
+  // unit with no measured result says so on the card, in words.
+  await expect(page.getByText("Shipped · Tier 4")).toHaveCount(0);
+  await expect(
+    page.getByText("This unit shows the mechanism. It carries no measured result."),
+  ).toHaveCount(1);
 
   // A what-you-can-do line on a card.
   await expect(

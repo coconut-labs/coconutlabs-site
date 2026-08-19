@@ -8,7 +8,7 @@ import { ThemeToggle } from "./ThemeToggle";
 
 /* Direction A chrome. The five-item inline nav + CTA is gone; the header is
    a wordmark on the left and a MENU toggle on the right, with a full-width
-   panel below carrying four mono-labelled columns and a status block. Menu
+   panel below carrying four mono-labelled columns and an address block. Menu
    link styling follows the handoff: 17px body links on 44px hit targets,
    10.5px/.14em column labels, panel on --bg-1 with a --rule bottom border.
 
@@ -105,12 +105,8 @@ export function Header() {
           ))}
 
           <div className="flex flex-col gap-[10px] self-start">
-            <p className="font-mono text-[10.5px] tracking-[0.14em] text-ink-2">STATUS</p>
+            <p className="font-mono text-[10.5px] tracking-[0.14em] text-ink-2">WRITE TO US</p>
             <p className="font-mono text-[12px] leading-[1.7] text-ink-1">
-              <span className="text-success">● LIVE</span>
-              <br />
-              masterclass · live
-              <br />
               <a
                 className="focus-ring rounded-sm transition hover:underline hover:underline-offset-[3px]"
                 href="mailto:info@coconutlabs.org"

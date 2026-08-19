@@ -3,27 +3,35 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./atlas.module.css";
 
-/* Data lifecycle — §4.2, fourteen stops. Loop-backs: 8→5 (late labels reshape
-   features), 13/14→6 (promote / roll back returns traffic to serve). */
+/* Data lifecycle, section 4.2 of the atlas spec, fourteen stops. Loop-backs:
+   stop 8 back to stop 5 (late labels reshape features), stops 13 and 14 back to
+   stop 6 (promote / roll back returns traffic to serve).
+
+   `units` stays in the data because it drives the hover and pin reveal, but the
+   U-keys are no longer painted on every station: fourteen stations each wearing
+   two to four bare keys read as a join table, and the reveal already names the
+   owning units on demand. Loop flags are written as words, matching what the
+   aria-label says out loud. */
 type Stop = { n: number; name: string; units: string[]; loop?: string; loopTo?: number };
 const STOPS: Stop[] = [
   { n: 1, name: "Ingest", units: ["U1", "U8"] },
   { n: 2, name: "Validate", units: ["U1", "U8"] },
   { n: 3, name: "Land", units: ["U1", "U8"] },
   { n: 4, name: "Transform", units: ["U1", "U8"] },
-  { n: 5, name: "Feature", units: ["U2", "U8"], loop: "↑ fed by 8" },
+  { n: 5, name: "Feature", units: ["U2", "U8"], loop: "fed by stop 8" },
   { n: 6, name: "Serve", units: ["U4", "U8"] },
   { n: 7, name: "Capture", units: ["U5", "U6", "U7", "U8"] },
-  { n: 8, name: "Label", units: ["U2", "U8"], loop: "→ 5", loopTo: 5 },
+  { n: 8, name: "Label", units: ["U2", "U8"], loop: "loops back to stop 5", loopTo: 5 },
   { n: 9, name: "Monitor", units: ["U2", "U8"] },
   { n: 10, name: "Train", units: ["U2", "U8"] },
   { n: 11, name: "Gate", units: ["U2", "U8"] },
   { n: 12, name: "Canary", units: ["U3", "U8"] },
-  { n: 13, name: "Promote", units: ["U3", "U8"], loop: "→ 6", loopTo: 6 },
-  { n: 14, name: "Roll back", units: ["U3", "U8"], loop: "→ 6", loopTo: 6 },
+  { n: 13, name: "Promote", units: ["U3", "U8"], loop: "loops back to stop 6", loopTo: 6 },
+  { n: 14, name: "Roll back", units: ["U3", "U8"], loop: "loops back to stop 6", loopTo: 6 },
 ];
 
-/* Layers — §3.4. Identity is glyph + label (color-alone fails CVD, validated). */
+/* Layers, section 3.4 of the atlas spec. Identity is glyph + label (color-alone
+   fails CVD, validated). */
 type LayerKey = "data" | "devops" | "ai" | "swe";
 const LAYERS: { key: LayerKey; name: string; glyph: string | undefined; blurb: string }[] = [
   { key: "data", name: "Data Core", glyph: styles.glyphData, blurb: "schemas · lineage · drift" },
@@ -32,11 +40,15 @@ const LAYERS: { key: LayerKey; name: string; glyph: string | undefined; blurb: s
   { key: "swe", name: "SWE Core", glyph: styles.glyphSwe, blurb: "boundaries · concurrency" },
 ];
 
-/* Units — §1.2 (JD trace), §12.2 (claim + target tier), §3.4 (layer). */
+/* Units, from the atlas spec: section 1.2 (JD trace), section 12.2 (claim and
+   target tier), section 3.4 (layer). `id` and `tier` stay in the data: `id`
+   is the deep-link fragment the gallery points at, and both are how the spec
+   is cross-referenced. Neither is rendered. The reader gets the title and the
+   falsifiable claim, which is what they came for. */
 type Unit = { id: string; title: string; claim: string; jd: string; tier: string; layer: LayerKey };
 const UNITS: Unit[] = [
   { id: "U1", title: "Registry + lineage", layer: "data", tier: "T4", jd: "manage model registries", claim: "Promotion and rollback are gated and auditable; an ungated stage change is impossible." },
-  { id: "U2", title: "Continuous-training loop", layer: "data", tier: "T4", jd: "continuous training loops", claim: "Injected drift triggers retrain → gate → promote end to end, unattended." },
+  { id: "U2", title: "Continuous-training loop", layer: "data", tier: "T4", jd: "continuous training loops", claim: "Injected drift triggers a retrain, then a gate, then a promote, end to end, unattended." },
   { id: "U4", title: "Agent on Kubernetes", layer: "devops", tier: "T4", jd: "deploy agents as scalable microservices", claim: "HPA on in-flight requests holds p99 under a burst where a CPU-triggered HPA does not." },
   { id: "U8", title: "IaC + teardown", layer: "devops", tier: "T3", jd: "Kubernetes, Docker, Terraform", claim: "One manifest set deploys unchanged to kind, k3s, and (by plan) EKS; live rebuilds from zero." },
   { id: "U3", title: "A/B router", layer: "ai", tier: "T4", jd: "A/B testing infrastructure", claim: "Arm assignment is stable and unbiased; a guardrail abort fires before the cost threshold breaches." },
@@ -89,6 +101,10 @@ const TOUR: TourStep[] = [
     why: "After an incident you can prove what the agent did, without keeping raw reasoning text.",
   },
 ];
+
+/* The reader sees unit titles, never the U-keys. One lookup, used by the
+   reveal line and by the station aria-labels so both say the same thing. */
+const unitTitle = (id: string) => UNITS.find((u) => u.id === id)?.title ?? id;
 
 type Pin = { kind: "stop"; id: number } | { kind: "unit"; id: string } | null;
 
@@ -248,15 +264,10 @@ export default function LifecycleMap() {
                   onFocus={() => !touring && setHoverStop(s.n)}
                   onBlur={() => setHoverStop(null)}
                   onClick={() => togglePin({ kind: "stop", id: s.n })}
-                  aria-label={`Stop ${s.n}, ${s.name}. Claimed by ${s.units.join(", ")}.${s.loopTo ? ` Loops back to stop ${s.loopTo}.` : ""}`}
+                  aria-label={`Stop ${s.n}, ${s.name}.${s.loopTo ? ` Loops back to stop ${s.loopTo}.` : ""} Select to see which units claim it.`}
                 >
                   <span className={styles.stopNum}>{String(s.n).padStart(2, "0")}</span>
                   <span className={styles.stopName}>{s.name}</span>
-                  <span className={styles.stopUnits}>
-                    {s.units.map((u) => (
-                      <span key={u} className={styles.stopUnitTag}>{u}</span>
-                    ))}
-                  </span>
                   {s.loop && <span className={styles.loopFlag}>{s.loop}</span>}
                 </button>
               </li>
@@ -266,11 +277,11 @@ export default function LifecycleMap() {
         <div className={styles.claimRow} aria-live={touring ? "off" : "polite"}>
           {activeUnitObj ? (
             <span>
-              <b>{activeUnitObj.id}</b> claims stops {stopsForActiveUnit.join(", ")}: {activeUnitObj.claim}
+              <b>{activeUnitObj.title}</b> claims stops {stopsForActiveUnit.join(", ")}: {activeUnitObj.claim}
             </span>
           ) : activeStopObj ? (
             <span>
-              <b>Stop {String(activeStopObj.n).padStart(2, "0")} · {activeStopObj.name}</b>, claimed by {activeStopObj.units.join(", ")}
+              <b>Stop {String(activeStopObj.n).padStart(2, "0")} · {activeStopObj.name}</b>, claimed by {activeStopObj.units.map(unitTitle).join(", ")}
               {activeStopObj.loopTo ? ` · loops back to stop ${activeStopObj.loopTo}` : ""}
             </span>
           ) : (
@@ -323,12 +334,10 @@ export default function LifecycleMap() {
                           onFocus={() => !touring && setHoverUnit(u.id)}
                           onBlur={() => setHoverUnit(null)}
                           onClick={() => togglePin({ kind: "unit", id: u.id })}
-                          aria-label={`${u.id} ${u.title}, target ${u.tier}. ${u.claim}`}
+                          aria-label={`${u.title}. ${u.claim}`}
                         >
                           <span className={styles.unitTop}>
-                            <span className={styles.unitId}>{u.id}</span>
                             <span className={styles.unitTitle}>{u.title}</span>
-                            <span className={styles.tier} title="target evaluation tier">{u.tier}</span>
                           </span>
                           <span className={styles.unitClaim}>{u.claim}</span>
                         </button>

@@ -25,7 +25,7 @@ export default function RiskHotpathPage() {
   return (
     <section className="content-band">
       <div className="content-inner max-w-4xl">
-        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · execution core · bottleneck class H</p>
+        <p className="font-mono text-xs uppercase text-ink-2">gallery unit · execution core</p>
         <h1 className="mt-5 text-[clamp(2.4rem,6vw,4.6rem)] leading-[1.02]">Pre-trade risk gate</h1>
 
         {/* hook */}
@@ -112,26 +112,17 @@ export default function RiskHotpathPage() {
           </Disclosure>
 
           <Disclosure summary="The seven checks, in evaluation order">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[26rem] border-collapse font-mono text-sm">
-                <thead>
-                  <tr className="border-b border-rule text-left text-xs uppercase text-ink-2">
-                    <th className="py-2 font-normal">#</th>
-                    <th className="py-2 font-normal">rule</th>
-                    <th className="py-2 font-normal">catches</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {CHECKS.map((c, i) => (
-                    <tr className="border-b border-rule/60" key={c.rule}>
-                      <td className="py-2.5 text-ink-2">{i + 1}</td>
-                      <td className="py-2.5 text-ink-0">{c.rule}</td>
-                      <td className="py-2.5 text-ink-1">{c.catches}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {/* A rule and a one-line gloss. Nothing is compared across columns,
+                so this is a list. The browser numbers it, which is what the
+                old counter column was doing by hand. */}
+            <ol className="max-w-2xl list-decimal space-y-3 pl-6 marker:font-mono marker:text-sm marker:text-ink-2">
+              {CHECKS.map((c) => (
+                <li key={c.rule} className="pl-1">
+                  <span className="font-mono text-sm text-ink-0">{c.rule}</span>
+                  <span className="mt-0.5 block text-sm leading-6 text-ink-1">{c.catches}</span>
+                </li>
+              ))}
+            </ol>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-1">
               Ordering is a performance decision: checks are sorted by expected failure frequency so
               the common rejection exits earliest. Credit and duplicate state live in fixed-size

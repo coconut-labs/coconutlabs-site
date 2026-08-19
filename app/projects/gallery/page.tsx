@@ -11,19 +11,23 @@ export const metadata = buildMetadata({
 /* The spine: one bottleneck class per row. Every class names a failure that
    HIDES in production, which is what earns a unit: the system keeps answering
    while the answer goes wrong. A unit must claim a new class or go deeper in an
-   occupied one. Empty cells are shown on purpose, a known frontier.
+   occupied one. Every class below is covered today.
+
+   The `key` letters are the internal taxonomy and are deliberately not
+   rendered: the class names are already unique, and a reader never types one.
+   They stay in the data because the unit pages are ordered against them.
 
    A class I was proposed for latent diffusion and rejected. That unit teaches a
    mechanism nobody can run without the weights, not a failure that hides.
-   Admitting it would have diluted what this table claims, so it sits below the
-   table under its own heading, where the different kind of claim is visible. */
-const CLASSES: { key: string; name: string; cover: { label: string; href?: string } | null }[] = [
+   Admitting it would have diluted what this list claims, so it sits above under
+   its own card, where the different kind of claim is visible. */
+const CLASSES: { key: string; name: string; cover: { label: string; href?: string } }[] = [
   { key: "A", name: "Silent data regressions / quality guardrails", cover: { label: "Silent data-regression guardrail", href: "/projects/silent-data-regression-guardrail" } },
   { key: "B", name: "Point-in-time & lineage correctness", cover: { label: "Point-in-time correctness guardrail", href: "/projects/point-in-time-correctness" } },
   { key: "C", name: "Throughput & caching", cover: { label: "Silent cache-miss guardrail", href: "/projects/silent-cache-miss" } },
-  { key: "D", name: "Cost & token attribution", cover: { label: "Atlas unit U5 · cost plane", href: "/projects/agentic-mlops#unit-U5" } },
+  { key: "D", name: "Cost & token attribution", cover: { label: "Cost plane, in the atlas", href: "/projects/agentic-mlops#unit-U5" } },
   { key: "E", name: "Format & storage tradeoffs", cover: { label: "Columnar-scan bytes guardrail", href: "/projects/columnar-scan-bytes-guardrail" } },
-  { key: "F", name: "Eval & replay", cover: { label: "Atlas unit U7 · reasoning path", href: "/projects/agentic-mlops#unit-U7" } },
+  { key: "F", name: "Eval & replay", cover: { label: "Reasoning path, in the atlas", href: "/projects/agentic-mlops#unit-U7" } },
   { key: "G", name: "Ingestion & schema-drift", cover: { label: "Ingestion data-contract guardrail", href: "/projects/ingestion-data-contract" } },
   { key: "H", name: "Hot-path admission & latency", cover: { label: "Pre-trade risk gate", href: "/projects/risk-hotpath" } },
 ];
@@ -38,10 +42,9 @@ type UnitCard = {
   meta: string;
   href: string;
   source: string;
-  /* Evidence badge. Defaults to the Tier-4 A/B badge the five guardrail units
-     and the risk gate earned. A unit that carries no measured result must say
-     so here: the badge is a claim like any other. */
-  badge?: string;
+  /* A unit that carries no measured result must say so, in a sentence a reader
+     can read, not a chip. Set only on units where the honesty is needed. */
+  caveat?: string;
 };
 const UNIT_CARDS: UnitCard[] = [
   {
@@ -54,7 +57,7 @@ const UNIT_CARDS: UnitCard[] = [
         <span className="font-mono">lerobot/pusht</span> · zero false positives · 1.8 ms/check
       </>
     ),
-    meta: "Physical Intelligence · data core · class A",
+    meta: "Physical Intelligence · data core",
     href: "/projects/silent-data-regression-guardrail",
     source: "https://github.com/coconut-labs/data-regression-guardrail",
   },
@@ -68,7 +71,7 @@ const UNIT_CARDS: UnitCard[] = [
         training set · guardrail ~0.1 ms
       </>
     ),
-    meta: "feature stores · data core · class B",
+    meta: "feature stores · data core",
     href: "/projects/point-in-time-correctness",
     source: "https://github.com/coconut-labs/point-in-time-correctness-guardrail",
   },
@@ -82,7 +85,7 @@ const UNIT_CARDS: UnitCard[] = [
         12 hot prompts · 20× redundant compute
       </>
     ),
-    meta: "prompt caching · throughput · class C",
+    meta: "prompt caching · throughput",
     href: "/projects/silent-cache-miss",
     source: "https://github.com/coconut-labs/silent-cache-miss-guardrail",
   },
@@ -96,7 +99,7 @@ const UNIT_CARDS: UnitCard[] = [
         2 of 12 columns needed
       </>
     ),
-    meta: "columnar formats · storage · class E",
+    meta: "columnar formats · storage",
     href: "/projects/columnar-scan-bytes-guardrail",
     source: "https://github.com/coconut-labs/columnar-scan-bytes-guardrail",
   },
@@ -111,7 +114,7 @@ const UNIT_CARDS: UnitCard[] = [
         ms/check
       </>
     ),
-    meta: "ELT · schema-drift · class G",
+    meta: "ELT · schema-drift",
     href: "/projects/ingestion-data-contract",
     source: "https://github.com/coconut-labs/ingestion-data-contract-guardrail",
   },
@@ -126,7 +129,7 @@ const UNIT_CARDS: UnitCard[] = [
         wasm build
       </>
     ),
-    meta: "electronic trading · execution core · class H",
+    meta: "electronic trading · execution core",
     href: "/projects/risk-hotpath",
     source: "https://github.com/ShreyPatel4/risk-hotpath-hft",
   },
@@ -144,7 +147,7 @@ const UNIT_CARDS: UnitCard[] = [
     meta: "CompVis latent diffusion · mechanism unit, outside the bottleneck spine",
     href: "/projects/latent-diffusion",
     source: "https://github.com/ShreyPatel4/Latent-Diffusion-Artbench-OpenImage",
-    badge: "Shipped · mechanism, no measured result",
+    caveat: "This unit shows the mechanism. It carries no measured result.",
   },
 ];
 
@@ -162,7 +165,7 @@ export default function GalleryPage() {
           One method at two scales: a deep case study (an agentic MLOps platform, built and
           measured end to end) plus small free-standing prototypes, each reverse-engineering one
           company&rsquo;s publicly stated data-systems bottleneck and solving a slice of it, honestly
-          measured. Same unit contract, same evidence tiers, so the reader sees one discipline
+          measured. The same standard of evidence in both, so the reader sees one discipline
           applied at two densities, not a pile of demos.
         </p>
 
@@ -174,9 +177,6 @@ export default function GalleryPage() {
               className="flex flex-col rounded-lg border border-rule bg-bg-1/70 p-8 transition hover:shadow-[var(--shadow-paper)]"
             >
               <div className="mb-4 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-2 rounded-sm border border-success/40 bg-success/10 px-3 py-1 font-mono text-xs uppercase text-success">
-                  <span aria-hidden="true">●</span> {card.badge ?? "Shipped · Tier 4"}
-                </span>
                 <span className="inline-flex items-center rounded-sm border border-rule px-3 py-1 font-mono text-xs uppercase text-ink-2">
                   live in your browser
                 </span>
@@ -186,7 +186,10 @@ export default function GalleryPage() {
               <p className="mt-3 font-mono text-sm leading-6 text-ink-0">
                 <span aria-hidden="true">▸</span> {card.action}
               </p>
-              <p className="mt-4 flex-1 text-sm leading-6 text-ink-2">{card.numbers}</p>
+              <p className="mt-4 flex-1 text-sm leading-6 text-ink-2">
+                {card.numbers}
+                {card.caveat ? <span className="mt-2 block">{card.caveat}</span> : null}
+              </p>
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-sm">
                 <Link
                   href={card.href}
@@ -209,14 +212,11 @@ export default function GalleryPage() {
 
           {/* the flagship atlas */}
           <article className="flex flex-col rounded-lg border border-rule bg-bg-1/40 p-8">
-            <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs uppercase text-accent">
-              <span aria-hidden="true">●</span> Flagship · in build
-            </div>
             <h2 className="text-3xl leading-tight text-ink-0">Agentic MLOps platform</h2>
             <p className="mt-5 text-base leading-7 text-ink-1">
-              The deep one. One platform proving one claim: the classic MLOps loop still holds when
-              the thing served is an LLM agent, once you add a token/cost axis and a
-              reasoning-trace artifact.
+              The deep one, still being built. One platform proving one claim: the classic MLOps
+              loop still holds when the thing served is an LLM agent, once you add a token/cost axis
+              and a reasoning-trace artifact.
             </p>
             <p className="mt-3 flex-1 font-mono text-sm leading-6 text-ink-0">
               <span aria-hidden="true">▸</span> Take the guided tour: three acts, seven stops, then
@@ -242,21 +242,16 @@ export default function GalleryPage() {
           <ul className="mt-6 divide-y divide-rule border-y border-rule">
             {CLASSES.map((c) => (
               <li key={c.key} className="flex flex-wrap items-center gap-x-6 gap-y-2 py-4">
-                <span className="font-mono text-sm text-ink-2">{c.key}</span>
                 <span className="min-w-[16rem] flex-1 text-ink-0">{c.name}</span>
-                {c.cover ? (
-                  c.cover.href ? (
-                    <Link
-                      href={c.cover.href}
-                      className="focus-ring inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs text-accent"
-                    >
-                      {c.cover.label} <span aria-hidden="true">→</span>
-                    </Link>
-                  ) : (
-                    <span className="rounded-sm border border-rule px-3 py-1 font-mono text-xs text-ink-1">{c.cover.label}</span>
-                  )
+                {c.cover.href ? (
+                  <Link
+                    href={c.cover.href}
+                    className="focus-ring inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs text-accent"
+                  >
+                    {c.cover.label} <span aria-hidden="true">→</span>
+                  </Link>
                 ) : (
-                  <span className="font-mono text-xs text-ink-2">open</span>
+                  <span className="rounded-sm border border-rule px-3 py-1 font-mono text-xs text-ink-1">{c.cover.label}</span>
                 )}
               </li>
             ))}
