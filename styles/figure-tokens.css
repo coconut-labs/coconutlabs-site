@@ -1,0 +1,254 @@
+/* Figure ink set and figure chrome. Catalog v1.1, section 7.
+ *
+ * Seven names, all aliases of existing catalog tokens. No new colors. A
+ * custom property that aliases another custom property resolves at the point
+ * of use, so these follow the theme without a per-scheme block: --fig-ink is
+ * whatever --ink-0 is in the scheme that is live.
+ *
+ * The dark plate is NOT the ground here. Per the v1.1 narrowing, the plate is
+ * for working drawings and brand marks; an inline teaching figure rides the
+ * reading theme so it does not punch a dark hole through a reading column.
+ *
+ * This sheet is deliberately self-sufficient: no Tailwind utility is required
+ * by any .fig-* rule, because the same markup is emitted by the vanilla
+ * renderer into standalone HTML pages and the book build. */
+
+:root {
+  --fig-ink: var(--ink-0); /* strokes, primary labels */
+  --fig-dim: var(--ink-2); /* secondary labels, frames, baselines, control paths */
+  --fig-rule: var(--rule); /* hairlines, grids, axes */
+  --fig-accent: var(--accent); /* the one quantity the figure exists to show */
+  --fig-well: var(--bg-2); /* recessed fill inside a figure */
+  --fig-pass: var(--success); /* tick rows only, never a series */
+  --fig-fail: var(--danger); /* cross rows only, never a series */
+}
+
+/* ---- step visibility -------------------------------------------------- */
+
+/* Stepping is visibility, not computation. Every step's geometry is in the
+   one SVG; a group outside the live step carries data-fig-off. The build
+   stamps data-fig-off for the static step, so a reader with no JS gets a real
+   frame and the runtime only ever moves the attribute around. */
+
+.fig-svg [data-fig-step] {
+  opacity: 1;
+  transition: opacity 140ms linear;
+}
+
+.fig-svg [data-fig-step][data-fig-off] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-svg [data-fig-step] {
+    transition-duration: 0ms;
+  }
+}
+
+/* ---- frame ------------------------------------------------------------ */
+
+.fig {
+  margin-block: 2rem;
+}
+
+.fig-frame {
+  border: 1px solid var(--rule);
+  border-radius: var(--rad);
+  background: var(--bg-1);
+  margin: 0;
+  padding: 1rem;
+}
+
+.fig-canvas {
+  overflow-x: auto;
+}
+
+.fig-svg {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+/* The mono face is a token, not a literal, and it is set here rather than as
+   an SVG font-family attribute so a standalone page and the Next app agree. */
+.fig-svg text {
+  font-family: var(--font-mono);
+}
+
+/* ---- the step rail ---------------------------------------------------- */
+
+.fig-controls {
+  align-items: center;
+  border-top: 1px solid var(--fig-rule);
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.875rem;
+  padding-top: 0.75rem;
+}
+
+.fig-controls[hidden] {
+  display: none;
+}
+
+.fig-rail-label {
+  color: var(--fig-dim);
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fig-rail {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  flex: 1 1 auto;
+  margin: 0;
+  min-width: 0;
+}
+
+.fig-rail::-webkit-slider-runnable-track {
+  background: var(--fig-rule);
+  height: 1px;
+}
+
+.fig-rail::-moz-range-track {
+  background: var(--fig-rule);
+  height: 1px;
+}
+
+.fig-rail::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--fig-accent);
+  border: 0;
+  border-radius: var(--rad);
+  height: 11px;
+  margin-top: -5px;
+  width: 11px;
+}
+
+.fig-rail::-moz-range-thumb {
+  background: var(--fig-accent);
+  border: 0;
+  border-radius: var(--rad);
+  height: 11px;
+  width: 11px;
+}
+
+.fig-rail:focus-visible {
+  outline: 2px solid var(--fig-accent);
+  outline-offset: 4px;
+}
+
+.fig-readout {
+  color: var(--fig-dim);
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.fig-step {
+  color: var(--ink-1);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0.625rem 0 0;
+}
+
+/* ---- caption rows ----------------------------------------------------- */
+
+.fig-caption {
+  border-top: 1px solid var(--fig-rule);
+  column-gap: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 0.875rem;
+  padding-top: 0.75rem;
+  row-gap: 0.25rem;
+}
+
+.fig-caption-left {
+  color: var(--fig-dim);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.fig-caption-right {
+  color: var(--fig-dim);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.fig-provenance {
+  border-top: 1px solid var(--fig-rule);
+  color: var(--fig-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin: 0.625rem 0 0;
+  padding-top: 0.625rem;
+}
+
+.fig-provenance a {
+  color: var(--fig-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---- text alternative ------------------------------------------------- */
+
+/* Self-contained sr-only. Tailwind supplies one in the Next app; standalone
+   pages and the book build do not have it. */
+.fig-alt {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ---- read-this-figure walkthrough ------------------------------------- */
+
+.fig-read {
+  border: 1px solid var(--rule);
+  border-radius: var(--rad);
+  background: var(--bg-1);
+  margin-top: 0.75rem;
+}
+
+.fig-read > summary {
+  color: var(--fig-dim);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  padding: 1rem;
+  text-transform: uppercase;
+}
+
+.fig-read > summary:focus-visible {
+  outline: 2px solid var(--fig-accent);
+  outline-offset: -2px;
+}
+
+.fig-read > ol {
+  border-top: 1px solid var(--hair);
+  color: var(--ink-1);
+  font-size: 15px;
+  line-height: 1.75;
+  margin: 0;
+  padding: 1.25rem 1.25rem 1.25rem 2.5rem;
+}
+
+.fig-read > ol > li + li {
+  margin-top: 0.5rem;
+}
