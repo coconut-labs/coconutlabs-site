@@ -18,5 +18,6 @@ export type Drawing = {
   scrubbed: boolean;
 };
 
+export declare function accentSubjects(nodes: DrawNode[]): number;
 export declare function stampStatic(nodes: DrawNode[], step: number): DrawNode[];
 export declare function buildFigure(spec: FigureSpec): Drawing;

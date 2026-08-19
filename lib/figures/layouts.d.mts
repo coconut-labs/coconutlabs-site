@@ -15,6 +15,7 @@ export type LayoutContext = {
 export type LayoutResult = { nodes: DrawNode[]; height: number; scale?: Scale };
 
 export declare const PAD: number;
+export declare function format(value: number | string, unit?: string): string;
 export declare function dist(data: DistData, ctx: LayoutContext): LayoutResult;
 export declare function map(data: MapData, ctx: LayoutContext): LayoutResult;
 export declare function flow(data: FlowData, ctx: LayoutContext): LayoutResult;

@@ -166,6 +166,37 @@ describe("flow", () => {
   it("refuses to name a station that does not exist", () => {
     expect(() => flow({ ...data, edges: [{ from: "a", to: "z" }] }, CTX)).toThrow(/no station "z"/);
   });
+
+  it("rules the boundary straight through when no edge label shares its gap", () => {
+    const built2 = flow({ ...data, boundary: { after: "b", label: "past this line" } }, CTX);
+    const dashed = ofType(built2.nodes, "line").filter(
+      (l) => l.attrs["stroke-dasharray"] === "9 4 2 4",
+    );
+    expect(dashed).toHaveLength(1);
+  });
+
+  it("breaks the boundary around an edge label rather than ruling through it", () => {
+    const built2 = flow(
+      {
+        ...data,
+        edges: [{ from: "b", to: "c", label: "shaped" }],
+        boundary: { after: "b", label: "past this line" },
+      },
+      CTX,
+    );
+    const dashed = ofType(built2.nodes, "line").filter(
+      (l) => l.attrs["stroke-dasharray"] === "9 4 2 4",
+    );
+    expect(dashed).toHaveLength(2);
+    const [upper, lower] = dashed as [DrawNode, DrawNode];
+    // Same x, and a real gap between them where the label sits.
+    expect(upper.attrs.x1).toBe(lower.attrs.x1);
+    expect(Number(lower.attrs.y1)).toBeGreaterThan(Number(upper.attrs.y2));
+    // The lower segment still crosses the arrow, which is the whole point.
+    const arrow = ofType(built2.nodes, "line").find((l) => l.attrs["marker-end"])!;
+    expect(Number(lower.attrs.y1)).toBeLessThan(Number(arrow.attrs.y1));
+    expect(Number(lower.attrs.y2)).toBeGreaterThan(Number(arrow.attrs.y1));
+  });
 });
 
 describe("stack", () => {

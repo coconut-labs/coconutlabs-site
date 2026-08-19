@@ -103,10 +103,12 @@ async function lintFigures() {
   let examples;
   let render;
   let spec;
+  let geometry;
   try {
     examples = await import("../lib/figures/examples.mjs");
     render = await import("../lib/figures/render.mjs");
     spec = await import("../lib/figures/spec.mjs");
+    geometry = await import("../lib/figures/geometry.mjs");
   } catch {
     return; // toolkit not present in this checkout
   }
@@ -153,6 +155,14 @@ async function lintFigures() {
     }
     if (svg.includes("font-family")) {
       failures.push(`${where} sets a font-family literal (the face is a token in CSS)`);
+    }
+    // One accent per figure, checked on the rendered result rather than on the
+    // declared ink roles. A layout that paints accent on its own (a dimension
+    // line, an ab delta callout, a stack's you-are-here bar) is invisible to a
+    // spec-level count, and that is exactly how a second accent gets in.
+    const subjects = geometry.accentSubjects(geometry.buildFigure(s).nodes);
+    if (subjects > 1) {
+      failures.push(`${where} renders ${subjects} accented subjects; one accent per figure`);
     }
   }
 }

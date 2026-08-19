@@ -11,7 +11,7 @@
  * complete, self-contained page: token sheet inlined, runtime inlined, no
  * network, no build step, no dependency.
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -36,13 +36,58 @@ const BLURB = {
   scrub: "n discrete timesteps over any primitive. Earned only when the step captions teach as prose.",
 };
 
+/**
+ * The real Geist faces, inlined.
+ *
+ * tokens.css sets --font-mono to var(--font-geist-mono), a variable next/font
+ * injects at runtime. On a file:// page that variable is undefined and Geist
+ * Mono is not a system face, so every label silently falls through to SF Mono.
+ * The screenshots would then show a figure the estate never renders, and, worse,
+ * the fixed label gutters in lib/figures/layouts.mjs would have been tuned
+ * against the wrong face's metrics.
+ *
+ * next/font already emitted subset woff2 files and the matching @font-face
+ * rules into the build. Read those, rewrite each url() to a data: URI (a
+ * file:// page cannot fetch a file:// font), and pin the two variables.
+ * Requires `npm run build` to have run at least once.
+ */
+function fontFaces() {
+  const cssDir = join(REPO, ".next", "static", "css");
+  const mediaDir = join(REPO, ".next", "static", "media");
+  let blocks = [];
+  try {
+    for (const name of readdirSync(cssDir)) {
+      if (!name.endsWith(".css")) continue;
+      const sheet = readFileSync(join(cssDir, name), "utf8");
+      blocks.push(...(sheet.match(/@font-face\{[^}]*\}/g) || []));
+    }
+  } catch {
+    console.warn("warning: no .next build found, falling back to system faces");
+    return "";
+  }
+  blocks = [...new Set(blocks)];
+  const inlined = blocks.map((block) =>
+    block.replace(/url\(\/_next\/static\/media\/([^)]+)\)/g, (whole, file) => {
+      try {
+        const bytes = readFileSync(join(mediaDir, file));
+        return `url(data:font/woff2;base64,${bytes.toString("base64")})`;
+      } catch {
+        return whole;
+      }
+    }),
+  );
+  if (inlined.length === 0) return "";
+  // tokens.css reads these; next/font normally defines them on <html>.
+  return `${inlined.join("\n")}\n:root{--font-geist-sans:"Geist";--font-geist-mono:"Geist Mono";}`;
+}
+
 function css() {
   const tokens = readFileSync(join(REPO, "styles", "tokens.css"), "utf8");
   const figures = readFileSync(join(REPO, "styles", "figure-tokens.css"), "utf8");
   // Read from disk rather than duplicated here: one source of truth for the
   // palette, and the standalone page is then provably on the same tokens as
   // the Next app.
-  return `${tokens}\n${figures}\n${PAGE_CSS}`;
+  return `${fontFaces()}\n${tokens}\n${figures}\n${PAGE_CSS}`;
 }
 
 const PAGE_CSS = `
@@ -129,6 +174,8 @@ if (process.argv.includes("--shoot")) {
     await p.screenshot({ path: out, fullPage: true });
     console.log(`wrote ${out}`);
     await context.close();
+    // The per-scheme page exists only to pin data-theme for the shot.
+    rmSync(tmp, { force: true });
   }
   await browser.close();
 }
