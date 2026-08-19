@@ -17,6 +17,11 @@ jobs:
     # package.json: a mismatch and the browsers stop matching the runner.
     container:
       image: mcr.microsoft.com/playwright:v1.59.1-noble
+    env:
+      # Firefox refuses to start when $HOME is owned by another user, and in
+      # this container the job runs as root while /github/home belongs to
+      # pwuser. Playwright's own launch error prescribes exactly this.
+      HOME: /root
     # The suite runs in about three minutes. A run that passes fifteen is hung,
     # not slow: one sat in_progress for 53 minutes and would have burned the
     # six-hour default before anyone noticed.
