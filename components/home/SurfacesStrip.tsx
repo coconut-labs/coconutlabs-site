@@ -15,7 +15,7 @@ type Surface = {
   host: string;
   href: string;
   copy: string;
-  /** Off-domain: rendered as a plain anchor with the ↗ glyph. */
+  /** Off-domain: rendered as a plain anchor, the visible host names it. */
   external?: boolean;
 };
 
@@ -106,7 +106,7 @@ function SurfaceRow({ surface }: { surface: Surface }) {
     <>
       <p className="font-mono text-[12.5px] leading-6 text-ink-0">
         {surface.host}
-        {surface.external ? <span aria-hidden="true"> ↗</span> : null}
+        
       </p>
       <p className="max-w-[68ch] text-sm leading-6 text-ink-1">{surface.copy}</p>
     </>

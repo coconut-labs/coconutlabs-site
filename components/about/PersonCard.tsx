@@ -22,7 +22,7 @@ export function PersonCard({ person }: { person: Person }) {
             }
             return (
               <a className="focus-ring inline-flex items-center gap-1 rounded-sm text-accent" href={link.href} key={link.href}>
-                {link.label} <span aria-hidden="true">↗</span>
+                {link.label}
               </a>
             );
           })}

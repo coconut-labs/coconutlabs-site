@@ -55,7 +55,7 @@ export default function DrawingsPage() {
               className="focus-ring rounded-sm text-accent underline underline-offset-2"
               href="/evidence/benchmarks"
             >
-              /evidence/benchmarks →
+              /evidence/benchmarks
             </Link>
           </p>
         </div>
@@ -112,7 +112,7 @@ export default function DrawingsPage() {
 
         <div className="mt-14 flex flex-wrap gap-6 border-t border-rule pt-8 font-mono text-sm">
           <Link className="focus-ring rounded-sm text-accent hover:opacity-80" href="/projects">
-            ← All projects
+            All projects
           </Link>
           <Link className="focus-ring rounded-sm text-ink-1 hover:text-accent" href="/evidence/benchmarks">
             Benchmarks

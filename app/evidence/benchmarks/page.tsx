@@ -130,19 +130,19 @@ export default function BenchmarksPage() {
             <ul className="mt-4 space-y-3 font-mono text-[13px] leading-6">
               <li>
                 <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://github.com/coconut-labs/kvwarden/tree/main/results/gate2_preprint_v3">
-                  results/gate2_preprint_v3/ ↗
+                  results/gate2_preprint_v3/
                 </a>
                 <span className="ml-2 text-ink-2">arm summaries, per-window traces</span>
               </li>
               <li>
                 <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://github.com/coconut-labs/kvwarden/blob/main/results/CORRECTIONS.md">
-                  results/CORRECTIONS.md ↗
+                  results/CORRECTIONS.md
                 </a>
                 <span className="ml-2 text-ink-2">every caveat we know about, C1 to C7</span>
               </li>
               <li>
                 <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://github.com/coconut-labs/kvwarden/blob/main/docs/launch/gate2_fairness_runbook.md">
-                  docs/launch/gate2_fairness_runbook.md ↗
+                  docs/launch/gate2_fairness_runbook.md
                 </a>
                 <span className="ml-2 text-ink-2">how to run it yourself</span>
               </li>

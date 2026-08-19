@@ -40,7 +40,7 @@ export async function Hero() {
               data-cta="hero"
               href={`/evidence/${latestSlug}`}
             >
-              Read the latest result <span aria-hidden="true">→</span>
+              Read the latest result
             </Link>
             <Link
               className="focus-ring inline-flex min-h-[44px] items-center gap-2 rounded-sm border border-rule bg-bg-0/80 px-[18px] font-mono text-[11.5px] uppercase tracking-[0.1em] text-ink-0 transition hover:border-accent hover:text-accent"

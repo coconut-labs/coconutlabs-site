@@ -17,7 +17,7 @@ export type NavLink = {
   href: string;
   /** Render a plain anchor instead of next/link (no prefetch, no client nav). */
   plain?: boolean;
-  /** Off-domain. Appends the ↗ glyph and implies plain. */
+  /** Off-domain. Rendered plain; the visible host names it. */
   external?: boolean;
 };
 

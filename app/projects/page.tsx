@@ -45,19 +45,19 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/evidence/tenant-fairness-on-shared-inference"
             >
-              Read the launch <span aria-hidden="true">→</span>
+              Read the launch
             </Link>
             <Link
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="/projects/kvwarden"
             >
-              Project page <span aria-hidden="true">→</span>
+              Project page
             </Link>
             <a
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="https://github.com/coconut-labs/kvwarden"
             >
-              GitHub <span aria-hidden="true">↗</span>
+              GitHub
             </a>
           </div>
         </article>
@@ -75,7 +75,7 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/mlxd"
             >
-              Project page <span aria-hidden="true">→</span>
+              Project page
             </Link>
           </div>
         </article>
@@ -90,13 +90,13 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/coconut-os"
             >
-              Project page <span aria-hidden="true">→</span>
+              Project page
             </Link>
             <a
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="https://coconutos.org"
             >
-              coconutos.org <span aria-hidden="true">↗</span>
+              coconutos.org
             </a>
           </div>
         </article>
@@ -115,13 +115,13 @@ export default async function ProjectsPage() {
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               href="/projects/gallery"
             >
-              Open the gallery <span aria-hidden="true">→</span>
+              Open the gallery
             </Link>
             <Link
               className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
               href="/projects/agentic-mlops"
             >
-              The atlas <span aria-hidden="true">→</span>
+              The atlas
             </Link>
           </div>
         </article>

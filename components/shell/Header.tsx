@@ -93,7 +93,7 @@ export function Header() {
                     {/* ml-1: the row is a flex container, so a leading space
                         inside the span would collapse and the glyph would sit
                         flush against the label. */}
-                    {link.external ? <span aria-hidden="true" className="ml-1">↗</span> : null}
+                    
                   </a>
                 ) : (
                   <Link className={menuLinkClass} href={link.href} key={link.href} onClick={closeMenu}>

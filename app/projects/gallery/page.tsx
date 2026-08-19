@@ -195,13 +195,13 @@ export default function GalleryPage() {
                   href={card.href}
                   className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
                 >
-                  Run the demo <span aria-hidden="true">→</span>
+                  Run the demo
                 </Link>
                 <a
                   href={card.source}
                   className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
                 >
-                  Source <span aria-hidden="true">↗</span>
+                  Source
                 </a>
               </div>
               <p className="mt-4 border-t border-rule pt-3 font-mono text-xs uppercase text-ink-2">
@@ -227,7 +227,7 @@ export default function GalleryPage() {
                 href="/projects/agentic-mlops"
                 className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
               >
-                Open the atlas <span aria-hidden="true">→</span>
+                Open the atlas
               </Link>
             </div>
             <p className="mt-4 border-t border-rule pt-3 font-mono text-xs uppercase text-ink-2">
@@ -248,7 +248,7 @@ export default function GalleryPage() {
                     href={c.cover.href}
                     className="focus-ring inline-flex items-center gap-2 rounded-sm border border-accent/40 bg-accent/10 px-3 py-1 font-mono text-xs text-accent"
                   >
-                    {c.cover.label} <span aria-hidden="true">→</span>
+                    {c.cover.label}
                   </Link>
                 ) : (
                   <span className="rounded-sm border border-rule px-3 py-1 font-mono text-xs text-ink-1">{c.cover.label}</span>
@@ -260,7 +260,7 @@ export default function GalleryPage() {
 
         <div className="mt-14 border-t border-rule pt-8">
           <Link href="/projects" className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-ink-1 hover:text-accent">
-            ← All projects
+            All projects
           </Link>
         </div>
       </div>

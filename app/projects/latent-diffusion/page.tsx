@@ -389,7 +389,7 @@ def predict_start_from_noise(self, x_t, t, noise):
             className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent"
             href="/projects/gallery"
           >
-            <span aria-hidden="true">←</span> Back to the gallery
+            Back to the gallery
           </Link>
           <Link className="focus-ring rounded-sm font-mono text-sm text-ink-1 hover:text-accent" href="/projects">
             All projects

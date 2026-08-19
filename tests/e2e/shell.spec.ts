@@ -106,7 +106,7 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
   // Row 4: identity plus the surfaces that actually exist. A surface we do
   // not have yet gets no row, so there is nothing here promising one.
   await expect(footer.getByText("Coconut Labs · independent inference research")).toBeVisible();
-  await expect(footer.getByRole("link", { name: "GitHub ↗" })).toHaveAttribute(
+  await expect(footer.getByRole("link", { name: "GitHub" })).toHaveAttribute(
     "href",
     "https://github.com/coconut-labs",
   );

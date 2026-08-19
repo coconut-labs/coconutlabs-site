@@ -22,7 +22,7 @@ export function IndexCard({ entry }: IndexCardProps) {
         <h2 className="text-4xl leading-tight">{title}</h2>
         <p className="mt-3 max-w-3xl text-ink-1">{description}</p>
       </div>
-      {href ? <span aria-hidden="true" className="font-mono text-lg text-accent">↗</span> : null}
+      
     </Card>
   );
 

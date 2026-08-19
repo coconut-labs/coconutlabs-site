@@ -368,10 +368,10 @@ export default function LifecycleMap() {
           <p className={styles.tourWhy}>Why it matters: {tourStep.why}</p>
           <div className={styles.tourNav}>
             <button type="button" className={styles.tourBtn} onClick={tourBack} disabled={tourIndex === 0}>
-              ← Back
+              Back
             </button>
             <button type="button" className={`${styles.tourBtn} ${styles.tourBtnPrimary}`} onClick={tourNext}>
-              {tourIndex === TOUR.length - 1 ? "Finish" : "Next →"}
+              {tourIndex === TOUR.length - 1 ? "Finish" : "Next"}
             </button>
             <button type="button" className={styles.tourBtn} onClick={exitTour}>
               Exit

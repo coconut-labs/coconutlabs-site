@@ -17,7 +17,7 @@ export function ProjectHero({ project }: { project: Project }) {
           rel="noreferrer"
           target="_blank"
         >
-          Read the full project <span aria-hidden="true">↗</span>
+          Read the full project
         </a>
       </div>
     </header>

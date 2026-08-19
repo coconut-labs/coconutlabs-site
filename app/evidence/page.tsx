@@ -64,7 +64,6 @@ export default async function EvidencePage() {
                       <p className="mt-4 font-mono text-xs text-ink-2">{entry.authors.join(", ")}</p>
                     ) : null}
                   </div>
-                  <span aria-hidden="true" className="font-mono text-lg text-accent">→</span>
                 </Card>
               </Link>
             ))}

@@ -55,7 +55,7 @@ export function PeopleStrip() {
         */}
 
         <Link className="focus-ring mt-8 inline-flex items-center gap-2 rounded-sm font-mono text-xs text-accent" href="/about">
-          How we work <span aria-hidden="true">→</span>
+          How we work
         </Link>
       </div>
     </section>

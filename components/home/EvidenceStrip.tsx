@@ -15,7 +15,7 @@ export async function EvidenceStrip() {
             <h2 className="mt-3 text-[clamp(1.6rem,3vw,2.4rem)] leading-tight tracking-[-0.03em]">Recent results</h2>
           </div>
           <Link className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs text-accent" href="/evidence">
-            Index <span aria-hidden="true">→</span>
+            Index
           </Link>
         </div>
         <div className="divide-y divide-[var(--rule)] border-y border-rule">

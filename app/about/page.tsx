@@ -33,7 +33,7 @@ export default async function AboutPage() {
             className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs uppercase text-accent"
             href="/evidence/benchmarks"
           >
-            See the proof page <span aria-hidden="true">→</span>
+            See the proof page
           </Link>
         </p>
         <div className="post-body mt-12">

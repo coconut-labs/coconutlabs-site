@@ -43,7 +43,7 @@ export function Footer() {
                   {l.external || l.plain ? (
                     <a className={`${footerLinkClass} text-[12.5px] text-ink-1`} href={l.href}>
                       {l.label}
-                      {l.external ? <span aria-hidden="true"> ↗</span> : null}
+                      
                     </a>
                   ) : (
                     <Link className={`${footerLinkClass} text-[12.5px] text-ink-1`} href={l.href}>
@@ -76,7 +76,7 @@ export function Footer() {
         <p>Coconut Labs · independent inference research</p>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a className={footerLinkClass} href="https://github.com/coconut-labs">
-            GitHub ↗
+            GitHub
           </a>
           <a className={footerLinkClass} href="/rss.xml">
             RSS

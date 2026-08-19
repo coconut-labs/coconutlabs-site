@@ -42,7 +42,7 @@ export function ProjectsStrip() {
                   <p className="text-[clamp(24px,2.4vw,32px)] font-semibold leading-tight tracking-[-0.03em] text-accent">{project.result}</p>
                   <p className="mt-3 max-w-[68ch] text-base leading-7 text-ink-1">{project.body}</p>
                   <span className="mt-5 inline-flex items-center gap-2 font-mono text-xs text-ink-0">
-                    Project page <span aria-hidden="true">→</span>
+                    Project page
                   </span>
                 </div>
               </Card>

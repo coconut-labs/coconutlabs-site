@@ -23,7 +23,7 @@ export default function ColophonPage() {
             className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-xs uppercase text-accent"
             href="/projects"
           >
-            For the work itself, see projects <span aria-hidden="true">→</span>
+            For the work itself, see projects
           </Link>
         </p>
         <div className="mt-16">

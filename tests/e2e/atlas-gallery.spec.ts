@@ -29,8 +29,8 @@ test("atlas tour is keyboard operable: tab, arrows, enter, escape", async ({ pag
   await expect(panel).toContainText("Stop 1 of 7");
 
   // Back is disabled at the first stop; Next advances via enter on the button.
-  await expect(panel.getByRole("button", { name: "← Back" })).toBeDisabled();
-  await panel.getByRole("button", { name: "Next →" }).click();
+  await expect(panel.getByRole("button", { name: "Back" })).toBeDisabled();
+  await panel.getByRole("button", { name: "Next" }).click();
   await expect(panel).toContainText("Stop 2 of 7");
 
   await page.keyboard.press("Escape");

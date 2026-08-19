@@ -171,7 +171,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
             <p className="max-w-2xl text-base leading-7 text-ink-1">
               The cache <em>models</em> the two documented provider rules (exact-prefix match, minimum cacheable length)
               rather than integrating with a live provider. The guardrail catches total silence, 0%, cleanly; partial
-              degradation (say 95% &rarr; 60% after a config change) needs a tuned floor or trend tracking, not a fixed one.
+              degradation (say 95% down to 60% after a config change) needs a tuned floor or trend tracking, not a fixed one.
               And the workload&rsquo;s repetition is known here by construction; a production stream&rsquo;s warmth has to be
               measured before the floor means anything.
             </p>
@@ -187,7 +187,7 @@ guardrail: on a warm workload, assert hit_ratio >= floor`}
             source: github.com/coconut-labs/silent-cache-miss-guardrail
           </a>
           <Link className="focus-ring inline-flex items-center gap-2 rounded-sm font-mono text-sm text-accent" href="/projects/gallery">
-            <span aria-hidden="true">←</span> Back to the gallery
+            Back to the gallery
           </Link>
           <Link className="focus-ring rounded-sm font-mono text-sm text-ink-1 hover:text-accent" href="/projects">
             All projects

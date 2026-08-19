@@ -98,7 +98,7 @@ export default async function JoinUsPage() {
             {FILE_LINKS.map(([label, href]) => (
               <li key={label}>
                 <a className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent" href={href}>
-                  {label} <span aria-hidden="true">↗</span>
+                  {label}
                 </a>
               </li>
             ))}
