@@ -6,7 +6,6 @@ const routes = [
   ["/projects/mlxd", "mlxd"],
   ["/projects/coconut-os", "Coconut OS"],
   ["/evidence", "Evidence"],
-  ["/joinus", "Build with us."],
   ["/about", "A small lab for shared inference."],
   ["/contact", "Write the lab."],
   ["/colophon", "How this page is made."],
@@ -46,20 +45,11 @@ test("/contact uses single info@coconutlabs.org inbox with Copy button", async (
 test("/contact has response-time + not-for-this-inbox blocks", async ({ page }) => {
   await page.goto("/contact", { waitUntil: "domcontentloaded" });
   await expect(page.getByText(/response time/i).first()).toBeVisible();
-  await expect(page.getByText(/We don't always reply quickly/i)).toBeVisible();
+  await expect(page.getByText(/I don't always reply quickly/i)).toBeVisible();
   await expect(page.getByText(/not for this inbox/i).first()).toBeVisible();
   await expect(page.getByText(/Sales outreach/i)).toBeVisible();
 });
 
-test("/joinus shows the 5 starting paths + contributors block", async ({ page }) => {
-  await page.goto("/joinus", { waitUntil: "domcontentloaded" });
-  await expect(page.getByText(/Reproduce Gate 2/i)).toBeVisible();
-  await expect(page.getByText(/H100 saturation case/i)).toBeVisible();
-  await expect(page.getByText(/baseline scheduler/i)).toBeVisible();
-  await expect(page.getByText(/failure mode in the fairness claim/i)).toBeVisible();
-  await expect(page.getByText(/Patch the harness/i)).toBeVisible();
-  await expect(page.getByText(/Just us, for now/i)).toBeVisible();
-});
 
 test("/projects shows KVWarden + mlxd + Coconut OS + tools section", async ({ page }) => {
   await page.goto("/projects", { waitUntil: "domcontentloaded" });

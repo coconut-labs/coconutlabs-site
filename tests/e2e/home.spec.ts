@@ -25,6 +25,13 @@ test("home renders the full composition in the new order", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "Coconut OS" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Recent results" })).toBeVisible();
 
+  // Credentials strip: the four newest, index only. Numbers live on /credentials.
+  await expect(page.getByRole("heading", { name: "Certified, and checkable" })).toBeVisible();
+  await expect(page.getByRole("main").getByRole("link", { name: "All credentials" })).toHaveAttribute(
+    "href",
+    "/credentials",
+  );
+
   // SurfacesStrip: the estate map, every surface named with a real sentence.
   await expect(page.getByRole("heading", { name: "One lab, several surfaces" })).toBeVisible();
   await expect(page.getByRole("main").getByRole("link", { name: /waterline\.coconutlabs\.org/ })).toHaveAttribute(
@@ -37,7 +44,7 @@ test("home renders the full composition in the new order", async ({ page }) => {
   );
 
   // PeopleStrip — names hidden, generic copy used.
-  await expect(page.getByRole("heading", { name: "Two engineers, close to the work." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "One engineer, close to the work." })).toBeVisible();
 
   // Contact strip
   await expect(page.getByText("Building something at this layer?")).toBeVisible();

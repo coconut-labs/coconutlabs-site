@@ -25,7 +25,7 @@ export function Footer() {
     >
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
         <p className="max-w-[44ch] font-mono text-[11px] leading-[1.7] text-ink-2">
-          Steady Cadence · one measured letter: what we shipped and what we got wrong
+          Steady Cadence · one measured letter: what I shipped and what I got wrong
         </p>
         <CadenceSignup />
       </div>
@@ -73,7 +73,7 @@ export function Footer() {
       </p>
 
       <div className="mt-[18px] flex flex-wrap justify-between gap-x-8 gap-y-3 border-t border-hair pt-[18px] font-mono text-[11px] text-ink-2">
-        <p>Coconut Labs · independent inference research</p>
+        <p>Coconut Labs · Shrey Patel · systems engineering and applied AI</p>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <a className={footerLinkClass} href="https://github.com/coconut-labs">
             GitHub

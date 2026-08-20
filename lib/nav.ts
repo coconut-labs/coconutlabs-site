@@ -63,7 +63,7 @@ export const NAV_COLUMNS: NavColumn[] = [
     label: "LAB",
     links: [
       { label: "About", href: "/about" },
-      { label: "Join us", href: "/joinus" },
+      { label: "Credentials", href: "/credentials" },
       { label: "Working drawings", href: "/drawings" },
       { label: "Colophon", href: "/colophon" },
       { label: "Contact", href: "/contact" },

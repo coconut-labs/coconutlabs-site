@@ -21,7 +21,6 @@ const routes = [
   "/projects/latent-diffusion",
   "/projects/gallery",
   "/projects/agentic-mlops",
-  "/joinus",
   "/about",
   "/contact",
   "/colophon",

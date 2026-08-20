@@ -68,7 +68,7 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
 
   // Row 1: the letter pitch plus the live signup form.
   await expect(
-    footer.getByText("Steady Cadence · one measured letter: what we shipped and what we got wrong"),
+    footer.getByText("Steady Cadence · one measured letter: what I shipped and what I got wrong"),
   ).toBeVisible();
   await expect(footer.getByLabel("Email address")).toBeVisible();
   await expect(footer.getByRole("button", { name: "SUBSCRIBE" })).toBeVisible();
@@ -105,7 +105,7 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
 
   // Row 4: identity plus the surfaces that actually exist. A surface we do
   // not have yet gets no row, so there is nothing here promising one.
-  await expect(footer.getByText("Coconut Labs · independent inference research")).toBeVisible();
+  await expect(footer.getByText("Coconut Labs · Shrey Patel · systems engineering and applied AI")).toBeVisible();
   await expect(footer.getByRole("link", { name: "GitHub" })).toHaveAttribute(
     "href",
     "https://github.com/coconut-labs",

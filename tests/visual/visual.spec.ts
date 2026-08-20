@@ -31,7 +31,7 @@ const ROUTES = [
   "/projects/latent-diffusion",
   "/drawings",
   "/about",
-  "/joinus",
+  "/credentials",
   "/contact",
   "/colophon",
 ];

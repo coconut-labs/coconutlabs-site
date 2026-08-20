@@ -54,6 +54,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/work",          destination: "/projects#tools",          permanent: true },
+      // /joinus is retired. It advertised hiring, and there is no hiring:
+      // this is one engineer. Contact still takes anything real.
+      { source: "/joinus",        destination: "/contact",                 permanent: true },
       { source: "/projects/weft", destination: "/projects/mlxd",           permanent: true },
 
       /* The rename. /research was pretending to be four things (notes,

@@ -18,7 +18,7 @@ export async function Hero() {
     <section className="relative isolate overflow-hidden px-[var(--space-page-x)] py-20">
       <div className="relative mx-auto grid max-w-[88rem] items-end gap-[clamp(24px,4vw,56px)] md:grid-cols-[minmax(320px,1.15fr)_minmax(320px,1fr)]">
         <div>
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.16em] text-ink-2">independent inference research</p>
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.16em] text-ink-2">systems engineering · applied ai</p>
           <h1 className="block leading-none text-ink-0">
             <CoconutLabsLogo
               animate
@@ -31,7 +31,7 @@ export async function Hero() {
             />
           </h1>
           <p className="mt-8 max-w-[44ch] text-xl leading-8 text-ink-1">
-            A quiet tenant keeps its latency under load. We build the schedulers that make that
+            A quiet tenant keeps its latency under load. I build the schedulers that make that
             true and measure them on rented hardware. The parts that failed are published too.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">

@@ -23,7 +23,7 @@ export default async function AboutPage() {
   return (
     <section className="content-band">
       <div className="content-inner">
-        <p className="font-mono text-xs uppercase text-ink-2">who we are and how we work</p>
+        <p className="font-mono text-xs uppercase text-ink-2">who i am and how i work</p>
         <h1 className="mt-5 text-[clamp(30px,4vw,46px)] leading-[1.05] tracking-[-0.03em]">A small lab for shared inference.</h1>
         <p className="mt-6 max-w-2xl text-base leading-7 text-ink-1">
           The manifesto and the working principles of a two-person inference research lab.
@@ -49,7 +49,7 @@ export default async function AboutPage() {
         </div>
         */}
 
-        <h2 className="mt-20 text-[clamp(3rem,7vw,6rem)] leading-none">How we work</h2>
+        <h2 className="mt-20 text-[clamp(3rem,7vw,6rem)] leading-none">How I work</h2>
         <div className="mt-10 grid gap-8 md:grid-cols-2">
           {principles.map((principle) => (
             <PrincipleCard body={principle.body} key={principle.title} title={principle.title} />

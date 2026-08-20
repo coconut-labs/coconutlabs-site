@@ -36,7 +36,7 @@ export const metadata = buildMetadata({
 
 const NOT_FOR = [
   "Sales outreach. If you are selling something, you can stop here.",
-  "Recruiting. We are not hiring. If we ever are, /joinus will say so.",
+  "Recruiting. I am not hiring.",
   "Bug reports for KVWarden or mlxd. File an issue on the repo instead.",
 ];
 
@@ -75,7 +75,7 @@ export default function ContactPage() {
         <div className="mt-20 border-t border-rule pt-10">
           <p className="font-mono text-xs uppercase text-ink-2">response time</p>
           <p className="mt-4 max-w-2xl leading-7 text-ink-1">
-            We don't always reply quickly. If something is time-sensitive, say so in the subject line and we will read it sooner.
+            I don't always reply quickly. If something is time-sensitive, say so in the subject line and I will read it sooner.
           </p>
         </div>
 
