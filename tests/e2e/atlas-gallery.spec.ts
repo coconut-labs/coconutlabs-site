@@ -71,11 +71,14 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
   ).toBeVisible();
 
   // Shipped unit cards, each with a live link and a source link.
-  // 7 units: 6 on the bottleneck spine plus latent diffusion, which is a
-  // mechanism unit and deliberately sits outside the class table.
-  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(7);
-  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(7);
+  // 8 units: 6 on the bottleneck spine, latent diffusion as a mechanism unit
+  // outside the class table, and CareScribe on the applied-AI tier.
+  await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(8);
+  await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(8);
+  // Where a unit runs is a per-card fact. Seven run in the browser; CareScribe
+  // calls a model on Cloudflare's GPUs and its chip says so.
   await expect(page.getByText("live in your browser")).toHaveCount(7);
+  await expect(page.getByText("live on cloudflare gpus")).toHaveCount(1);
 
   // The Tier-4 chip is gone. The honesty it carried is now a sentence: the one
   // unit with no measured result says so on the card, in words.

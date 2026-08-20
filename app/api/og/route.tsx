@@ -41,7 +41,7 @@ export async function GET(request: Request) {
           {title}
         </div>
         <div style={{ color: "#6A6A78", fontFamily: "monospace", fontSize: 22 }}>
-          independent inference research · coconutlabs.org
+          systems engineering · applied ai · coconutlabs.org
         </div>
       </div>
     ),

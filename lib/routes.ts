@@ -28,6 +28,7 @@ export const ROUTES: RouteEntry[] = [
   { href: "/projects/ingestion-data-contract", label: "Ingestion data-contract guardrail" },
   { href: "/projects/risk-hotpath", label: "Pre-trade risk gate" },
   { href: "/projects/latent-diffusion", label: "Latent diffusion mechanics" },
+  { href: "/projects/carescribe", label: "CareScribe" },
   { href: "/projects/coconut-os", label: "Coconut OS" },
   { href: "/drawings", label: "Working drawings" },
   { href: "/cadence", label: "The nightly record" },

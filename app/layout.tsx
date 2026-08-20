@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://coconutlabs.org"),
   ...buildMetadata({
     title: "Coconut Labs",
-    description: "An independent inference research lab: schedulers, measured results, and the benches behind them.",
+    description: "Shrey Patel: systems engineering and applied AI. Schedulers, measured results, demos that run, and the benches behind them.",
   }),
   icons: {
     icon: "/favicon.svg",

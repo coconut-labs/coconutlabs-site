@@ -29,6 +29,7 @@ const ROUTES = [
   "/projects/coconut-os",
   "/projects/risk-hotpath",
   "/projects/latent-diffusion",
+  "/projects/carescribe",
   "/drawings",
   "/about",
   "/credentials",

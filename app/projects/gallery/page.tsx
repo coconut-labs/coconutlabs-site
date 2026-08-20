@@ -45,6 +45,10 @@ type UnitCard = {
   /* A unit that carries no measured result must say so, in a sentence a reader
      can read, not a chip. Set only on units where the honesty is needed. */
   caveat?: string;
+  /* Where the demo actually executes. Every unit ran in the browser until
+     CareScribe, which calls a model on Cloudflare's GPUs, so the chip stopped
+     being a constant the moment it would have been a lie on one card. */
+  runs?: string;
 };
 const UNIT_CARDS: UnitCard[] = [
   {
@@ -149,6 +153,22 @@ const UNIT_CARDS: UnitCard[] = [
     source: "https://github.com/ShreyPatel4/Latent-Diffusion-Artbench-OpenImage",
     caveat: "This unit shows the mechanism. It carries no measured result.",
   },
+  {
+    title: "CareScribe",
+    hook: "A clinician talks for four minutes. The chart needs five headings, and every one of them has to be supported by something that was actually said.",
+    action: "Feed it a thin transcript and see whether the note says not documented or quietly invents a diagnosis.",
+    numbers: (
+      <>
+        A <span className="font-mono">real model</span> on Cloudflare&rsquo;s GPUs, called live from
+        this page · synthetic transcripts, nothing stored, no evaluation claimed
+      </>
+    ),
+    meta: "Applied AI · live inference on the free tier",
+    runs: "live on cloudflare gpus",
+    href: "/projects/carescribe",
+    source: "https://github.com/ShreyPatel4/carescribe",
+    caveat: "One model answering one transcript. No accuracy number, no hallucination rate, and not a medical device.",
+  },
 ];
 
 export default function GalleryPage() {
@@ -178,7 +198,7 @@ export default function GalleryPage() {
             >
               <div className="mb-4 flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center rounded-sm border border-rule px-3 py-1 font-mono text-xs uppercase text-ink-2">
-                  live in your browser
+                  {card.runs ?? "live in your browser"}
                 </span>
               </div>
               <h2 className="text-3xl leading-tight text-ink-0">{card.title}</h2>

@@ -19,6 +19,7 @@ const routes = [
   "/projects/columnar-scan-bytes-guardrail",
   "/projects/ingestion-data-contract",
   "/projects/latent-diffusion",
+  "/projects/carescribe",
   "/projects/gallery",
   "/projects/agentic-mlops",
   "/about",
