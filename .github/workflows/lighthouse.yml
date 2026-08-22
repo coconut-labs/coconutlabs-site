@@ -3,6 +3,11 @@ name: Lighthouse
 on:
   pull_request:
   workflow_dispatch:
+  # Work lands straight on main here, so a pull_request-only trigger meant this
+  # gate had never run once in the life of the repo. Weekly keeps it honest
+  # without putting a Lighthouse build in front of every push.
+  schedule:
+    - cron: "40 15 * * 1"
 
 jobs:
   lighthouse:
