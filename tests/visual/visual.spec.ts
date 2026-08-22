@@ -32,7 +32,6 @@ const ROUTES = [
   "/projects/carescribe",
   "/drawings",
   "/about",
-  "/credentials",
   "/contact",
   "/colophon",
 ];
