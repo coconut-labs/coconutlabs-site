@@ -90,13 +90,16 @@ const nextConfig: NextConfig = {
       /* /library the page collided by name with library.coconutlabs.org the
          host, and described two wings of a four-wing shelf. The surviving
          paragraph lives on /about under the-library anchor. */
-      { source: "/library/enter", destination: "https://library.coconutlabs.org",     permanent: false },
+      /* library.coconutlabs.org's origin (a tunnel to lab hardware) was
+         retired 2026-08-22, so the enter door lands on the explanation. */
+      { source: "/library/enter", destination: "/about#the-library",       permanent: false },
       { source: "/library",       destination: "/about#the-library",       permanent: true },
 
       // Memorable doors: short paths on the main domain that hand off to the
-      // surfaces that live on their own hosts.
-      { source: "/atlas",         destination: "https://waterline.coconutlabs.org",   permanent: false },
-      { source: "/waterline",     destination: "https://waterline.coconutlabs.org",   permanent: false },
+      // surfaces that live on their own hosts. The waterline host died with
+      // the same tunnel; both atlas doors land on the in-house atlas.
+      { source: "/atlas",         destination: "/projects/agentic-mlops",  permanent: false },
+      { source: "/waterline",     destination: "/projects/agentic-mlops",  permanent: false },
       { source: "/masterclass",   destination: "https://masterclass.coconutlabs.org", permanent: false },
       // Swap this to https://learn.coconutos.org when the CNAME resolves. It
       // does not today, so the door points at the Pages host that serves it.

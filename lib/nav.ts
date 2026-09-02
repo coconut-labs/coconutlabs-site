@@ -51,12 +51,13 @@ export const NAV_COLUMNS: NavColumn[] = [
   {
     label: "LEARN",
     links: [
-      { label: "Below the Waterline", href: "https://waterline.coconutlabs.org", external: true },
       { label: "Masterclass", href: "https://masterclass.coconutlabs.org", external: true },
       // learn.coconutos.org does not resolve yet. Point at the Pages host that
       // does and swap both this href and the rail entry when the CNAME lands.
       { label: "The low-level book", href: "https://coconutos-learn.pages.dev", external: true },
-      { label: "The Library, private", href: "https://library.coconutlabs.org", external: true },
+      // waterline. and library.coconutlabs.org were served off lab hardware
+      // whose tunnel stack was retired 2026-08-22. Do not relink until a
+      // serving origin exists again.
     ],
   },
   {
@@ -77,6 +78,4 @@ export const HOSTNAME_RAIL: { label: string; href: string }[] = [
   { label: "coconutos.org", href: "https://coconutos.org" },
   { label: "coconutos-learn.pages.dev", href: "https://coconutos-learn.pages.dev" },
   { label: "masterclass.coconutlabs.org", href: "https://masterclass.coconutlabs.org" },
-  { label: "waterline.coconutlabs.org", href: "https://waterline.coconutlabs.org" },
-  { label: "library.coconutlabs.org", href: "https://library.coconutlabs.org" },
 ];

@@ -61,11 +61,13 @@ test.describe("legacy route redirects", () => {
 
   test("the memorable doors point at their hosts", async ({ request }) => {
     const cases: [string, string][] = [
-      ["/atlas", "https://waterline.coconutlabs.org"],
-      ["/waterline", "https://waterline.coconutlabs.org"],
+      // The waterline/library tunnel origin was retired 2026-08-22; those
+      // doors now land on the living in-house pages.
+      ["/atlas", "/projects/agentic-mlops"],
+      ["/waterline", "/projects/agentic-mlops"],
       ["/learn", "https://coconutos-learn.pages.dev"],
       ["/masterclass", "https://masterclass.coconutlabs.org"],
-      ["/library/enter", "https://library.coconutlabs.org"],
+      ["/library/enter", "/about#the-library"],
     ];
     for (const [from, to] of cases) {
       const response = await request.get(from, { maxRedirects: 0 });

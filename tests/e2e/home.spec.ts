@@ -27,10 +27,8 @@ test("home renders the full composition in the new order", async ({ page }) => {
 
   // SurfacesStrip: the estate map, every surface named with a real sentence.
   await expect(page.getByRole("heading", { name: "One lab, several surfaces" })).toBeVisible();
-  await expect(page.getByRole("main").getByRole("link", { name: /waterline\.coconutlabs\.org/ })).toHaveAttribute(
-    "href",
-    "https://waterline.coconutlabs.org",
-  );
+  await expect(page.getByText("Five doors. Here is what is behind each one.")).toBeVisible();
+  await expect(page.getByRole("main").getByRole("link", { name: /waterline\.coconutlabs\.org/ })).toHaveCount(0);
   await expect(page.getByRole("main").getByRole("link", { name: /coconutlabs\.org\/live/ })).toHaveAttribute(
     "href",
     "/live",

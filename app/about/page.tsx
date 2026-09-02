@@ -69,19 +69,16 @@ export default async function AboutPage() {
             the job requires and write it down well enough to teach.
           </p>
           <p className="mt-3 max-w-[68ch] leading-7 text-ink-1">
-            It stays behind a login at{" "}
-            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://library.coconutlabs.org">
-              library.coconutlabs.org
-            </a>{" "}
-            because the drafts lean on first-person operational detail. The cleared subset is
-            public: the atlas at{" "}
-            <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://waterline.coconutlabs.org">
-              Below the Waterline
-            </a>
-            , the course at{" "}
+            The shelf lived behind a login on lab hardware, and that serving stack was retired in
+            August 2026, so it is offline rather than gated. What was cleared for the public stays
+            public: the course at{" "}
             <a className="focus-ring text-accent underline decoration-1 underline-offset-2" href="https://masterclass.coconutlabs.org">
               masterclass
             </a>
+            , and the atlas work in the{" "}
+            <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/projects/agentic-mlops">
+              projects gallery
+            </Link>
             . What the lab measured lands in{" "}
             <Link className="focus-ring text-accent underline decoration-1 underline-offset-2" href="/evidence">
               evidence

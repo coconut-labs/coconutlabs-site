@@ -94,14 +94,13 @@ test("footer carries the Steady Cadence row and the baseline row", async ({ page
   );
 
   // Row 3: the hostname rail, every host in the estate on one mono line.
-  await expect(footer.getByRole("link", { name: "waterline.coconutlabs.org" })).toHaveAttribute(
+  // waterline/library left the rail when their tunnel origin was retired.
+  await expect(footer.getByRole("link", { name: "masterclass.coconutlabs.org" })).toHaveAttribute(
     "href",
-    "https://waterline.coconutlabs.org",
+    "https://masterclass.coconutlabs.org",
   );
-  await expect(footer.getByRole("link", { name: "library.coconutlabs.org" })).toHaveAttribute(
-    "href",
-    "https://library.coconutlabs.org",
-  );
+  await expect(footer.getByRole("link", { name: "waterline.coconutlabs.org" })).toHaveCount(0);
+  await expect(footer.getByRole("link", { name: "library.coconutlabs.org" })).toHaveCount(0);
 
   // Row 4: identity plus the surfaces that actually exist. A surface we do
   // not have yet gets no row, so there is nothing here promising one.

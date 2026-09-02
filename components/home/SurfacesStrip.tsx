@@ -1,14 +1,16 @@
 import Link from "next/link";
 
-/* The estate map on the home page. Seven hairline rows, not cards and not a
+/* The estate map on the home page. Five hairline rows, not cards and not a
    grid: the surface name on the left, one real sentence beside it. Rows
    carrying sentences make a map; rows carrying bare hostnames make a link
-   dump. There is no state column: every row here is reachable, and the one
-   door a reader cannot walk through says so in its own sentence.
+   dump. There is no state column: every row here is reachable, and a door
+   in an unusual state says so in its own sentence.
 
    Row order is deliberate and not alphabetical: the two surfaces with a
    measured claim behind them lead, teaching surfaces follow, the operations
-   readout and the gated shelf close. */
+   readout closes. The waterline atlas and the private library came off this
+   map when their serving stack (a tunnel to lab hardware) was retired on
+   2026-08-22; restore the rows only when an origin serves again. */
 
 type Surface = {
   /** What the row is called. A real domain where we have one. */
@@ -27,12 +29,6 @@ const SURFACES: Surface[] = [
     external: true,
   },
   {
-    host: "waterline.coconutlabs.org",
-    href: "https://waterline.coconutlabs.org",
-    copy: "Below the Waterline. Six systems taken apart, business problem down to the metal.",
-    external: true,
-  },
-  {
     host: "masterclass.coconutlabs.org",
     href: "https://masterclass.coconutlabs.org",
     copy: "Five chapters on forward-deployed engineering, start to finish.",
@@ -41,7 +37,7 @@ const SURFACES: Surface[] = [
   {
     host: "coconutos.org",
     href: "https://coconutos.org",
-    copy: "An operating system where an agent is a first-class citizen. Five specs, all public.",
+    copy: "Paused while the lab reworks what Coconut is. The page behind this door says so itself.",
     external: true,
   },
   {
@@ -56,13 +52,7 @@ const SURFACES: Surface[] = [
   {
     host: "coconutlabs.org/live",
     href: "/live",
-    copy: "Uptime, the gap ledger, and what the nightly loop did last night.",
-  },
-  {
-    host: "library.coconutlabs.org",
-    href: "https://library.coconutlabs.org",
-    copy: "The private study shelf. Two of us have keys, and that is the point.",
-    external: true,
+    copy: "The operations record: a closed ingestion run's gap ledger, and the nightly loop.",
   },
 ];
 
@@ -79,7 +69,7 @@ export function SurfacesStrip() {
             One lab, several surfaces
           </h2>
           <p className="mt-3 max-w-[68ch] text-base leading-7 text-ink-1">
-            Seven doors. Here is what is behind each one.
+            Five doors. Here is what is behind each one.
           </p>
         </div>
 
