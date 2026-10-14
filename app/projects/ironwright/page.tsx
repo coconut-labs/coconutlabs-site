@@ -1,6 +1,7 @@
 import Disclosure from "@/components/demos/Disclosure";
 import Steps from "@/components/demos/Steps";
 import { buildMetadata } from "@/lib/seo";
+import Demo from "./Demo";
 
 export const metadata = buildMetadata({
   title: "Ironwright · Coconut Labs",
@@ -82,6 +83,16 @@ export default function IronwrightPage() {
           />
         </div>
 
+        <h2 className="mt-14 text-2xl">The audit chain, verified here</h2>
+        <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
+          The films show the run; this verifies its receipt. The retail pack&rsquo;s hash-chained
+          audit log ships with this page, preimages and all, and your browser recomputes every
+          SHA-256 digest and checks every link.
+        </p>
+        <div className="mt-6">
+          <Demo />
+        </div>
+
         <h2 className="mt-14 text-2xl">Four packs, four decisions</h2>
         <p className="mt-3 max-w-2xl text-base leading-7 text-ink-1">
           Each film below is rendered from the engine&rsquo;s own export for that pack: the
@@ -140,10 +151,16 @@ export default function IronwrightPage() {
 
           <Disclosure summary="Where the source is">
             <p className="max-w-2xl text-base leading-7 text-ink-1">
-              The repository is assembled and green locally and goes public under
-              ShreyPatel4/ironwright; the link lands here the day it does. Until then, every
-              claim on this page is reproducible from the films&rsquo; own frames: run ids,
-              reconciliation counts, and trace waterfalls are shown, not described.
+              Everything on this page is reproducible from{" "}
+              <a
+                className="focus-ring text-accent underline decoration-1 underline-offset-2"
+                href="https://github.com/ShreyPatel4/ironwright"
+              >
+                github.com/ShreyPatel4/ironwright
+              </a>
+              : the engine, the four packs, the tests, and the scripts that rendered these very
+              films from the engine&rsquo;s own exports. Clone it and <span className="font-mono text-[13px]">make test</span>{" "}
+              runs the same 9 tests this page cites.
             </p>
           </Disclosure>
         </div>

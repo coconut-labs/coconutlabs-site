@@ -18,20 +18,39 @@ test("the page carries the intro and exactly four pack films, all lazy", async (
   await expect(page.locator('video[src^="/ironwright/films/"]')).toHaveCount(4);
 });
 
-test("the honesty notes are present: film-only verticals and no source link yet", async ({ page }) => {
+test("the honesty notes are present: film-only verticals and the source link", async ({ page }) => {
   await page.goto("/projects/ironwright");
   await page.getByText("Two more films, and why they do not count").click();
   await expect(page.getByText("ideation, not evidence", { exact: false })).toBeVisible();
-  // No link to the project repo until it is public (site chrome may link
-  // github.com elsewhere; the contract is about this unit's source).
-  await expect(page.locator('a[href*="github.com/ShreyPatel4/ironwright"]')).toHaveCount(0);
+  // The repo went public 2026-10-13; the page links it from the source
+  // disclosure. The disclosure is open by default on desktop.
+  await expect(page.locator('a[href="https://github.com/ShreyPatel4/ironwright"]')).toHaveCount(1);
 });
 
 test("the gallery card exists and routes here", async ({ page }) => {
   await page.goto("/projects/gallery");
   await expect(page.getByRole("heading", { name: "Ironwright" })).toBeVisible();
-  await page.getByRole("link", { name: "Watch the films" }).click();
+  await page
+    .locator("article", { hasText: "Ironwright" })
+    .getByRole("link", { name: "Run the demo" })
+    .click();
   await expect(page).toHaveURL(/\/projects\/ironwright$/);
+});
+
+/* Functional literals below were derived by executing the same verification
+   in Node (node:crypto sha256) over the committed chain.json: intact gives
+   59 rows and 0 breaks; rewriting seq 23's status and recomputing its hash
+   gives first break at seq 24, exactly 1 failing row. */
+test("the chain verifies in the browser: 59 rows, 0 breaks", async ({ page }) => {
+  await page.goto("/projects/ironwright");
+  await page.getByRole("button", { name: "Verify the chain as shipped" }).click();
+  await expect(page.getByTestId("demo-outcome")).toContainText("59 of 59 rows verified, 0 breaks");
+});
+
+test("a careful rewrite is caught one link later, at seq 24", async ({ page }) => {
+  await page.goto("/projects/ironwright");
+  await page.getByRole("button", { name: /Rewrite seq 23/ }).click();
+  await expect(page.getByTestId("demo-outcome")).toContainText("Chain breaks at seq 24");
 });
 
 test("the pack films are the four real packs, named", async ({ page }) => {

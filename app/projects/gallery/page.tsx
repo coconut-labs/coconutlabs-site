@@ -184,10 +184,9 @@ const UNIT_CARDS: UnitCard[] = [
       </>
     ),
     meta: "Legacy modernization · one engine, four mock businesses",
-    runs: "films from real runs",
     href: "/projects/ironwright",
-    cta: "Watch the films",
-    caveat: "The films are the engine's own runs, but no live demo runs on this page yet; that is the next phase.",
+    source: "https://github.com/ShreyPatel4/ironwright",
+    caveat: "The films are the engine's own runs, and the demo verifies the run's hash-chained audit log in your browser. No pack executes end to end on this page yet.",
   },
 ];
 
@@ -198,8 +197,8 @@ export default function GalleryPage() {
         <p className="font-mono text-xs uppercase text-ink-2">the gallery</p>
         <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
         <p className="mt-8 max-w-2xl text-xl leading-8 text-ink-0">
-          Every card is a thing that silently breaks in real data systems. Nearly every demo runs
-          in your browser; the one card that ships films instead says so on its face.
+          Every card is a thing that silently breaks in real data systems. Every demo runs in your
+          browser.
         </p>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           One method at two scales: a deep case study (an agentic MLOps platform, built and
