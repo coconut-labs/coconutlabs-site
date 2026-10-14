@@ -41,7 +41,11 @@ type UnitCard = {
   numbers: React.ReactNode;
   meta: string;
   href: string;
-  source: string;
+  /* Absent only while a unit's repository is not yet public; the card then
+     shows no Source link rather than a dead or misleading one. */
+  source?: string;
+  /* The action label; "Run the demo" unless the unit is not a live demo. */
+  cta?: string;
   /* A unit that carries no measured result must say so, in a sentence a reader
      can read, not a chip. Set only on units where the honesty is needed. */
   caveat?: string;
@@ -169,6 +173,22 @@ const UNIT_CARDS: UnitCard[] = [
     source: "https://github.com/ShreyPatel4/carescribe",
     caveat: "One model answering one transcript. No accuracy number, no hallucination rate, and not a medical device.",
   },
+  {
+    title: "Ironwright",
+    hook: "A company that runs on mainframe files and CSV drops, taken to the point where an AI agent can make a business decision on it, safely.",
+    action: "Watch the engine take four mock businesses from legacy mess to a policy-gated agent decision, rendered from its own runs.",
+    numbers: (
+      <>
+        <span className="font-mono">4 packs</span> with planted defects and ground truth ·
+        write-audit-publish on Iceberg · hash-chained audit · $0, local, no keys
+      </>
+    ),
+    meta: "Legacy modernization · one engine, four mock businesses",
+    runs: "films from real runs",
+    href: "/projects/ironwright",
+    cta: "Watch the films",
+    caveat: "The films are the engine's own runs, but no live demo runs on this page yet; that is the next phase.",
+  },
 ];
 
 export default function GalleryPage() {
@@ -178,8 +198,8 @@ export default function GalleryPage() {
         <p className="font-mono text-xs uppercase text-ink-2">the gallery</p>
         <h1 className="mt-5 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95]">Hall of demos</h1>
         <p className="mt-8 max-w-2xl text-xl leading-8 text-ink-0">
-          Every card is a thing that silently breaks in real data systems. Every demo runs in your
-          browser.
+          Every card is a thing that silently breaks in real data systems. Nearly every demo runs
+          in your browser; the one card that ships films instead says so on its face.
         </p>
         <p className="mt-4 max-w-2xl text-base leading-7 text-ink-1">
           One method at two scales: a deep case study (an agentic MLOps platform, built and
@@ -215,14 +235,16 @@ export default function GalleryPage() {
                   href={card.href}
                   className="focus-ring inline-flex items-center gap-2 rounded-sm text-accent"
                 >
-                  Run the demo
+                  {card.cta ?? "Run the demo"}
                 </Link>
-                <a
-                  href={card.source}
-                  className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
-                >
-                  Source
-                </a>
+                {card.source ? (
+                  <a
+                    href={card.source}
+                    className="focus-ring inline-flex items-center gap-2 rounded-sm text-ink-1 hover:text-accent"
+                  >
+                    Source
+                  </a>
+                ) : null}
               </div>
               <p className="mt-4 border-t border-rule pt-3 font-mono text-xs uppercase text-ink-2">
                 {card.meta}

@@ -70,15 +70,19 @@ test("gallery opens with the hook and cards carry hook, action, badges", async (
     page.getByText("Every card is a thing that silently breaks in real data systems.")
   ).toBeVisible();
 
-  // Shipped unit cards, each with a live link and a source link.
-  // 8 units: 6 on the bottleneck spine, latent diffusion as a mechanism unit
-  // outside the class table, and CareScribe on the applied-AI tier.
+  // Shipped unit cards. 9 units: 6 on the bottleneck spine, latent diffusion
+  // as a mechanism unit outside the class table, CareScribe on the applied-AI
+  // tier, and Ironwright as a films unit whose CTA says what it is. Source
+  // links number 8: Ironwright's repo is not public yet and its card shows no
+  // Source link rather than a dead one.
   await expect(page.getByRole("link", { name: /Run the demo/ })).toHaveCount(8);
+  await expect(page.getByRole("link", { name: /Watch the films/ })).toHaveCount(1);
   await expect(page.getByRole("link", { name: /Source/ })).toHaveCount(8);
   // Where a unit runs is a per-card fact. Seven run in the browser; CareScribe
-  // calls a model on Cloudflare's GPUs and its chip says so.
+  // calls a model on Cloudflare's GPUs; Ironwright ships films from real runs.
   await expect(page.getByText("live in your browser")).toHaveCount(7);
   await expect(page.getByText("live on cloudflare gpus")).toHaveCount(1);
+  await expect(page.getByText("films from real runs")).toHaveCount(1);
 
   // The Tier-4 chip is gone. The honesty it carried is now a sentence: the one
   // unit with no measured result says so on the card, in words.

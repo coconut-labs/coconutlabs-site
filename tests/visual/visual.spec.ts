@@ -30,6 +30,7 @@ const ROUTES = [
   "/projects/risk-hotpath",
   "/projects/latent-diffusion",
   "/projects/carescribe",
+  "/projects/ironwright",
   "/drawings",
   "/about",
   "/contact",

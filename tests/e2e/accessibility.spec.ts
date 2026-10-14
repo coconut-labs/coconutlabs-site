@@ -20,6 +20,7 @@ const routes = [
   "/projects/ingestion-data-contract",
   "/projects/latent-diffusion",
   "/projects/carescribe",
+  "/projects/ironwright",
   "/projects/gallery",
   "/projects/agentic-mlops",
   "/about",
